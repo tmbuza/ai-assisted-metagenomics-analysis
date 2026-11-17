@@ -1,0 +1,125 @@
+{
+  "index.qmd": {
+    "index.html": "09da460f"
+  },
+  "examples/community-comparison/00-start-here.qmd": {
+    "00-start-here.html": "7a6b3e15"
+  },
+  "examples/community-comparison/01-see-the-result.qmd": {
+    "01-see-the-result.html": "71f8625e"
+  },
+  "examples/community-comparison/02-meet-the-data.qmd": {
+    "02-meet-the-data.html": "9419e1a6"
+  },
+  "examples/community-comparison/03-check-the-inputs.qmd": {
+    "03-check-the-inputs.html": "e43d3b2e"
+  },
+  "examples/community-comparison/04-run-the-analysis.qmd": {
+    "04-run-the-analysis.html": "29edfd0a"
+  },
+  "examples/community-comparison/05-verify-and-explain.qmd": {
+    "05-verify-and-explain.html": "2ece2713"
+  },
+  "examples/community-comparison/06-export-the-report.qmd": {
+    "06-export-the-report.html": "df7496c3"
+  },
+  "examples/community-comparison/99-appendix.qmd": {
+    "99-appendix.html": "747c8f18"
+  },
+  "examples/community-comparison/example-report.qmd": {
+    "example-report.html": "c2d0eecc"
+  },
+  "examples/taxon-comparison/00-start-here.qmd": {
+    "00-start-here.html": "b6e581f2"
+  },
+  "examples/taxon-comparison/01-see-the-result.qmd": {
+    "01-see-the-result.html": "16c5f4d4"
+  },
+  "examples/taxon-comparison/example-report.qmd": {
+    "example-report.html": "ac7bb4f1"
+  },
+  "examples/taxon-comparison/02-meet-the-data.qmd": {
+    "02-meet-the-data.html": "4e3f7a6b"
+  },
+  "examples/taxon-comparison/03-check-the-inputs.qmd": {
+    "03-check-the-inputs.html": "ec99ba55"
+  },
+  "examples/taxon-comparison/04-run-the-analysis.qmd": {
+    "04-run-the-analysis.html": "f2c9b026"
+  },
+  "examples/taxon-comparison/05-verify-and-explain.qmd": {
+    "05-verify-and-explain.html": "df284b1e"
+  },
+  "examples/taxon-comparison/06-export-the-report.qmd": {
+    "06-export-the-report.html": "d3a504ef"
+  },
+  "examples/taxon-comparison/99-appendix.qmd": {
+    "99-appendix.html": "80567d42"
+  },
+  "00-preface.qmd": {
+    "00-preface.html": "a45354d4"
+  },
+  "examples/shotgun-metagenomics/00-start-here.qmd": {
+    "00-start-here.html": "7b52b525"
+  },
+  "examples/shotgun-metagenomics/01-see-the-result.qmd": {
+    "01-see-the-result.html": "ea308f8c"
+  },
+  "examples/shotgun-metagenomics/02-meet-the-data.qmd": {
+    "02-meet-the-data.html": "a722b47a"
+  },
+  "examples/shotgun-metagenomics/03-check-the-inputs.qmd": {
+    "03-check-the-inputs.html": "83c68df2"
+  },
+  "examples/shotgun-metagenomics/04-run-the-analysis.qmd": {
+    "04-run-the-analysis.html": "aab1dc96"
+  },
+  "examples/shotgun-metagenomics/05-verify-and-explain.qmd": {
+    "05-verify-and-explain.html": "72e614cf"
+  },
+  "examples/shotgun-metagenomics/06-export-the-report.qmd": {
+    "06-export-the-report.html": "74da6444"
+  },
+  "examples/dietswap/00-start-here.qmd": {
+    "00-start-here.html": "038dede1"
+  },
+  "examples/dietswap/01-see-the-result.qmd": {
+    "01-see-the-result.html": "f13888c7"
+  },
+  "examples/dietswap/02-meet-the-data.qmd": {
+    "02-meet-the-data.html": "866e749d"
+  },
+  "examples/dietswap/03-check-the-inputs.qmd": {
+    "03-check-the-inputs.html": "74156190"
+  },
+  "examples/dietswap/04-run-the-analysis.qmd": {
+    "04-run-the-analysis.html": "498d457c"
+  },
+  "examples/dietswap/05-verify-and-explain.qmd": {
+    "05-verify-and-explain.html": "15abd70f"
+  },
+  "examples/dietswap/06-export-the-report.qmd": {
+    "06-export-the-report.html": "07daacef"
+  },
+  "examples/hypertension-functional-profiling/00-start-here.qmd": {
+    "00-start-here.html": "b614ac57"
+  },
+  "examples/hypertension-functional-profiling/01-see-the-result.qmd": {
+    "01-see-the-result.html": "65ffe9d4"
+  },
+  "examples/hypertension-functional-profiling/02-meet-the-data.qmd": {
+    "02-meet-the-data.html": "883d5ee2"
+  },
+  "examples/hypertension-functional-profiling/03-check-the-inputs.qmd": {
+    "03-check-the-inputs.html": "f3fcddb1"
+  },
+  "examples/hypertension-functional-profiling/04-run-the-analysis.qmd": {
+    "04-run-the-analysis.html": "77fd6b99"
+  },
+  "examples/hypertension-functional-profiling/05-verify-and-explain.qmd": {
+    "05-verify-and-explain.html": "611498c3"
+  },
+  "examples/hypertension-functional-profiling/06-export-the-report.qmd": {
+    "06-export-the-report.html": "e786fb9e"
+  }
+}
