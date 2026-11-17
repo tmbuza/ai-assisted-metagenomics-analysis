@@ -1,0 +1,13 @@
+# Verify and explain
+
+::: {.callout-warning}
+This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/my-study/README.md` before running.
+:::
+
+Choose a sample ID from your metadata. Recalculate its taxon total, detected taxa and natural-log Shannon diversity:
+
+```bash
+python scripts/python/verify_sample.py data/my-study results/my-studyYOUR_SAMPLE_ID
+```
+
+Compare the manual values with the saved results. Explain Shannon using richness and evenness. Then write one observation per figure, checking values in the tables. State limitations and a useful follow-up check.

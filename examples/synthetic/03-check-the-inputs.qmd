@@ -1,0 +1,9 @@
+# Check the inputs
+
+Run the checks before analysis:
+
+```bash
+python scripts/python/run_workflow.py --data-dir data/synthetic --output-dir results/synthetic --check-only
+```
+
+Resolve every reported problem. Automatic checks do not establish study design validity or biological suitability.

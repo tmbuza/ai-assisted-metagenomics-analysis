@@ -1,0 +1,1 @@
+Preparation only: no study data are bundled here. Add the three input files described in the main README. Document source, permissions, processing, taxonomic rank, functional feature definitions and units, participant IDs, repeated measures, and covariates before analysis.

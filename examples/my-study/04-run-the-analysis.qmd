@@ -1,0 +1,13 @@
+# Run the analysis
+
+::: {.callout-warning}
+This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/my-study/README.md` before running.
+:::
+
+Run from the main project folder:
+
+```bash
+python scripts/python/run_workflow.py --data-dir data/my-study --output-dir results/my-study
+```
+
+Review the figures and saved tables. The analysis is descriptive; functional profiles represent relative potential, not activity.

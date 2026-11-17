@@ -1,0 +1,13 @@
+# Check the inputs
+
+::: {.callout-warning}
+This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/hypertension/README.md` before running.
+:::
+
+Run the checks before analysis:
+
+```bash
+python scripts/python/run_workflow.py --data-dir data/hypertension --output-dir results/hypertension --check-only
+```
+
+Resolve every reported problem. Automatic checks do not establish study design validity or biological suitability.

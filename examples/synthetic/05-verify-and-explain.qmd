@@ -1,0 +1,9 @@
+# Verify and explain
+
+Choose a sample ID from your metadata (start with S01). Recalculate its taxon total, detected taxa and natural-log Shannon diversity:
+
+```bash
+python scripts/python/verify_sample.py data/synthetic results/synthetic S01
+```
+
+Compare the manual values with the saved results. Explain Shannon using richness and evenness. Then write one observation per figure, checking values in the tables. State limitations and a useful follow-up check.

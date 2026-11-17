@@ -1,0 +1,9 @@
+# Appendix
+
+## Shannon diversity
+
+For positive taxon proportions $p_i$, $H=-\sum_i p_i\ln(p_i)$. Zero proportions contribute zero. Detected taxa count features with abundance greater than zero. Total abundance is the sum of the supplied units, not necessarily read depth.
+
+## Functional profiles
+
+Feature abundance, pathway abundance, and pathway coverage have different meanings. Confirm the source units and feature definitions before deciding whether within-sample normalization is appropriate. This starter requires an abundance-like matrix with positive sample totals.

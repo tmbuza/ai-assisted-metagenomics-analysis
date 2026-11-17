@@ -1,0 +1,14 @@
+# See the result
+
+![Synthetic taxonomic composition](../../results/synthetic/figures/composition.png)
+
+![Synthetic sample diversity](../../results/synthetic/figures/shannon-diversity.png)
+
+Group A has a higher median Shannon diversity and less variation than Group B,
+although the groups overlap. All samples contain eight detected taxa, so the
+diversity differences reflect how evenly abundance is distributed among taxa.
+This plot alone does not establish statistical significance.
+
+![Synthetic functional profile](../../results/synthetic/figures/functional-features.png)
+
+Describe visible differences. These figures do not establish statistical significance or causation.

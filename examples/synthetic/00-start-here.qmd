@@ -1,0 +1,5 @@
+# Start here
+
+Question: How do microbial composition, Shannon diversity, and relative functional profiles vary between groups?
+
+Use the synthetic data to practise the full workflow. Differences were constructed for teaching.

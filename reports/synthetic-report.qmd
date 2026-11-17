@@ -1,0 +1,34 @@
+---
+title: "Synthetic metagenomics practice report"
+format: html
+---
+
+## Question
+
+How do composition, diversity, and relative functional profiles differ between synthetic groups A and B?
+
+## Inputs and methods
+
+Describe the three input tables, arbitrary abundance units, normalization, natural-log Shannon calculation, and checks you ran. These data and functional labels are synthetic.
+
+## Results
+
+![Taxonomic composition](../results/synthetic/figures/composition.png)
+
+Replace this prompt with an observation supported by a saved table value.
+
+![Shannon diversity](../results/synthetic/figures/shannon-diversity.png)
+
+Report a checked value and explain richness and evenness.
+
+![Functional profile](../results/synthetic/figures/functional-features.png)
+
+Describe relative differences without assigning biological pathway names to invented features.
+
+## Verification
+
+Record your sample ID, recalculated values, saved values, and whether they agree.
+
+## Limitations and next check
+
+The group differences were constructed. This descriptive analysis establishes no significance, causation, pathway activity, or clinical conclusions. Add another relevant limitation and a proposed follow-up check.

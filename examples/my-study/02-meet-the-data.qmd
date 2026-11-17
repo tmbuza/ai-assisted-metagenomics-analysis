@@ -1,0 +1,7 @@
+# Meet the data
+
+::: {.callout-warning}
+This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/my-study/README.md` before running.
+:::
+
+Read the input contract in [README](../../README.md). Inspect all three TSV files. Identify groups, sample IDs, abundance units, taxonomic resolution, and functional feature definitions. Record source and preprocessing details. Check participant IDs, timing, batch, medication and other relevant covariates.

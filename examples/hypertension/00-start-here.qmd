@@ -1,0 +1,9 @@
+# Start here
+
+::: {.callout-warning}
+This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/hypertension/README.md` before running.
+:::
+
+Question: How do microbial composition, Shannon diversity, and relative functional profiles vary between groups?
+
+Define your study question, comparison groups, and independent sampling unit.

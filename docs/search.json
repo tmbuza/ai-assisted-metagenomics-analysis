@@ -1,0 +1,309 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "AI-Assisted Metagenomics Analysis",
+    "section": "",
+    "text": "Explore processed taxonomic and functional profiles with Python. Start with synthetic practice, verify the outputs, and explain what the evidence supports.\n\n\n\n\n\n\nOne workflow for every dataset\n\n\n\n\nDefine the question.\nPreview the results.\nMeet the inputs.\nCheck the inputs.\nRun the analysis.\nVerify and explain.\nWrite the report, showing the results that support your statements and explaining what the analysis cannot establish.\n\n\n\nStart with Required setup, then Synthetic practice. The hypertension section awaits verified real profiles and study documentation.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html",
+    "href": "00-setup.html",
+    "title": "Required setup",
+    "section": "",
+    "text": "Follow steps 1–2 in the project README. Run all commands in a terminal from the main project folder. Quarto is only needed to preview or render the guide and report.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/00-start-here.html",
+    "href": "examples/synthetic/00-start-here.html",
+    "title": "Start here",
+    "section": "",
+    "text": "Question: How do microbial composition, Shannon diversity, and relative functional profiles vary between groups?\nUse the synthetic data to practise the full workflow. Differences were constructed for teaching.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Start here</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/01-see-the-result.html",
+    "href": "examples/synthetic/01-see-the-result.html",
+    "title": "See the result",
+    "section": "",
+    "text": "Synthetic taxonomic composition\n\n\n\n\n\nSynthetic sample diversity\n\n\nGroup A has a higher median Shannon diversity and less variation than Group B, although the groups overlap. All samples contain eight detected taxa, so the diversity differences reflect how evenly abundance is distributed among taxa. This plot alone does not establish statistical significance.\n\n\n\nSynthetic functional profile\n\n\nDescribe visible differences. These figures do not establish statistical significance or causation.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/02-meet-the-data.html",
+    "href": "examples/synthetic/02-meet-the-data.html",
+    "title": "Meet the data",
+    "section": "",
+    "text": "Read the input contract in README. Inspect all three TSV files. Identify groups, sample IDs, abundance units, taxonomic resolution, and functional feature definitions. The functional labels are invented and cannot be assigned pathway names.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/03-check-the-inputs.html",
+    "href": "examples/synthetic/03-check-the-inputs.html",
+    "title": "Check the inputs",
+    "section": "",
+    "text": "Run the checks before analysis:\npython scripts/python/run_workflow.py --data-dir data/synthetic --output-dir results/synthetic --check-only\nResolve every reported problem. Automatic checks do not establish study design validity or biological suitability.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/04-run-the-analysis.html",
+    "href": "examples/synthetic/04-run-the-analysis.html",
+    "title": "Run the analysis",
+    "section": "",
+    "text": "Run from the main project folder:\npython scripts/python/run_workflow.py --data-dir data/synthetic --output-dir results/synthetic\nReview the figures and saved tables. The analysis is descriptive; functional profiles represent relative potential, not activity.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/05-verify-and-explain.html",
+    "href": "examples/synthetic/05-verify-and-explain.html",
+    "title": "Verify and explain",
+    "section": "",
+    "text": "Choose a sample ID from your metadata (start with S01). Recalculate its taxon total, detected taxa and natural-log Shannon diversity:\npython scripts/python/verify_sample.py data/synthetic results/synthetic S01\nCompare the manual values with the saved results. Explain Shannon using richness and evenness. Then write one observation per figure, checking values in the tables. State limitations and a useful follow-up check.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/06-export-the-report.html",
+    "href": "examples/synthetic/06-export-the-report.html",
+    "title": "Export the report",
+    "section": "",
+    "text": "Edit reports/synthetic-report.qmd and replace every prompt with checked results and your own explanation.\nquarto render reports/synthetic-report.qmd --to html\nReport the question, inputs and units, methods, checked findings, and limitations. Do not claim significance or causation from visuals alone.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Export the report</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/00-start-here.html",
+    "href": "examples/hypertension/00-start-here.html",
+    "title": "Start here",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/hypertension/README.md before running.\n\n\nQuestion: How do microbial composition, Shannon diversity, and relative functional profiles vary between groups?\nDefine your study question, comparison groups, and independent sampling unit.",
+    "crumbs": [
+      "Hypertension case study — preparation",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Start here</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/01-see-the-result.html",
+    "href": "examples/hypertension/01-see-the-result.html",
+    "title": "See the result",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/hypertension/README.md before running.\n\n\nAfter a validated analysis, add the three figures from your results folder. Do not substitute synthetic results for study results.",
+    "crumbs": [
+      "Hypertension case study — preparation",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/02-meet-the-data.html",
+    "href": "examples/hypertension/02-meet-the-data.html",
+    "title": "Meet the data",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/hypertension/README.md before running.\n\n\nRead the input contract in README. Inspect all three TSV files. Identify groups, sample IDs, abundance units, taxonomic resolution, and functional feature definitions. Record source and preprocessing details. Check participant IDs, timing, batch, medication and other relevant covariates.",
+    "crumbs": [
+      "Hypertension case study — preparation",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/03-check-the-inputs.html",
+    "href": "examples/hypertension/03-check-the-inputs.html",
+    "title": "Check the inputs",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/hypertension/README.md before running.\n\n\nRun the checks before analysis:\npython scripts/python/run_workflow.py --data-dir data/hypertension --output-dir results/hypertension --check-only\nResolve every reported problem. Automatic checks do not establish study design validity or biological suitability.",
+    "crumbs": [
+      "Hypertension case study — preparation",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/04-run-the-analysis.html",
+    "href": "examples/hypertension/04-run-the-analysis.html",
+    "title": "Run the analysis",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/hypertension/README.md before running.\n\n\nRun from the main project folder:\npython scripts/python/run_workflow.py --data-dir data/hypertension --output-dir results/hypertension\nReview the figures and saved tables. The analysis is descriptive; functional profiles represent relative potential, not activity.",
+    "crumbs": [
+      "Hypertension case study — preparation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html",
+    "href": "examples/hypertension/05-verify-and-explain.html",
+    "title": "Verify and explain",
+    "section": "",
+    "text": "Taxonomic composition\nChoose a sample ID from your metadata. Recalculate its taxon total, detected taxa and natural-log Shannon diversity:\nCompare the manual values with the saved results. Explain Shannon using richness and evenness. Then write one observation per figure, checking values in the tables. State limitations and a useful follow-up check.\nDescribe the visible variation among samples. These placeholder profiles cannot support conclusions about hypertension.",
+    "crumbs": [
+      "Hypertension case study — preparation",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html#taxonomic-composition",
+    "href": "examples/hypertension/05-verify-and-explain.html#taxonomic-composition",
+    "title": "Verify and explain",
+    "section": "",
+    "text": "Figure 15.1: Taxonomic composition across samples, calculated from synthetic placeholder abundances. Each bar represents one sample.",
+    "crumbs": [
+      "Hypertension case study — preparation",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html#shannon-diversity",
+    "href": "examples/hypertension/05-verify-and-explain.html#shannon-diversity",
+    "title": "Verify and explain",
+    "section": "Shannon diversity",
+    "text": "Shannon diversity\n\n\n\n\n\n\nFigure 15.2: Shannon diversity calculated from the placeholder taxon table. Each dot represents one sample; black lines indicate group medians.\n\n\n\nCompare group medians, spread and overlap. Use the saved detected_taxa values to explain whether richness, evenness or both contribute to the differences. Keep these calculated values separate from source_shannon_index in the metadata. This plot alone does not establish statistical significance.",
+    "crumbs": [
+      "Hypertension case study — preparation",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html#functional-profile",
+    "href": "examples/hypertension/05-verify-and-explain.html#functional-profile",
+    "title": "Verify and explain",
+    "section": "Functional profile",
+    "text": "Functional profile\n\n\n\n\n\n\nFigure 15.3: Within-sample proportions of the supplied functional features. Each bar represents one sample; remaining features are combined as Other.\n\n\n\nIdentify the largest displayed proportions and check them against the saved table. These proportions describe only the supplied feature set. Interpretation remains provisional until the feature definitions, source and measurement units are confirmed.",
+    "crumbs": [
+      "Hypertension case study — preparation",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/06-export-the-report.html",
+    "href": "examples/hypertension/06-export-the-report.html",
+    "title": "Export the report",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/hypertension/README.md before running.\n\n\nCopy reports/synthetic-report.qmd to a study-specific filename. Update the title, paths, methods, evidence, and limitations for your data; then render that file with Quarto.\nReport the question, inputs and units, methods, checked findings, and limitations. Do not claim significance or causation from visuals alone.",
+    "crumbs": [
+      "Hypertension case study — preparation",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Export the report</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/00-start-here.html",
+    "href": "examples/my-study/00-start-here.html",
+    "title": "Start here",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/my-study/README.md before running.\n\n\nQuestion: How do microbial composition, Shannon diversity, and relative functional profiles vary between groups?\nDefine your study question, comparison groups, and independent sampling unit.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Start here</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/01-see-the-result.html",
+    "href": "examples/my-study/01-see-the-result.html",
+    "title": "See the result",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/my-study/README.md before running.\n\n\nAfter a validated analysis, add the three figures from your results folder. Do not substitute synthetic results for study results.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/02-meet-the-data.html",
+    "href": "examples/my-study/02-meet-the-data.html",
+    "title": "Meet the data",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/my-study/README.md before running.\n\n\nRead the input contract in README. Inspect all three TSV files. Identify groups, sample IDs, abundance units, taxonomic resolution, and functional feature definitions. Record source and preprocessing details. Check participant IDs, timing, batch, medication and other relevant covariates.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/03-check-the-inputs.html",
+    "href": "examples/my-study/03-check-the-inputs.html",
+    "title": "Check the inputs",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/my-study/README.md before running.\n\n\nRun the checks before analysis:\npython scripts/python/run_workflow.py --data-dir data/my-study --output-dir results/my-study --check-only\nResolve every reported problem. Automatic checks do not establish study design validity or biological suitability.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/04-run-the-analysis.html",
+    "href": "examples/my-study/04-run-the-analysis.html",
+    "title": "Run the analysis",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/my-study/README.md before running.\n\n\nRun from the main project folder:\npython scripts/python/run_workflow.py --data-dir data/my-study --output-dir results/my-study\nReview the figures and saved tables. The analysis is descriptive; functional profiles represent relative potential, not activity.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/05-verify-and-explain.html",
+    "href": "examples/my-study/05-verify-and-explain.html",
+    "title": "Verify and explain",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/my-study/README.md before running.\n\n\nChoose a sample ID from your metadata. Recalculate its taxon total, detected taxa and natural-log Shannon diversity:\npython scripts/python/verify_sample.py data/my-study results/my-studyYOUR_SAMPLE_ID\nCompare the manual values with the saved results. Explain Shannon using richness and evenness. Then write one observation per figure, checking values in the tables. State limitations and a useful follow-up check.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/06-export-the-report.html",
+    "href": "examples/my-study/06-export-the-report.html",
+    "title": "Export the report",
+    "section": "",
+    "text": "Warning\n\n\n\nThis section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in data/my-study/README.md before running.\n\n\nCopy reports/synthetic-report.qmd to a study-specific filename. Update the title, paths, methods, evidence, and limitations for your data; then render that file with Quarto.\nReport the question, inputs and units, methods, checked findings, and limitations. Do not claim significance or causation from visuals alone.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Export the report</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html",
+    "href": "99-appendix.html",
+    "title": "Appendix A — Appendix",
+    "section": "",
+    "text": "Shannon diversity\nFor positive taxon proportions \\(p_i\\), \\(H=-\\sum_i p_i\\ln(p_i)\\). Zero proportions contribute zero. Detected taxa count features with abundance greater than zero. Total abundance is the sum of the supplied units, not necessarily read depth.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#functional-profiles",
+    "href": "99-appendix.html#functional-profiles",
+    "title": "Appendix A — Appendix",
+    "section": "Functional profiles",
+    "text": "Functional profiles\nFeature abundance, pathway abundance, and pathway coverage have different meanings. Confirm the source units and feature definitions before deciding whether within-sample normalization is appropriate. This starter requires an abundance-like matrix with positive sample totals.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  }
+]

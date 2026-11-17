@@ -1,0 +1,7 @@
+# See the result
+
+::: {.callout-warning}
+This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/my-study/README.md` before running.
+:::
+
+After a validated analysis, add the three figures from your results folder. Do not substitute synthetic results for study results.

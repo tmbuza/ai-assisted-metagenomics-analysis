@@ -1,27 +1,23 @@
 ---
+title: "AI-Assisted Metagenomics Analysis"
 toc: false
+format:
+  html:
+    body-classes: front-page
 ---
 
-# Comparing two microbial communities {.unnumbered}
+Explore processed taxonomic and functional profiles with Python. Start with synthetic practice, verify the outputs, and explain what the evidence supports.
 
-::: {.callout-note title="Question" icon=false}
-**How do community composition and diversity differ between two groups?**
+::: {.callout-tip}
+## One workflow for every dataset
+
+1. **Define the question.**
+2. **Preview the results.**
+3. **Meet the inputs.**
+4. **Check the inputs.**
+5. **Run the analysis.**
+6. **Verify and explain.**
+7. **Write the report**, showing the results that support your statements and explaining what the analysis cannot establish.
 :::
 
-Work through a free example with synthetic microbiome data. You’ll compare which features are present and how abundant they are relative to one another, then examine diversity within each sample.
-
-[See the example results](examples/community-comparison/01-see-the-result.qmd){.btn .btn-primary}
-
-## Choose where to begin
-
-| If you want to… | Go to… |
-|---|---|
-| Understand the count, taxonomy, and sample metadata tables | [Meet the data](examples/community-comparison/02-meet-the-data.qmd) |
-| Make sure the tables are ready for analysis | [Check the inputs](examples/community-comparison/03-check-the-inputs.qmd) |
-| Generate the figures and summary table | [Run the analysis](examples/community-comparison/04-run-the-analysis.qmd) |
-| Recalculate a result and explain what it means | [Verify and explain](examples/community-comparison/05-verify-and-explain.qmd) |
-| Share the results and their limitations | [Export the report](examples/community-comparison/06-export-the-report.qmd) |
-
-First time running the code? [Prepare your environment](examples/community-comparison/00-start-here.qmd#prepare-your-environment).
-
-You define the question. AI can help you work through the analysis. You check the evidence and explain the result. [How to use this guide](00-preface.qmd).
+Start with [Required setup](00-setup.qmd), then [Synthetic practice](examples/synthetic/00-start-here.qmd). The hypertension section awaits verified real profiles and study documentation.

@@ -1,0 +1,3 @@
+# Meet the data
+
+Read the input contract in [README](../../README.md). Inspect all three TSV files. Identify groups, sample IDs, abundance units, taxonomic resolution, and functional feature definitions. The functional labels are invented and cannot be assigned pathway names.

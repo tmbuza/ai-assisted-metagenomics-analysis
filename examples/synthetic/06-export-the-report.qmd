@@ -1,0 +1,9 @@
+# Export the report
+
+Edit `reports/synthetic-report.qmd` and replace every prompt with checked results and your own explanation.
+
+```bash
+quarto render reports/synthetic-report.qmd --to html
+```
+
+Report the question, inputs and units, methods, checked findings, and limitations. Do not claim significance or causation from visuals alone.

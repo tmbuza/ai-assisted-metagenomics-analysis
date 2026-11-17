@@ -1,0 +1,1 @@
+Deterministic synthetic teaching profiles generated with NumPy default_rng seed 42. Arbitrary abundance units; not read counts. Function_01–05 are invented functional features, not identified biological pathways. Group B has a constructed increase in the first feature before normalization. No biological or clinical interpretation is warranted.

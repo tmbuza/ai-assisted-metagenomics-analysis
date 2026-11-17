@@ -1,0 +1,3 @@
+# Required setup
+
+Follow steps 1–2 in [the project README](README.md). Run all commands in a terminal from the main project folder. Quarto is only needed to preview or render the guide and report.

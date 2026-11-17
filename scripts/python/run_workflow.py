@@ -1,205 +1,148 @@
-"""Run descriptive comparisons after validating all three input files."""
-import argparse
-import csv
-import math
-from collections import Counter, defaultdict
+"""Descriptive analysis of processed metagenomic profiles."""
+import argparse, csv, json, platform
 from pathlib import Path
-from statistics import mean, median
-from tempfile import TemporaryDirectory
+import numpy as np
+import pandas as pd
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
+def read_table(path, key):
+    with path.open(newline="") as f:
+        header = next(csv.reader(f, delimiter="\t"), [])
+    if not header or header[0] != key or len(header) != len(set(header)):
+        raise ValueError(f"{path}: expected unique headers beginning with {key}")
+    t = pd.read_csv(path, sep="\t", dtype=str, keep_default_na=False)
+    if t.empty or (t == "").any().any() or t[key].duplicated().any():
+        raise ValueError(f"{path}: empty table, blank values, or duplicate IDs")
+    return t.set_index(key)
 
-def read_table(path, required):
-    with path.open(encoding="utf-8-sig", newline="") as handle:
-        reader = csv.reader(handle, delimiter="\t", strict=True)
-        header = next(reader, [])
-        if (not set(required).issubset(header) or len(set(header)) != len(header)
-                or any(not name or name != name.strip() for name in header)):
-            raise ValueError(f"{path.name}: invalid header. Required: {', '.join(required)}")
-        rows = {}
-        for line, values in enumerate(reader, 2):
-            if len(values) != len(header):
-                raise ValueError(f"{path.name}:{line}: wrong number of fields")
-            row = dict(zip(header, values))
-            sample = row.pop("sample_id")
-            if not sample or sample != sample.strip() or sample in rows:
-                raise ValueError(f"{path.name}:{line}: blank, padded or duplicate sample ID {sample!r}")
-            rows[sample] = row
-    if not rows:
-        raise ValueError(f"{path.name}: no sample rows")
-    return rows
+def load_inputs(folder):
+    meta = read_table(folder / "sample-metadata.tsv", "sample_id")
+    if "group" not in meta or meta["group"].str.strip().eq("").any():
+        raise ValueError("Metadata requires a nonempty group column")
+    tables = []
+    for filename, key in [("taxon-abundance.tsv", "taxon_id"), ("functional-features.tsv", "feature_id")]:
+        t = read_table(folder / filename, key).apply(pd.to_numeric, errors="raise")
+        if set(t.columns) != set(meta.index):
+            raise ValueError(f"{filename}: sample IDs must match metadata exactly")
+        t = t.loc[:, meta.index]
+        if not np.isfinite(t.to_numpy()).all() or (t < 0).any().any() or (t.sum() <= 0).any():
+            raise ValueError(f"{filename}: values must be finite, nonnegative, with positive sample totals")
+        tables.append(t)
+    return meta, *tables
 
-
-def numeric_table(path, samples, require_positive_total=False):
-    rows = read_table(path, ["sample_id"])
-    missing = sorted(samples - rows.keys())
-    extra = sorted(rows.keys() - samples)
-    if missing or extra:
-        raise ValueError(f"{path.name}: missing {len(missing)} {missing[:5]}; extra {len(extra)} {extra[:5]}")
-    for sample, row in rows.items():
-        if not row:
-            raise ValueError(f"{path.name}: at least one feature column is required")
-        for feature, value in row.items():
-            try:
-                number = float(value)
-            except ValueError:
-                number = math.nan
-            if not math.isfinite(number) or number < 0:
-                raise ValueError(f"{path.name}: {sample}, {feature}: expected a finite nonnegative number")
-            row[feature] = number
-        if require_positive_total and (not math.isfinite(sum(row.values())) or not sum(row.values())):
-            raise ValueError(f"{path.name}: {sample}: taxon total must be positive and finite")
-    return rows
-
-
-def verify_inputs(folder):
-    metadata = read_table(folder / "sample-metadata.tsv", ["sample_id", "group"])
-    groups = {sample: row["group"] for sample, row in metadata.items()}
-    if any(not group or group != group.strip() for group in groups.values()):
-        raise ValueError("sample-metadata.tsv: blank or padded group label")
-    counts = Counter(groups.values())
-    if len(counts) < 2 or min(counts.values()) < 2:
-        raise ValueError("sample-metadata.tsv: require at least two groups with two samples each")
-    taxa = numeric_table(folder / "taxon-abundance.tsv", set(groups), True)
-    functions = numeric_table(folder / "functional-features.tsv", set(groups))
-    return groups, taxa, functions
-
-
-def write_figures(folder, groups, proportions, diversity, functions):
+def main():
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--data-dir", type=Path, required=True)
+    p.add_argument("--output-dir", type=Path, required=True)
+    p.add_argument("--check-only", action="store_true")
+    a = p.parse_args()
     try:
-        import matplotlib
-        matplotlib.use("Agg")
-        import matplotlib.pyplot as plt
-    except ImportError as error:
-        raise ValueError("Install Matplotlib with python3 -m pip install 'matplotlib>=3.7'") from error
+        meta, taxa, functions = load_inputs(a.data_dir)
+    except (ValueError, OSError, KeyError) as e:
+        p.exit(1, f"Input check failed: {e}\n")
+    print(f"Input checks passed: {len(meta)} samples; {meta.group.nunique()} groups.")
+    if meta.group.nunique() == 1:
+        print("One group detected. Continuing with descriptive analysis.")
+    if a.check_only:
+        return
+    figures, tables = a.output_dir / "figures", a.output_dir / "tables"
+    figures.mkdir(parents=True, exist_ok=True); tables.mkdir(parents=True, exist_ok=True)
+    rel = taxa.div(taxa.sum(), axis=1)
+    shannon = -(rel * np.log(rel.where(rel > 0, 1))).sum()
+    alpha = pd.DataFrame({"total_abundance": taxa.sum(), "detected_taxa": (taxa > 0).sum(), "shannon": shannon}).join(meta)
+    alpha.index.name = "sample_id"
+    alpha.to_csv(tables / "alpha-diversity.tsv", sep="\t")
+    rel.to_csv(tables / "taxon-relative-abundance.tsv", sep="\t")
+    frel = functions.div(functions.sum(), axis=1)
+    frel.to_csv(tables / "functional-relative-abundance.tsv", sep="\t")
+    for values, name, title in [(rel, "composition", "Taxonomic composition"), (frel, "functional-features", "Relative functional profile")]:
+        top = values.mean(axis=1).nlargest(10).index
+        display = values.loc[top].copy()
+        if len(values) > len(top):
+            display.loc["Other (remaining features)"] = values.drop(top).sum()
+        ax = display.T.plot.bar(stacked=True, figsize=(10, 5), width=.85)
+        ax.set_xticks([])
+        ax.set(xlabel="Sample", ylabel="Within-sample proportion", title=title)
+        ax.legend(bbox_to_anchor=(1.02, 1), loc="upper left", fontsize=8)
+        plt.tight_layout(); plt.savefig(figures / f"{name}.png", dpi=160); plt.close()
+    # Plot every sample, with a short line marking each group's median.
+    fig, ax = plt.subplots(figsize=(8, 5))
+    groups = list(alpha.groupby("group", sort=False))
+    colors = plt.get_cmap("tab10")
 
-    folder.mkdir()
-    by_group = defaultdict(list)
-    for sample, group in groups.items():
-        by_group[group].append(sample)
-    samples = [sample for members in by_group.values() for sample in members]
-    positions = list(range(len(samples)))
-    colors = plt.get_cmap("tab20").colors
+    for i, (group, frame) in enumerate(groups):
+        # Horizontal spacing separates dots without changing diversity values.
+        offsets = np.linspace(-0.12, 0.12, len(frame))
+        x_positions = i + offsets
 
-    taxa = sorted(proportions[samples[0]],
-                  key=lambda taxon: (-mean(proportions[s][taxon] for s in samples), taxon))
-    shown = taxa[:10]
-    series = [(taxon, [proportions[s][taxon] for s in samples]) for taxon in shown]
-    if taxa[10:]:
-        series.append(("Remaining taxa (pooled)",
-                       [sum(proportions[s][t] for t in taxa[10:]) for s in samples]))
+        ax.scatter(
+            x_positions,
+            frame["shannon"],
+            color=colors(i % 10),
+            s=65,
+            zorder=3,
+        )
 
-    fig, ax = plt.subplots(figsize=(10, 4.5), layout="constrained")
-    bottom = [0.0] * len(samples)
-    for index, (taxon, values) in enumerate(series):
-        ax.bar(positions, values, bottom=bottom, width=0.9, color=colors[index], label=taxon)
-        bottom = [total + value for total, value in zip(bottom, values)]
-    offset = 0
-    centers = []
-    for members in by_group.values():
-        if offset:
-            ax.axvline(offset - 0.5, color="0.35", linewidth=0.8)
-        centers.append(offset + (len(members) - 1) / 2)
-        offset += len(members)
-    ax.set_xticks(centers, list(by_group))
-    ax.set(ylabel="Relative abundance", xlabel="Group (one bar per sample)",
-           title="Taxonomic composition", ylim=(0, 1))
-    ax.legend(loc="center left", bbox_to_anchor=(1, 0.5), frameon=False)
-    fig.savefig(folder / "composition.png", dpi=180)
+        # for x, (sample_id, row) in zip(x_positions, frame.iterrows()):
+        #     ax.annotate(
+        #         sample_id,
+        #         (x, row["shannon"]),
+        #         xytext=(0, 8),
+        #         ha="center",
+        #         textcoords="offset points",
+        #         fontsize=8,
+        #         zorder=5,
+        #         bbox=dict(
+        #             facecolor="white",
+        #             edgecolor="none",
+        #             alpha=1,
+        #             pad=1,
+        #         ),
+        #     )
+
+        median = frame["shannon"].median()
+        ax.hlines(
+            median,
+            i - 0.25,
+            i + 0.25,
+            color="black",
+            linewidth=2,
+            zorder=2,
+        )
+
+    ax.set_xticks(
+        range(len(groups)),
+        [f"Group {group}\n(n = {len(frame)})" for group, frame in groups],
+    )
+    ax.set_xlim(-0.5, len(groups) - 0.5)
+    ax.margins(y=0.15)
+    ax.set_ylabel("Shannon diversity")
+    ax.set_title(
+        "Shannon diversity by group\n"
+        "Each dot is one sample; black lines show group medians",
+        pad=12,
+    )
+    ax.grid(axis="y", alpha=0.25)
+    ax.set_axisbelow(True)
+    ax.spines[["top", "right"]].set_visible(False)
+
+    fig.text(
+        0.5, 0.02,
+        "Higher values indicate greater diversity. "
+        "Horizontal dot positions only separate samples.",
+        ha="center",
+        fontsize=9,
+    )
+
+    fig.tight_layout(rect=(0, 0.06, 1, 1))
+    fig.savefig(figures / "shannon-diversity.png", dpi=160)
     plt.close(fig)
 
-    def plot_points(ax, profiles, feature):
-        for index, members in enumerate(by_group.values()):
-            values = [profiles[s][feature] for s in members]
-            offsets = [0.36 * (i / (len(values) - 1) - 0.5) for i in range(len(values))]
-            ax.scatter([index + offset for offset in offsets], values, s=24, alpha=0.75)
-            ax.hlines(median(values), index - 0.24, index + 0.24, color="black", linewidth=1.5)
-        ax.set_xticks(range(len(by_group)), list(by_group), rotation=20, ha="right")
-        ax.grid(axis="y", alpha=0.25)
-        ax.set_axisbelow(True)
-
-    fig, ax = plt.subplots(figsize=(6, 4.5), layout="constrained")
-    plot_points(ax, diversity, "shannon")
-    ax.set(title="Shannon diversity", ylabel="Shannon index (natural log)")
-    fig.savefig(folder / "shannon-diversity.png", dpi=180)
-    plt.close(fig)
-
-    features = list(functions[samples[0]])
-    columns = min(3, len(features))
-    rows = (len(features) + columns - 1) // columns
-    fig, axes = plt.subplots(rows, columns, squeeze=False, layout="constrained",
-                             figsize=(4.2 * columns, 3.3 * rows))
-    for ax, feature in zip(axes.flat, features):
-        plot_points(ax, functions, feature)
-        ax.set(title=feature.replace("_", " "), ylabel="Value (input units)")
-    for ax in list(axes.flat)[len(features):]:
-        ax.set_visible(False)
-    fig.suptitle("Selected functional features")
-    fig.savefig(folder / "functional-features.png", dpi=180)
-    plt.close(fig)
-
-
-def write_table(path, header, rows):
-    with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.writer(handle, delimiter="\t")
-        writer.writerow(header)
-        writer.writerows(rows)
-
-
-def summarize(groups, profiles):
-    values = defaultdict(list)
-    for sample, features in profiles.items():
-        for feature, value in features.items():
-            values[groups[sample], feature].append(value)
-    for (group, feature), observations in sorted(values.items()):
-        yield group, feature, len(observations), median(observations)
-
-
-def run(inputs, output):
-    groups, taxa, functions = verify_inputs(inputs)
-    if output.exists() or output.is_symlink():
-        raise ValueError(f"Choose a new output directory: {output}")
-    proportions = {}
-    diversity = {}
-    for sample, row in taxa.items():
-        total = sum(row.values())
-        profile = {taxon: value / total for taxon, value in row.items()}
-        proportions[sample] = profile
-        shannon = -sum(p * math.log(p) for p in profile.values() if p > 0)
-        diversity[sample] = {"shannon": shannon}
-
-    output.parent.mkdir(parents=True, exist_ok=True)
-    with TemporaryDirectory(dir=output.parent) as staging:
-        results = Path(staging) / "results"
-        results.mkdir()
-        write_table(results / "verified-groups.tsv", ["group", "n_samples"],
-                    sorted(Counter(groups.values()).items()))
-        write_table(results / "shannon-by-sample.tsv", ["sample_id", "group", "shannon"],
-                    ((sample, groups[sample], row["shannon"]) for sample, row in diversity.items()))
-        for filename, profiles in [
-            ("composition-by-group.tsv", proportions),
-            ("shannon-by-group.tsv", diversity),
-            ("functional-features-by-group.tsv", functions),
-        ]:
-            write_table(results / filename, ["group", "feature", "n_samples", "median"],
-                        summarize(groups, profiles))
-        write_figures(results / "figures", groups, proportions, diversity, functions)
-        results.rename(output)
-
+    record = {"python": platform.python_version(), "numpy": np.__version__, "pandas": pd.__version__, "matplotlib": matplotlib.__version__, "data_dir": str(a.data_dir), "analysis": "descriptive; natural-log Shannon; within-sample normalization"}
+    (tables / "run-record.json").write_text(json.dumps(record, indent=2) + "\n")
+    print(f"Results saved to {a.output_dir}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("inputs", type=Path, help="Directory containing the three input TSVs")
-    parser.add_argument("output", type=Path, nargs="?", help="New directory for tables and figures")
-    parser.add_argument("--verify-only", action="store_true", help="Check input files and exit")
-    args = parser.parse_args()
-    if args.verify_only == (args.output is not None):
-        parser.error("Supply an output directory or use --verify-only.")
-    try:
-        if args.verify_only:
-            groups, _, _ = verify_inputs(args.inputs)
-            print(f"Verified {len(groups)} matched samples. Groups: {dict(Counter(groups.values()))}")
-        else:
-            run(args.inputs, args.output)
-            print(f"Complete: {args.output}")
-    except (OSError, ValueError, csv.Error) as error:
-        parser.exit(2, f"Workflow stopped: {error}\n")
+    main()

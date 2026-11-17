@@ -1,0 +1,9 @@
+# Run the analysis
+
+Run from the main project folder:
+
+```bash
+python scripts/python/run_workflow.py --data-dir data/synthetic --output-dir results/synthetic
+```
+
+Review the figures and saved tables. The analysis is descriptive; functional profiles represent relative potential, not activity.
