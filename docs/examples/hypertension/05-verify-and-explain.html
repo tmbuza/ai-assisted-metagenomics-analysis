@@ -106,6 +106,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/css/cdi.css">
 </head>
@@ -329,9 +358,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#taxonomic-composition" id="toc-taxonomic-composition" class="nav-link active" data-scroll-target="#taxonomic-composition">Taxonomic composition</a></li>
-  <li><a href="#shannon-diversity" id="toc-shannon-diversity" class="nav-link" data-scroll-target="#shannon-diversity">Shannon diversity</a></li>
-  <li><a href="#functional-profile" id="toc-functional-profile" class="nav-link" data-scroll-target="#functional-profile">Functional profile</a></li>
+  <li><a href="#verify-a-named-sample" id="toc-verify-a-named-sample" class="nav-link active" data-scroll-target="#verify-a-named-sample">1. Verify a named sample</a>
+  <ul class="collapse">
+  <li><a href="#recalculate-independently" id="toc-recalculate-independently" class="nav-link" data-scroll-target="#recalculate-independently">Recalculate independently</a></li>
+  </ul></li>
+  <li><a href="#check-a-functional-proportion" id="toc-check-a-functional-proportion" class="nav-link" data-scroll-target="#check-a-functional-proportion">2. Check a functional proportion</a></li>
+  <li><a href="#explain-taxonomic-composition" id="toc-explain-taxonomic-composition" class="nav-link" data-scroll-target="#explain-taxonomic-composition">3. Explain taxonomic composition</a></li>
+  <li><a href="#explain-shannon-diversity" id="toc-explain-shannon-diversity" class="nav-link" data-scroll-target="#explain-shannon-diversity">4. Explain Shannon diversity</a></li>
+  <li><a href="#explain-the-functional-profile" id="toc-explain-the-functional-profile" class="nav-link" data-scroll-target="#explain-the-functional-profile">5. Explain the functional profile</a></li>
+  <li><a href="#your-evidence-check" id="toc-your-evidence-check" class="nav-link" data-scroll-target="#your-evidence-check">Your evidence check</a></li>
   </ul>
 </nav>
     </div>
@@ -357,6 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>A saved result is more useful when you can trace it back to the input. Verify one sample, check a functional proportion and use numerical summaries to support what you see.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -367,53 +403,152 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The taxonomic table contains synthetic placeholder abundances. Composition and calculated Shannon diversity do not represent the hypertension study. Confirm the source and units of the functional features in <code>data/hypertension/README.md</code> before interpreting biological differences.</p>
+<p>Taxonomic composition and calculated Shannon values use synthetic placeholder taxa and do not describe the hypertension study. Functional interpretations remain provisional until source, definitions and units are confirmed.</p>
 </div>
 </div>
-<p>Choose a sample ID from your metadata. Recalculate its taxon total, detected taxa and natural-log Shannon diversity:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/verify_sample.py data/hypertension results/hypertension YOUR_SAMPLE_ID</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Compare the manual values with the saved results. Explain Shannon using richness and evenness. Then write one observation per figure, checking values in the tables. State limitations and a useful follow-up check.</p>
-<section id="taxonomic-composition" class="level2">
-<h2 class="anchored" data-anchor-id="taxonomic-composition">Taxonomic composition</h2>
+<section id="verify-a-named-sample" class="level2">
+<h2 class="anchored" data-anchor-id="verify-a-named-sample">1. Verify a named sample</h2>
+<p>Use <strong>ERR1398068</strong>. For the current placeholder table, expect:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th style="text-align: right;">Expected value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Total taxonomic abundance</td>
+<td style="text-align: right;">4,761</td>
+</tr>
+<tr class="even">
+<td>Detected taxa</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td>Shannon diversity, natural logarithm</td>
+<td style="text-align: right;">2.202635</td>
+</tr>
+</tbody>
+</table>
+<p>Run the supplied verification script from the main project folder:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/verify_sample.py <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  data/hypertension results/hypertension ERR1398068</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Compare its reported values with the table above and with <code>results/hypertension/tables/alpha-diversity.tsv</code>.</p>
+<section id="recalculate-independently" class="level3">
+<h3 class="anchored" data-anchor-id="recalculate-independently">Recalculate independently</h3>
+<p>This block makes each calculation visible and compares it with the saved row. Copy the complete block into the terminal:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-</span> <span class="op">&lt;&lt;'PY'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">import math</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">import pandas as pd</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">sample = "ERR1398068"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">taxa = pd.read_csv("data/hypertension/taxon-abundance.tsv", sep="\t", index_col=0)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">saved = pd.read_csv("results/hypertension/tables/alpha-diversity.tsv", sep="\t", index_col=0)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st"># Calculate this sample's total and number of positive taxon values.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st">x = taxa[sample].astype(float)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="st">total = float(x.sum())</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="st">detected = int((x &gt; 0).sum())</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st"># Only positive values contribute to natural-log Shannon diversity.</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">p = x[x &gt; 0] / total</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="st">shannon = -sum(float(value) * math.log(float(value)) for value in p)</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="st">for name, manual in [("total_abundance", total),</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="st">                     ("detected_taxa", detected),</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="st">                     ("shannon", shannon)]:</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="st">    recorded = float(saved.loc[sample, name])</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="st">    agrees = math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="st">    print(f"{name}: manual={manual:.6f}; saved={recorded:.6f}; agrees={agrees}")</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="op">PY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>All three comparisons should print <code>agrees=True</code>. A tiny difference in the last decimal places can be rounding. A larger difference calls for checking the input version, selected sample, normalization and logarithm base. Do not change a saved result merely to make it agree.</p>
+<p><code>source_shannon_index</code> is a separate supplied metadata field. It is not the reference value for this calculation from placeholder taxa.</p>
+</section>
+</section>
+<section id="check-a-functional-proportion" class="level2">
+<h2 class="anchored" data-anchor-id="check-a-functional-proportion">2. Check a functional proportion</h2>
+<p>For ERR1398068, the supplied functional values sum to <strong>45,300</strong> and <code>LPS_biosynthesis</code> is <strong>436</strong>. The saved proportion should therefore be approximately <span class="math inline">\(436/45300 = 0.009625\)</span>, or <strong>0.9625% of the supplied functional total</strong>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-</span> <span class="op">&lt;&lt;'PY'</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">import math</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">import pandas as pd</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">sample = "ERR1398068"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">feature = "LPS_biosynthesis"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">raw = pd.read_csv("data/hypertension/functional-features.tsv", sep="\t", index_col=0)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">saved = pd.read_csv("results/hypertension/tables/functional-relative-abundance.tsv", sep="\t", index_col=0)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">manual = raw.loc[feature, sample] / raw[sample].sum()</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">recorded = saved.loc[feature, sample]</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">print(f"Calculated proportion: {manual:.6f} ({100 * manual:.4f}%)")</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">print(f"Saved proportion:      {recorded:.6f}")</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">print("Agrees:", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="op">PY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This checks arithmetic. It does not establish what the original feature values measure or whether their sum is a biologically appropriate denominator.</p>
+</section>
+<section id="explain-taxonomic-composition" class="level2">
+<h2 class="anchored" data-anchor-id="explain-taxonomic-composition">3. Explain taxonomic composition</h2>
 <div id="fig-hypertension-composition" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-hypertension-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../results/hypertension/figures/composition.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hypertension-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.1: Taxonomic composition across samples, calculated from synthetic placeholder abundances. Each bar represents one sample.
+Figure&nbsp;15.1: Composition calculated from synthetic placeholder taxa. Each bar represents one sample.
 </figcaption>
 </figure>
 </div>
-<p>Describe the visible variation among samples. These placeholder profiles cannot support conclusions about hypertension.</p>
+<p>Choose one sample with an uneven profile. Use <code>taxon-relative-abundance.tsv</code> to identify its largest taxon proportion, then write a sentence containing the sample ID, taxon ID and value. <strong>Other</strong> combines taxa rather than naming an organism.</p>
+<p><strong>Sentence starter:</strong> “In sample …, placeholder taxon … accounts for …% of the supplied taxonomic abundance.” This describes the exercise without implying a hypertension association.</p>
 </section>
-<section id="shannon-diversity" class="level2">
-<h2 class="anchored" data-anchor-id="shannon-diversity">Shannon diversity</h2>
+<section id="explain-shannon-diversity" class="level2">
+<h2 class="anchored" data-anchor-id="explain-shannon-diversity">4. Explain Shannon diversity</h2>
 <div id="fig-hypertension-shannon" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-hypertension-shannon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../results/hypertension/figures/shannon-diversity.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hypertension-shannon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.2: Shannon diversity calculated from the placeholder taxon table. Each dot represents one sample; black lines indicate group medians.
+Figure&nbsp;15.2: Shannon diversity calculated from placeholder taxa. Each dot is a sample; black lines indicate group medians.
 </figcaption>
 </figure>
 </div>
-<p>Compare group medians, spread and overlap. Use the saved <code>detected_taxa</code> values to explain whether richness, evenness or both contribute to the differences. Keep these calculated values separate from <code>source_shannon_index</code> in the metadata. This plot alone does not establish statistical significance.</p>
+<p>Inspect sample counts, spread and overlap before comparing medians. Generate a numerical summary:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-</span> <span class="op">&lt;&lt;'PY'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">import pandas as pd</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">alpha = pd.read_csv("results/hypertension/tables/alpha-diversity.tsv", sep="\t")</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">summary = alpha.groupby("group", sort=False).agg(</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">    samples=("shannon", "size"),</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">    median_shannon=("shannon", "median"),</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">    minimum_shannon=("shannon", "min"),</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">    maximum_shannon=("shannon", "max"),</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">    minimum_detected_taxa=("detected_taxa", "min"),</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">    maximum_detected_taxa=("detected_taxa", "max"),</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">)</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">print(summary.round(6).to_string())</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="op">PY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the current placeholder table, samples have <strong>11 or 12 detected taxa</strong>. Do not assume richness is identical throughout. For two samples with the same detected-taxon count, a Shannon difference reflects evenness; across samples with different counts, both richness and evenness may contribute.</p>
+<p><strong>Your task:</strong> identify the group with the highest calculated median, quote the value and describe overlap with the other groups. Add: “These values were calculated from synthetic placeholder taxa and do not establish a study finding or statistical significance.”</p>
 </section>
-<section id="functional-profile" class="level2">
-<h2 class="anchored" data-anchor-id="functional-profile">Functional profile</h2>
+<section id="explain-the-functional-profile" class="level2">
+<h2 class="anchored" data-anchor-id="explain-the-functional-profile">5. Explain the functional profile</h2>
 <div id="fig-hypertension-functions" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-hypertension-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../results/hypertension/figures/functional-features.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hypertension-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.3: Within-sample proportions of the supplied functional features. Each bar represents one sample; remaining features are combined as Other.
+Figure&nbsp;15.3: Within-sample proportions of supplied functional features; remaining features are combined as Other.
 </figcaption>
 </figure>
 </div>
-<p>Identify the largest displayed proportions and check them against the saved table. These proportions describe only the supplied feature set. Interpretation remains provisional until the feature definitions, source and measurement units are confirmed.</p>
+<p>Choose a visible feature and confirm one sample’s proportion in the saved table. Use “larger proportion of the supplied functional total” rather than “more active pathway.” Features may be selected, overlapping or differently normalized; resolve those details before biological interpretation.</p>
+</section>
+<section id="your-evidence-check" class="level2">
+<h2 class="anchored" data-anchor-id="your-evidence-check">Your evidence check</h2>
+<p>Write three short observations, one per figure. For each, include a numerical value, its source table, a limitation and a useful next check. A useful next check might be replacing placeholder taxa, confirming functional units or checking sample independence.</p>
+<p><strong>Ready to report:</strong> you can reproduce the named sample’s values and distinguish a correct calculation from an interpretable biological conclusion.</p>
+<p><a href="../../examples/hypertension/06-export-the-report.html">Next: Write the report</a></p>
 
 
 </section>

@@ -106,6 +106,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/css/cdi.css">
 </head>
@@ -324,8 +353,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#generate-your-results" id="toc-generate-your-results" class="nav-link active" data-scroll-target="#generate-your-results">Generate your results</a></li>
+  <li><a href="#what-the-script-calculates" id="toc-what-the-script-calculates" class="nav-link" data-scroll-target="#what-the-script-calculates">What the script calculates</a></li>
+  <li><a href="#locate-the-outputs" id="toc-locate-the-outputs" class="nav-link" data-scroll-target="#locate-the-outputs">Locate the outputs</a></li>
+  <li><a href="#inspect-your-first-run" id="toc-inspect-your-first-run" class="nav-link" data-scroll-target="#inspect-your-first-run">Inspect your first run</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -349,24 +387,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in <code>data/my-study/README.md</code> before running.</p>
-</div>
-</div>
+<p>Use the same workflow as in synthetic practice, now pointing to your own input folder.</p>
+<section id="generate-your-results" class="level2">
+<h2 class="anchored" data-anchor-id="generate-your-results">Generate your results</h2>
 <p>Run from the main project folder:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="at">--data-dir</span> data/my-study <span class="at">--output-dir</span> results/my-study</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Review the figures and saved tables. The analysis is descriptive; functional profiles represent relative potential, not activity.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--data-dir</span> data/my-study <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-dir</span> results/my-study</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The script repeats validation, then prints:</p>
+<pre class="text"><code>Results saved to results/my-study</code></pre>
+<p>It creates the output folders if necessary and replaces files with the same output names when rerun. Preserve a copy if you need to compare different input versions. If you previously used the example files in <code>data/my-study/</code>, confirm that the new run uses your intended study inputs.</p>
+</section>
+<section id="what-the-script-calculates" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-script-calculates">What the script calculates</h2>
+<ul>
+<li><strong>Taxon proportions:</strong> each taxon value divided by its sample’s taxonomic total.</li>
+<li><strong>Detected taxa:</strong> the count of taxon values greater than zero in each sample.</li>
+<li><strong>Shannon diversity:</strong> <span class="math inline">\(H=-\sum_{i:p_i&gt;0}p_i\ln(p_i)\)</span>, using all supplied taxa and the natural logarithm.</li>
+<li><strong>Functional proportions:</strong> each feature value divided by its sample’s supplied functional total.</li>
+</ul>
+<p>The two types of proportions use separate denominators. Functional proportions describe the supplied feature set; they do not necessarily represent all genes or functions in the sample. Before biological interpretation, confirm whether these sums and comparisons are meaningful for your units and feature definitions.</p>
+</section>
+<section id="locate-the-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="locate-the-outputs">Locate the outputs</h2>
+<p>All paths below are inside <code>results/my-study/</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>What it contains</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>figures/composition.png</code></td>
+<td>Taxon proportions per sample</td>
+</tr>
+<tr class="even">
+<td><code>figures/shannon-diversity.png</code></td>
+<td>Shannon values and group medians</td>
+</tr>
+<tr class="odd">
+<td><code>figures/functional-features.png</code></td>
+<td>Functional proportions per sample</td>
+</tr>
+<tr class="even">
+<td><code>tables/alpha-diversity.tsv</code></td>
+<td>Totals, detected taxa, calculated Shannon and metadata</td>
+</tr>
+<tr class="odd">
+<td><code>tables/taxon-relative-abundance.tsv</code></td>
+<td>Proportions for all supplied taxa</td>
+</tr>
+<tr class="even">
+<td><code>tables/functional-relative-abundance.tsv</code></td>
+<td>Proportions for all supplied functional features</td>
+</tr>
+<tr class="odd">
+<td><code>tables/run-record.json</code></td>
+<td>Python/package versions, input directory and method description</td>
+</tr>
+</tbody>
+</table>
+<p>Stacked plots show up to ten features selected by highest mean proportions across samples. Any remaining features are combined as <strong>Other</strong>. Tables retain all features and Shannon uses all supplied taxa.</p>
+</section>
+<section id="inspect-your-first-run" class="level2">
+<h2 class="anchored" data-anchor-id="inspect-your-first-run">Inspect your first run</h2>
+<ol type="1">
+<li>Open <code>alpha-diversity.tsv</code> and check that sample IDs and groups are yours.</li>
+<li>Locate the three figures and inspect their axes and legends.</li>
+<li>Return to <a href="../../examples/my-study/01-see-the-result.html">See the result</a> to display your figures in the guide if desired.</li>
+<li>Keep the exact inputs and provenance notes with your analysis. The run record does not include input checksums or every preparation decision.</li>
+</ol>
+<p>With many samples, labels may overlap. That is a presentation problem rather than evidence of an incorrect calculation. Use saved tables for sample-specific checks and adapt plotting labels separately if needed.</p>
+<p>The workflow is descriptive. It does not account for repeated samples, adjust for confounding variables or test group differences. A functional profile does not directly measure activity.</p>
+<p><strong>Checkpoint:</strong> all seven output files exist and contain results from your study. Now verify a sample before interpreting patterns.</p>
+<p><a href="../../examples/my-study/05-verify-and-explain.html">Next: Verify and explain</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -1,7 +1,73 @@
 # Meet the data
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/my-study/README.md` before running.
-:::
+Prepare working copies of your inputs in `data/my-study/`. A TSV is a plain-text table with tabs between columns. Changing a filename from `.csv` to `.tsv` does not change its separator; export it as tab-separated text.
 
-Read the input contract in [README](../../README.md). Inspect all three TSV files. Identify groups, sample IDs, abundance units, taxonomic resolution, and functional feature definitions. Record source and preprocessing details. Check participant IDs, timing, batch, medication and other relevant covariates.
+## Use these filenames and headers
+
+| File | Rows | First header | Other columns |
+|---|---|---|---|
+| `sample-metadata.tsv` | Samples | `sample_id` | `group` and optional annotations |
+| `taxon-abundance.tsv` | Taxa | `taxon_id` | Sample IDs containing numeric abundances |
+| `functional-features.tsv` | Functional features | `feature_id` | Sample IDs containing numeric values |
+
+**Samples are rows in metadata and columns in the abundance tables.** Each sample ID must appear once in metadata and once as a column header in each abundance table. Keep identifiers as text so leading zeros are preserved. IDs are case-sensitive: `S01` and `s01` differ.
+
+| Requirement | Why it matters |
+|---|---|
+| Unique, nonblank row IDs and headers | Every value must have an unambiguous identity |
+| Same samples in all three files | Metadata must describe the samples being analysed |
+| A nonempty `group` for each sample | The diversity plot uses this label |
+| Finite, nonnegative abundance values | The current calculations require nonnegative abundances |
+| Positive sample totals in both abundance tables | Proportions need a nonzero denominator |
+
+If you have one descriptive group, use a meaningful label such as `All_samples`. Do not invent comparison groups. If your data include transformations with negative values, return to an appropriate nonnegative abundance representation rather than deleting negative values.
+
+A zero means zero in the supplied table; a missing value means unknown. Do not replace missing values with zero without justification. Optional metadata columns must also have nonblank values to pass the current validator; record an explicit missingness label or omit an optional column where appropriate, and document the decision. Do not fabricate measurements.
+
+## Inspect your working files
+
+Run the complete block from the main project folder:
+
+```bash
+python - <<'PY'
+from pathlib import Path
+import pandas as pd
+
+folder = Path("data/my-study")
+metadata = pd.read_csv(folder / "sample-metadata.tsv", sep="\t", dtype=str, keep_default_na=False)
+taxa = pd.read_csv(folder / "taxon-abundance.tsv", sep="\t", index_col=0, dtype=str)
+functions = pd.read_csv(folder / "functional-features.tsv", sep="\t", index_col=0, dtype=str)
+
+print("Metadata samples:", len(metadata))
+print("Taxon table (taxa, samples):", taxa.shape)
+print("Functional table (features, samples):", functions.shape)
+print("\nGroup sizes:")
+print(metadata["group"].value_counts().to_string())
+print("\nFirst sample IDs:", metadata["sample_id"].head().tolist())
+print("\nFirst metadata rows:")
+print(metadata.head(3).to_string(index=False))
+print("\nFirst taxon values:")
+print(taxa.iloc[:3, :3].to_string())
+PY
+```
+
+The second number in each abundance-table shape should equal the metadata sample count. Record your actual dimensions and group sizes; there are no fixed answers for your study.
+
+If the abundance table has sample IDs down its first column, it may need transposing. Simply renaming that column to `taxon_id` or `feature_id` will not correct its orientation. Make the change on a working copy and check which identifiers become rows and columns.
+
+## Document meaning, not just format
+
+In `data/my-study/README.md`, keep notes on:
+
+- Study/source citation, access date and processing steps.
+- Taxonomic resolution and abundance units, including normalization.
+- Functional feature definitions, units, overlap and whether the set is complete or selected.
+- Group definitions, participant/site identifiers and collection timing.
+- Available age, medication, diet, batch or other relevant annotations.
+- Filtering, exclusions and any unresolved questions.
+
+This file is a local provenance record. The learner-facing instructions are on this page; you do not need to follow a raw Markdown link to understand the input format.
+
+**Checkpoint:** locate one sample in all three files, explain one value from each abundance table and record anything whose meaning is not yet known.
+
+[Next: Validate the files](03-check-the-inputs.qmd)

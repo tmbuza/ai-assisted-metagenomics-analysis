@@ -1,3 +1,59 @@
 # Meet the data
 
-Read the input contract in [README](../../README.md). Inspect all three TSV files. Identify groups, sample IDs, abundance units, taxonomic resolution, and functional feature definitions. The functional labels are invented and cannot be assigned pathway names.
+The analysis uses three tab-separated text files, or TSVs. A tab separates adjacent columns. Read them with `sep="\t"` in pandas; do not treat them as comma-separated files.
+
+## Understand the layout
+
+| File in `data/synthetic/` | One row represents | First header | Remaining columns |
+|---|---|---|---|
+| `sample-metadata.tsv` | One sample | `sample_id` | `group` and any additional sample information |
+| `taxon-abundance.tsv` | One fictional taxon | `taxon_id` | Sample IDs with numerical abundances |
+| `functional-features.tsv` | One fictional functional feature | `feature_id` | Sample IDs with numerical values |
+
+**Samples are rows in metadata and columns in both abundance tables.** The same sample IDs connect the files. Spelling and case must match exactly. Renaming a header cannot correct a table that needs to be transposed.
+
+## Inspect the files yourself
+
+Run this complete block from the main project folder:
+
+```bash
+python - <<'PY'
+from pathlib import Path
+import pandas as pd
+
+folder = Path("data/synthetic")
+metadata = pd.read_csv(folder / "sample-metadata.tsv", sep="\t")
+taxa = pd.read_csv(folder / "taxon-abundance.tsv", sep="\t", index_col=0)
+functions = pd.read_csv(folder / "functional-features.tsv", sep="\t", index_col=0)
+
+print("Number of samples:", len(metadata))
+print("Taxon table (taxa, samples):", taxa.shape)
+print("Functional table (features, samples):", functions.shape)
+print("\nSamples per group:")
+print(metadata["group"].value_counts().to_string())
+print("\nFirst three metadata rows:")
+print(metadata.head(3).to_string(index=False))
+print("\nTaxon values for S01:")
+print(taxa["S01"].to_string())
+print("\nFunctional values for S01:")
+print(functions["S01"].to_string())
+PY
+```
+
+For an abundance table, `shape` gives **(features, samples)**. Compare its second number with the metadata sample count. Group counts should account for all metadata rows.
+
+## What do the values mean?
+
+The values are constructed abundance numbers for practice. Do not call their totals sequencing depth, reads, cells or gene copies without documentation that defines them that way. The calculation only needs comparable, nonnegative values within each table and positive sample totals; biological interpretation requires much more context.
+
+A zero means a feature has zero abundance in this practice table. A missing value means the abundance is unknown. Do not replace missing values with zero automatically.
+
+Taxonomic and functional totals have separate denominators. Dividing a functional value by the taxonomic total would calculate the wrong proportion.
+
+## Your task
+
+Record the number of samples, the number of taxa and functional features, and the group sizes. Locate S01 in all three files. Identify one taxon value and one functional value for that sample.
+
+For a real dataset, you would also need source, units, preprocessing, taxonomic resolution, functional definitions and information about independent participants or repeated samples. Here, all labels and patterns are fictional.
+
+[Next: Check the inputs](03-check-the-inputs.qmd)

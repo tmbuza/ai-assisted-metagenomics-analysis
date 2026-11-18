@@ -1,7 +1,47 @@
 # See the result
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/my-study/README.md` before running.
-:::
+This page explains the outputs you will create. Your study has not been analysed yet, so there are no findings to describe. Use the [synthetic preview](../synthetic/01-see-the-result.qmd) as a visual reference, then return here after running your analysis.
 
-After a validated analysis, add the three figures from your results folder. Do not substitute synthetic results for study results.
+## Three figures, three questions
+
+| Figure | What it shows | What to look for |
+|---|---|---|
+| `composition.png` | Taxon proportions within each sample | Dominant taxa, evenness and variation among samples |
+| `shannon-diversity.png` | Calculated sample diversity and group medians | Richness, evenness, spread and overlap |
+| `functional-features.png` | Proportions within the supplied functional feature set | Relative distributions of features whose definitions and units you understand |
+
+All three files will be written to `results/my-study/figures/`.
+
+## How to read the figures
+
+**Stacked bars:** each bar is a sample and each segment is a feature's share of that sample's supplied total. A bar sums to 1, even when original sample totals differ. A larger proportion does not necessarily mean a larger absolute abundance. The workflow displays up to ten features with the highest mean proportions and combines remaining features as **Other**.
+
+**Diversity dots:** each dot is a sample and its vertical position is its Shannon diversity. Horizontal offsets separate dots visually. Black lines mark group medians. Read these together with the individual values, detected-taxon counts and overlap. With one group, describe sample variation rather than a group comparison.
+
+**Functional profiles:** proportions use only the supplied feature total as their denominator. Confirm that the features are comparable and understand whether categories overlap. A functional label or abundance estimate is not direct evidence of activity.
+
+Samples in stacked bars follow metadata order. Group boundaries are not explicitly labelled, so check the metadata before assigning a section of bars to a group.
+
+## Display your figures here after analysis
+
+After completing [Run the analysis](04-run-the-analysis.qmd), open this page's source file, `examples/my-study/01-see-the-result.qmd`, in your editor. Paste the following Markdown **below this code block**, save and render the guide. The paths are relative to this lesson page.
+
+```markdown
+## My taxonomic composition
+
+![Taxonomic composition of my samples.](../../results/my-study/figures/composition.png)
+
+## My Shannon diversity
+
+![Calculated Shannon diversity; black lines show group medians.](../../results/my-study/figures/shannon-diversity.png)
+
+## My functional profile
+
+![Relative proportions of my supplied functional features.](../../results/my-study/figures/functional-features.png)
+```
+
+The code block deliberately displays the Markdown as an example until your figure files exist. Do not paste results from another dataset or write an interpretation before checking your own outputs.
+
+**Your task:** for each figure, write one question you will investigate. You do not need to know the answer yet.
+
+[Next: Prepare your inputs](02-meet-the-data.qmd)

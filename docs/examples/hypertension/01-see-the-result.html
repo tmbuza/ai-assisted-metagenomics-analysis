@@ -289,8 +289,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#taxonomic-composition-how-is-abundance-distributed" id="toc-taxonomic-composition-how-is-abundance-distributed" class="nav-link active" data-scroll-target="#taxonomic-composition-how-is-abundance-distributed">Taxonomic composition: how is abundance distributed?</a></li>
+  <li><a href="#shannon-diversity-richness-and-evenness-together" id="toc-shannon-diversity-richness-and-evenness-together" class="nav-link" data-scroll-target="#shannon-diversity-richness-and-evenness-together">Shannon diversity: richness and evenness together</a></li>
+  <li><a href="#functional-profile-proportions-within-the-supplied-feature-set" id="toc-functional-profile-proportions-within-the-supplied-feature-set" class="nav-link" data-scroll-target="#functional-profile-proportions-within-the-supplied-feature-set">Functional profile: proportions within the supplied feature set</a></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding">Check your understanding</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -314,6 +323,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Start by learning how to read the outputs. The figures below come from <code>results/hypertension/figures/</code>. If they have not been generated yet, continue through the input checks and analysis, then return here.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -324,12 +334,72 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in <code>data/hypertension/README.md</code> before running.</p>
+<p>Taxonomic composition and Shannon diversity use synthetic placeholder taxa. Functional profiles use supplied features whose source and units still require confirmation. Read these as workflow outputs, not established hypertension findings.</p>
 </div>
 </div>
-<p>After a validated analysis, add the three figures from your results folder. Do not substitute synthetic results for study results.</p>
+<section id="taxonomic-composition-how-is-abundance-distributed" class="level2">
+<h2 class="anchored" data-anchor-id="taxonomic-composition-how-is-abundance-distributed">Taxonomic composition: how is abundance distributed?</h2>
+<div id="fig-htn-preview-composition" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-htn-preview-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../results/hypertension/figures/composition.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-htn-preview-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.1: Within-sample proportions of synthetic placeholder taxa. Each bar is one sample.
+</figcaption>
+</figure>
+</div>
+<p>Each bar sums to 1, or 100%. A coloured segment shows one taxon’s share of that sample’s total abundance. The workflow displays the ten taxa with the highest mean within-sample proportions across all samples; remaining taxa are combined as <strong>Other</strong>.</p>
+<p>A taller segment means a larger proportion, not necessarily a larger absolute abundance. The samples follow metadata order; the plot does not explicitly label group boundaries. Use the metadata and saved table before assigning a pattern to a group.</p>
+<p><strong>Look for:</strong> samples dominated by a few taxa and samples with more evenly sized segments. Describe variation without treating fictional taxon names as biological organisms.</p>
+</section>
+<section id="shannon-diversity-richness-and-evenness-together" class="level2">
+<h2 class="anchored" data-anchor-id="shannon-diversity-richness-and-evenness-together">Shannon diversity: richness and evenness together</h2>
+<div id="fig-htn-preview-shannon" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-htn-preview-shannon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../results/hypertension/figures/shannon-diversity.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-htn-preview-shannon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.2: Calculated Shannon diversity by metadata group. Each dot is one sample; black lines show group medians.
+</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Richness</strong> here means the number of taxa with abundance greater than zero.</li>
+<li><strong>Evenness</strong> describes how evenly abundance is distributed among those taxa.</li>
+<li><strong>Shannon diversity</strong> combines both properties. A higher value can reflect more detected taxa, more even abundances, or both.</li>
+</ul>
+<p>The vertical position of each dot is its calculated Shannon value. Horizontal offsets only separate samples visually. Read the median lines together with the spread and overlap of the dots; the plot contains no hypothesis test.</p>
+<p><strong>Think about:</strong> could two samples with 12 detected taxa have different Shannon values? Yes: their abundances can be distributed differently.</p>
+</section>
+<section id="functional-profile-proportions-within-the-supplied-feature-set" class="level2">
+<h2 class="anchored" data-anchor-id="functional-profile-proportions-within-the-supplied-feature-set">Functional profile: proportions within the supplied feature set</h2>
+<div id="fig-htn-preview-functions" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-htn-preview-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../results/hypertension/figures/functional-features.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-htn-preview-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.3: Within-sample proportions of the supplied functional features. Each bar is one sample; remaining features are combined as Other.
+</figcaption>
+</figure>
+</div>
+<p>The script divides each functional value by the sum of the supplied functional values for that sample. It displays the ten features with the highest mean proportions and combines the remainder as <strong>Other</strong>.</p>
+<p>A value of 0.20 therefore means 20% of this supplied feature total. It is not automatically 20% of all microbial functions, genes or sequencing reads. Feature definitions, units and possible overlap must be understood before interpreting these proportions biologically. The plot does not directly measure biological activity.</p>
+</section>
+<section id="check-your-understanding" class="level2">
+<h2 class="anchored" data-anchor-id="check-your-understanding">Check your understanding</h2>
+<ol type="1">
+<li>Why do all stacked bars have the same height even when original totals differ?</li>
+<li>Why can a group median hide substantial variation among samples?</li>
+<li>What information is missing before a functional pattern can support a study conclusion?</li>
+</ol>
+<p><strong>Ready to continue:</strong> you can explain what a bar, a coloured segment, a dot and a median line represent.</p>
+<p><a href="../../examples/hypertension/02-meet-the-data.html">Next: Meet the data</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

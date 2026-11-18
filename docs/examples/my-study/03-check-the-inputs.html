@@ -324,8 +324,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#run-the-command" id="toc-run-the-command" class="nav-link active" data-scroll-target="#run-the-command">Run the command</a></li>
+  <li><a href="#what-is-checked" id="toc-what-is-checked" class="nav-link" data-scroll-target="#what-is-checked">What is checked?</a></li>
+  <li><a href="#work-through-an-error-one-at-a-time" id="toc-work-through-an-error-one-at-a-time" class="nav-link" data-scroll-target="#work-through-an-error-one-at-a-time">Work through an error one at a time</a></li>
+  <li><a href="#passing-is-a-technical-checkpoint" id="toc-passing-is-a-technical-checkpoint" class="nav-link" data-scroll-target="#passing-is-a-technical-checkpoint">Passing is a technical checkpoint</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -349,24 +358,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in <code>data/my-study/README.md</code> before running.</p>
-</div>
-</div>
-<p>Run the checks before analysis:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="at">--data-dir</span> data/my-study <span class="at">--output-dir</span> results/my-study <span class="at">--check-only</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Resolve every reported problem. Automatic checks do not establish study design validity or biological suitability.</p>
+<p>Run the validator before generating results. It checks the file requirements described on <a href="../../examples/my-study/02-meet-the-data.html">Meet the data</a>.</p>
+<section id="run-the-command" class="level2">
+<h2 class="anchored" data-anchor-id="run-the-command">Run the command</h2>
+<p>From the main project folder:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--data-dir</span> data/my-study <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-dir</span> results/my-study <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--check-only</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Look for a message beginning <code>Input checks passed:</code> followed by your actual sample and group counts. Compare those counts with your study notes.</p>
+<p>For one group, the script also prints:</p>
+<pre class="text"><code>One group detected. Continuing with descriptive analysis.</code></pre>
+<p>This is an informational message. You can still describe sample composition and diversity, but there is no between-group comparison.</p>
+<p><code>--check-only</code> stops after validation. It does not create new figures or refresh existing results.</p>
+</section>
+<section id="what-is-checked" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-checked">What is checked?</h2>
+<p>The script checks for nonempty tables, unique headers and row IDs, blank cells, nonempty group values, matching sample IDs, numeric finite nonnegative abundances and positive sample totals in both abundance tables.</p>
+</section>
+<section id="work-through-an-error-one-at-a-time" class="level2">
+<h2 class="anchored" data-anchor-id="work-through-an-error-one-at-a-time">Work through an error one at a time</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Error or symptom</th>
+<th>What to inspect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>File not found</td>
+<td>Current project folder and exact filenames</td>
+</tr>
+<tr class="even">
+<td>Headers must begin with <code>taxon_id</code> or <code>feature_id</code></td>
+<td>First header, duplicate names and table orientation</td>
+</tr>
+<tr class="odd">
+<td>Sample IDs must match metadata exactly</td>
+<td>Missing/extra IDs, case and surrounding spaces</td>
+</tr>
+<tr class="even">
+<td>Blank cells or duplicate IDs</td>
+<td>Source files, accidental duplicates and missing annotations</td>
+</tr>
+<tr class="odd">
+<td>Numeric conversion fails</td>
+<td>Text mixed into abundance cells or wrong separators</td>
+</tr>
+<tr class="even">
+<td>Values must be finite and nonnegative with positive totals</td>
+<td>Negative/transformed values, infinity and all-zero samples</td>
+</tr>
+</tbody>
+</table>
+<p>Check the original source, correct a working copy and rerun the command. Do not remove samples or fill unknown values merely to silence an error. Document any justified exclusion or transformation.</p>
+</section>
+<section id="passing-is-a-technical-checkpoint" class="level2">
+<h2 class="anchored" data-anchor-id="passing-is-a-technical-checkpoint">Passing is a technical checkpoint</h2>
+<p>Validation cannot confirm study provenance, meaningful units, independent sampling, comparable processing or suitable study design. Nor can it establish statistical significance. A correctly formatted file can still be biologically unsuitable.</p>
+<p><strong>Ready to continue:</strong> the check passes, counts match your notes and you can explain any preparation changes you made.</p>
+<p><a href="../../examples/my-study/04-run-the-analysis.html">Next: Run the workflow</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

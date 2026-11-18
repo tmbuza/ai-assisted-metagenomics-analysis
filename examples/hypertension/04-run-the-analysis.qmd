@@ -1,13 +1,62 @@
 # Run the analysis
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/hypertension/README.md` before running.
-:::
+The input check has confirmed that the files can be processed. Now generate descriptive outputs in a folder dedicated to this example.
 
-Run from the main project folder:
+## Run the workflow
+
+From the main project folder:
 
 ```bash
-python scripts/python/run_workflow.py --data-dir data/hypertension --output-dir results/hypertension
+python scripts/python/run_workflow.py \
+  --data-dir data/hypertension \
+  --output-dir results/hypertension
 ```
 
-Review the figures and saved tables. The analysis is descriptive; functional profiles represent relative potential, not activity.
+Expect:
+
+```text
+Input checks passed: 195 samples; 3 groups.
+Results saved to results/hypertension
+```
+
+The script creates the output folders if necessary. Rerunning writes over the same named outputs, so retain a copy elsewhere if you need to compare runs using different inputs.
+
+## Understand the calculations
+
+**Taxonomic composition:** divide each taxon's abundance by that sample's total taxonomic abundance. The resulting proportions sum to 1.
+
+**Detected taxa:** count taxon values greater than zero. This is richness within the supplied table, not an estimate of all organisms present.
+
+**Shannon diversity:** calculate $H = -\sum_{i:p_i>0}p_i\ln(p_i)$, where $p_i$ is a taxon's within-sample proportion. Zero values do not contribute. The script uses the natural logarithm.
+
+**Functional profile:** separately divide each functional value by that sample's supplied functional-feature total. Taxonomic and functional totals are different denominators and should not be compared as if they were the same quantity.
+
+Both stacked bar plots display the ten features with the highest mean proportions across samples and combine remaining features into **Other**. This selection is for display, not a statistical test. Shannon uses all supplied taxa, including those combined as Other in the figure.
+
+## Find the outputs
+
+All paths below are inside `results/hypertension/`.
+
+| Output | What it contains |
+|---|---|
+| `figures/composition.png` | Relative composition of placeholder taxa |
+| `figures/shannon-diversity.png` | Calculated Shannon values grouped by metadata labels |
+| `figures/functional-features.png` | Relative profile of supplied functional features |
+| `tables/alpha-diversity.tsv` | Sample totals, detected taxa, calculated Shannon and joined metadata |
+| `tables/taxon-relative-abundance.tsv` | Proportions for every supplied taxon and sample |
+| `tables/functional-relative-abundance.tsv` | Proportions for every supplied functional feature and sample |
+| `tables/run-record.json` | Python and package versions, input directory and analysis description |
+
+The run record does not identify the original study or record input checksums. Keep provenance notes and exact input versions alongside your work.
+
+## Inspect before interpreting
+
+Open `tables/alpha-diversity.tsv`. Find `ERR1398068` and identify `total_abundance`, `detected_taxa`, `shannon` and `source_shannon_index`. Which columns were calculated from the placeholder taxa, and which came from metadata?
+
+::: {.callout-note}
+The script does not test group differences, adjust for confounding variables or demonstrate functional activity. Successful execution is the start of verification, not the end of interpretation.
+:::
+
+**Checkpoint:** confirm that all three figures and four table/record files exist, then return to [the preview](01-see-the-result.qmd) to inspect the figures.
+
+[Next: Verify and explain](05-verify-and-explain.qmd)

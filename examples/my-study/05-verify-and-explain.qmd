@@ -1,13 +1,137 @@
 # Verify and explain
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/my-study/README.md` before running.
-:::
+Choose one sample, calculate its results directly from the input and compare them with the saved outputs. This both checks the workflow and shows you how the calculations work in Python.
 
-Choose a sample ID from your metadata. Recalculate its taxon total, detected taxa and natural-log Shannon diversity:
+There are no fixed numerical answers for your study. Your independent calculation and saved result should agree when they use the same inputs and method.
+
+## 1. Choose a sample
+
+Run this short block to list the first ten sample IDs:
 
 ```bash
-python scripts/python/verify_sample.py data/my-study results/my-studyYOUR_SAMPLE_ID
+python - <<'PY'
+import pandas as pd
+metadata = pd.read_csv("data/my-study/sample-metadata.tsv", sep="\t", dtype=str, keep_default_na=False)
+print(metadata["sample_id"].head(10).to_string(index=False))
+PY
 ```
 
-Compare the manual values with the saved results. Explain Shannon using richness and evenness. Then write one observation per figure, checking values in the tables. State limitations and a useful follow-up check.
+Choose an ID and copy it exactly. In the command below, replace `YOUR_SAMPLE_ID` with that ID. Keep the quotation marks; they help if the ID contains spaces.
+
+```bash
+python scripts/python/verify_sample.py \
+  data/my-study results/my-study "YOUR_SAMPLE_ID"
+```
+
+Record the reported total, detected taxa and Shannon value. Compare them with the corresponding row in `results/my-study/tables/alpha-diversity.tsv`.
+
+## 2. See the calculations in Python
+
+The code below uses the **first metadata sample automatically**, so it can run without editing. It prints the chosen ID. To use the ID you selected above, replace the `sample = ...` line with `sample = "your actual ID"`.
+
+Copy the entire block, from `python - <<'PY'` through the final `PY`, into your terminal:
+
+```bash
+python - <<'PY'
+import math
+import pandas as pd
+
+metadata = pd.read_csv("data/my-study/sample-metadata.tsv", sep="\t", dtype=str, keep_default_na=False)
+sample = metadata.loc[0, "sample_id"]
+print("Verifying sample:", sample)
+
+taxa = pd.read_csv("data/my-study/taxon-abundance.tsv", sep="\t", index_col=0)
+saved = pd.read_csv("results/my-study/tables/alpha-diversity.tsv", sep="\t", dtype={"sample_id": str}, keep_default_na=False).set_index("sample_id")
+
+# Select the sample's values and calculate its total and richness.
+x = taxa[sample].astype(float)
+total = float(x.sum())
+detected = int((x > 0).sum())
+
+# Use positive proportions for natural-log Shannon diversity.
+p = x[x > 0] / total
+shannon = -sum(float(value) * math.log(float(value)) for value in p)
+
+for name, manual in [("total_abundance", total),
+                     ("detected_taxa", detected),
+                     ("shannon", shannon)]:
+    recorded = float(saved.loc[sample, name])
+    agrees = math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9)
+    print(f"{name}: manual={manual:.6f}; saved={recorded:.6f}; agrees={agrees}")
+
+# Check the largest taxon's proportion against the saved table.
+relative = pd.read_csv("results/my-study/tables/taxon-relative-abundance.tsv", sep="\t", index_col=0)
+taxon = x.idxmax()
+manual = x.loc[taxon] / total
+recorded = float(relative.loc[taxon, sample])
+print(f"Largest taxon: {taxon}; proportion={manual:.6f} ({100 * manual:.2f}%)")
+print("Taxon proportion agrees:", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))
+
+# Separately check the first supplied functional feature.
+functions = pd.read_csv("data/my-study/functional-features.tsv", sep="\t", index_col=0)
+functional_saved = pd.read_csv("results/my-study/tables/functional-relative-abundance.tsv", sep="\t", index_col=0)
+feature = functions.index[0]
+manual = float(functions.loc[feature, sample]) / float(functions[sample].sum())
+recorded = float(functional_saved.loc[feature, sample])
+print(f"Functional feature: {feature}; proportion={manual:.6f} ({100 * manual:.2f}%)")
+print("Functional proportion agrees:", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))
+PY
+```
+
+### What the key lines do
+
+| Code | Meaning |
+|---|---|
+| `taxa[sample]` | Select one sample column |
+| `x.sum()` | Add the taxon values |
+| `(x > 0).sum()` | Count detected taxa |
+| `x[x > 0] / total` | Convert positive taxon values to proportions |
+| `math.log(value)` | Take the natural logarithm |
+| `math.isclose(...)` | Compare numbers while allowing tiny rounding differences |
+
+All agreement checks should be `True`. This supports the checked calculations for that sample; it does not validate every sample or establish a biological conclusion.
+
+If a check is `False`, check the selected sample, input version, output folder and whether results were regenerated after editing inputs. Do not change saved values to force agreement. If necessary, inspect the original data and rerun validation and analysis.
+
+## 3. Summarize your diversity values
+
+```bash
+python - <<'PY'
+import pandas as pd
+
+alpha = pd.read_csv("results/my-study/tables/alpha-diversity.tsv", sep="\t", dtype={"sample_id": str, "group": str}, keep_default_na=False)
+summary = alpha.groupby("group", sort=False).agg(
+    samples=("shannon", "size"),
+    median_shannon=("shannon", "median"),
+    minimum_shannon=("shannon", "min"),
+    maximum_shannon=("shannon", "max"),
+    minimum_detected_taxa=("detected_taxa", "min"),
+    maximum_detected_taxa=("detected_taxa", "max"),
+)
+print(summary.round(6).to_string())
+PY
+```
+
+Compare group medians, variation and overlap. If there is only one group, describe variation among its samples.
+
+**Richness versus evenness:** when two samples have the same number of detected taxa, a difference in Shannon reflects evenness. When detected-taxon counts differ, both may contribute. Do not assume every sample has the same richness because the input table has a fixed number of rows.
+
+## 4. Turn observations into supported statements
+
+| Output | A useful observation includes |
+|---|---|
+| Composition | Sample ID, taxon name/ID and a checked proportion |
+| Diversity | Group medians or sample values, detected-taxon counts and overlap |
+| Functional profile | Feature ID/definition, proportion, denominator and relevant units |
+
+For each figure, write: **what I see; the number supporting it; what I cannot conclude; what I would check next**.
+
+For example: “Sample ... has ...% of the supplied taxonomic abundance assigned to .... This is a relative proportion and does not directly establish the absolute amount present.”
+
+Do not infer significance or causation from plots. Check group sizes, repeated samples, processing differences and relevant covariates before deciding what additional statistical analysis is appropriate. If a source diversity value is present in metadata, keep it separate from the value calculated here unless the input profiles and methods are known to match.
+
+If you ask AI to help explain a figure, supply the checked values and units, then review each statement yourself.
+
+**Ready to report:** you have recorded the chosen ID, checked values, agreement results and one supported observation for each figure.
+
+[Next: Write the report](06-export-the-report.qmd)

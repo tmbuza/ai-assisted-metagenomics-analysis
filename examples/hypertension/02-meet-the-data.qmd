@@ -1,7 +1,73 @@
 # Meet the data
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/hypertension/README.md` before running.
-:::
+Before running an analysis, identify what each row, column and value represents. All three input files belong in `data/hypertension/` and must be tab-separated text files (TSV).
 
-Read the input contract in [README](../../README.md). Inspect all three TSV files. Identify groups, sample IDs, abundance units, taxonomic resolution, and functional feature definitions. Record source and preprocessing details. Check participant IDs, timing, batch, medication and other relevant covariates.
+## The three-file contract
+
+| File | One row represents | First column | Remaining columns |
+|---|---|---|---|
+| `sample-metadata.tsv` | One sample | `sample_id` | `group` and other metadata |
+| `taxon-abundance.tsv` | One taxon | `taxon_id` | Sample IDs containing numeric abundance values |
+| `functional-features.tsv` | One functional feature | `feature_id` | Sample IDs containing numeric feature values |
+
+Notice the orientation: **metadata has samples in rows; abundance tables have samples in columns**. Renaming `sample_id` to `taxon_id` will not fix an abundance table that is the wrong way round; it must be transposed.
+
+For this version, expect 195 metadata rows, 12 taxon rows and 14 functional-feature rows. Each abundance table has 195 sample columns in addition to its identifier column.
+
+## Inspect the inputs
+
+Run this block in the terminal from the main project folder:
+
+```bash
+python - <<'PY'
+from pathlib import Path
+import pandas as pd
+
+folder = Path("data/hypertension")
+metadata = pd.read_csv(folder / "sample-metadata.tsv", sep="\t")
+taxa = pd.read_csv(folder / "taxon-abundance.tsv", sep="\t", index_col=0)
+functions = pd.read_csv(folder / "functional-features.tsv", sep="\t", index_col=0)
+
+print("Metadata rows:", len(metadata))
+print("Taxon table (taxa, samples):", taxa.shape)
+print("Functional table (features, samples):", functions.shape)
+print("\nSamples per group:")
+print(metadata["group"].value_counts().to_string())
+print("\nFirst three metadata rows:")
+print(metadata.head(3).to_string(index=False))
+print("\nFirst three taxa and samples:")
+print(taxa.iloc[:3, :3].to_string())
+print("\nFunctional feature names:")
+print(functions.index.tolist())
+PY
+```
+
+Expected dimensions are `195`, `(12, 195)` and `(14, 195)`. Group counts should be HTN 98, pHTN 56 and Control 41. These expectations apply to the current practice files; update them if you replace the inputs.
+
+## Understand the metadata
+
+| Column | How to use it |
+|---|---|
+| `sample_id` | Exact key connecting a metadata row to abundance columns |
+| `group` | Label used to group dots in the diversity figure |
+| `enterotype` | Supplied annotation; the current workflow does not adjust for it |
+| `source_shannon_index` | Supplied source value, separate from Shannon calculated from the placeholder taxa |
+
+Do not use `source_shannon_index` as a reference answer for the placeholder calculation. The underlying profiles and preprocessing may differ, and the placeholder taxa are not the source study profiles.
+
+## Record what the files cannot tell you
+
+In `data/hypertension/README.md`, document what is known and mark unresolved items as **not yet verified**:
+
+- Original study citation, source location, access date and preprocessing steps.
+- Meaning of HTN, pHTN and Control, including the study's classification criteria.
+- Whether multiple samples come from the same participant and when they were collected.
+- Taxonomic resolution, abundance units and how the placeholders were generated.
+- Functional definitions, measurement units, normalization and whether features overlap.
+- Availability of medication, age, diet, sampling site and batch information.
+
+The script uses `group` for descriptive grouping. It does not adjust for other variables or account for repeated sampling.
+
+**Your task:** choose one sample ID and locate it in all three files. Then state one technical fact you have confirmed and one study detail that remains unresolved.
+
+[Next: Check the inputs](03-check-the-inputs.qmd)

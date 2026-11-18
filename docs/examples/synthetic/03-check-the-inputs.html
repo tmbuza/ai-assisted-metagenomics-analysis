@@ -324,8 +324,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#run-the-check" id="toc-run-the-check" class="nav-link active" data-scroll-target="#run-the-check">Run the check</a></li>
+  <li><a href="#what-is-checked" id="toc-what-is-checked" class="nav-link" data-scroll-target="#what-is-checked">What is checked?</a></li>
+  <li><a href="#fix-the-cause-of-an-error" id="toc-fix-the-cause-of-an-error" class="nav-link" data-scroll-target="#fix-the-cause-of-an-error">Fix the cause of an error</a></li>
+  <li><a href="#what-does-passing-mean" id="toc-what-does-passing-mean" class="nav-link" data-scroll-target="#what-does-passing-mean">What does passing mean?</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -349,11 +358,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Run the checks before analysis:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="at">--data-dir</span> data/synthetic <span class="at">--output-dir</span> results/synthetic <span class="at">--check-only</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Resolve every reported problem. Automatic checks do not establish study design validity or biological suitability.</p>
+<p>Before calculating results, ask whether the three files are consistent and contain usable values. This step prevents avoidable errors from being carried into the figures.</p>
+<section id="run-the-check" class="level2">
+<h2 class="anchored" data-anchor-id="run-the-check">Run the check</h2>
+<p>From the main project folder:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--data-dir</span> data/synthetic <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-dir</span> results/synthetic <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--check-only</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>--data-dir</code> selects the input folder. <code>--output-dir</code> names the results folder used for a full run. <code>--check-only</code> stops after validation.</p>
+<p>The success message follows this pattern:</p>
+<pre class="text"><code>Input checks passed: &lt;number of samples&gt; samples; 2 groups.</code></pre>
+<p>The sample count should match the number you inspected on the previous page. The angle-bracketed text above is an explanation of the message, not a command or literal output.</p>
+</section>
+<section id="what-is-checked" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-checked">What is checked?</h2>
+<p>The script checks that:</p>
+<ul>
+<li>Files have unique headers starting with the required identifier names.</li>
+<li>Tables are nonempty, with no blank values or duplicate row identifiers.</li>
+<li>Each sample has a nonempty group label.</li>
+<li>Sample columns match metadata IDs exactly.</li>
+<li>Abundances are numeric, finite and nonnegative.</li>
+<li>Every sample has a positive total in each abundance table.</li>
+</ul>
+<p>An individual zero is allowed; an all-zero sample cannot be converted to proportions. The script reorders abundance columns to match metadata after checking the IDs.</p>
+</section>
+<section id="fix-the-cause-of-an-error" class="level2">
+<h2 class="anchored" data-anchor-id="fix-the-cause-of-an-error">Fix the cause of an error</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Problem</th>
+<th>What to check</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Expected headers beginning with <code>taxon_id</code> or <code>feature_id</code></td>
+<td>First header, duplicate headers and whether features are rows</td>
+</tr>
+<tr class="even">
+<td>Sample IDs must match metadata exactly</td>
+<td>Missing or extra IDs, spelling, case and surrounding spaces</td>
+</tr>
+<tr class="odd">
+<td>Blank values or duplicate IDs</td>
+<td>The original file and why the value or identifier is repeated or absent</td>
+</tr>
+<tr class="even">
+<td>Invalid numerical values or zero totals</td>
+<td>Text in abundance cells, negatives, nonfinite values and all-zero samples</td>
+</tr>
+<tr class="odd">
+<td>File not found</td>
+<td>Current project folder and exact TSV filenames</td>
+</tr>
+</tbody>
+</table>
+<p>Do not drop samples or invent values simply to make a check pass. Resolve the source problem and repeat the command.</p>
+</section>
+<section id="what-does-passing-mean" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-passing-mean">What does passing mean?</h2>
+<p>It means the files satisfy the script’s technical requirements. It does not show that a study has a valid design, that samples are independent, or that observed differences are statistically significant.</p>
+<p><code>--check-only</code> creates no new figures and does not refresh existing results. You must run the next step to generate outputs from the checked inputs.</p>
+<p><strong>Checkpoint:</strong> the check passes, sample and group counts match your notes, and you can explain one problem that validation would catch.</p>
+<p><a href="../../examples/synthetic/04-run-the-analysis.html">Next: Run the analysis</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

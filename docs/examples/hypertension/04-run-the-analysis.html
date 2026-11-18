@@ -106,6 +106,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/css/cdi.css">
 </head>
@@ -324,8 +353,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#run-the-workflow" id="toc-run-the-workflow" class="nav-link active" data-scroll-target="#run-the-workflow">Run the workflow</a></li>
+  <li><a href="#understand-the-calculations" id="toc-understand-the-calculations" class="nav-link" data-scroll-target="#understand-the-calculations">Understand the calculations</a></li>
+  <li><a href="#find-the-outputs" id="toc-find-the-outputs" class="nav-link" data-scroll-target="#find-the-outputs">Find the outputs</a></li>
+  <li><a href="#inspect-before-interpreting" id="toc-inspect-before-interpreting" class="nav-link" data-scroll-target="#inspect-before-interpreting">Inspect before interpreting</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -349,24 +387,94 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
+<p>The input check has confirmed that the files can be processed. Now generate descriptive outputs in a folder dedicated to this example.</p>
+<section id="run-the-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="run-the-workflow">Run the workflow</h2>
+<p>From the main project folder:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--data-dir</span> data/hypertension <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-dir</span> results/hypertension</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Expect:</p>
+<pre class="text"><code>Input checks passed: 195 samples; 3 groups.
+Results saved to results/hypertension</code></pre>
+<p>The script creates the output folders if necessary. Rerunning writes over the same named outputs, so retain a copy elsewhere if you need to compare runs using different inputs.</p>
+</section>
+<section id="understand-the-calculations" class="level2">
+<h2 class="anchored" data-anchor-id="understand-the-calculations">Understand the calculations</h2>
+<p><strong>Taxonomic composition:</strong> divide each taxon’s abundance by that sample’s total taxonomic abundance. The resulting proportions sum to 1.</p>
+<p><strong>Detected taxa:</strong> count taxon values greater than zero. This is richness within the supplied table, not an estimate of all organisms present.</p>
+<p><strong>Shannon diversity:</strong> calculate <span class="math inline">\(H = -\sum_{i:p_i&gt;0}p_i\ln(p_i)\)</span>, where <span class="math inline">\(p_i\)</span> is a taxon’s within-sample proportion. Zero values do not contribute. The script uses the natural logarithm.</p>
+<p><strong>Functional profile:</strong> separately divide each functional value by that sample’s supplied functional-feature total. Taxonomic and functional totals are different denominators and should not be compared as if they were the same quantity.</p>
+<p>Both stacked bar plots display the ten features with the highest mean proportions across samples and combine remaining features into <strong>Other</strong>. This selection is for display, not a statistical test. Shannon uses all supplied taxa, including those combined as Other in the figure.</p>
+</section>
+<section id="find-the-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="find-the-outputs">Find the outputs</h2>
+<p>All paths below are inside <code>results/hypertension/</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>What it contains</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>figures/composition.png</code></td>
+<td>Relative composition of placeholder taxa</td>
+</tr>
+<tr class="even">
+<td><code>figures/shannon-diversity.png</code></td>
+<td>Calculated Shannon values grouped by metadata labels</td>
+</tr>
+<tr class="odd">
+<td><code>figures/functional-features.png</code></td>
+<td>Relative profile of supplied functional features</td>
+</tr>
+<tr class="even">
+<td><code>tables/alpha-diversity.tsv</code></td>
+<td>Sample totals, detected taxa, calculated Shannon and joined metadata</td>
+</tr>
+<tr class="odd">
+<td><code>tables/taxon-relative-abundance.tsv</code></td>
+<td>Proportions for every supplied taxon and sample</td>
+</tr>
+<tr class="even">
+<td><code>tables/functional-relative-abundance.tsv</code></td>
+<td>Proportions for every supplied functional feature and sample</td>
+</tr>
+<tr class="odd">
+<td><code>tables/run-record.json</code></td>
+<td>Python and package versions, input directory and analysis description</td>
+</tr>
+</tbody>
+</table>
+<p>The run record does not identify the original study or record input checksums. Keep provenance notes and exact input versions alongside your work.</p>
+</section>
+<section id="inspect-before-interpreting" class="level2">
+<h2 class="anchored" data-anchor-id="inspect-before-interpreting">Inspect before interpreting</h2>
+<p>Open <code>tables/alpha-diversity.tsv</code>. Find <code>ERR1398068</code> and identify <code>total_abundance</code>, <code>detected_taxa</code>, <code>shannon</code> and <code>source_shannon_index</code>. Which columns were calculated from the placeholder taxa, and which came from metadata?</p>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in <code>data/hypertension/README.md</code> before running.</p>
+<p>The script does not test group differences, adjust for confounding variables or demonstrate functional activity. Successful execution is the start of verification, not the end of interpretation.</p>
 </div>
 </div>
-<p>Run from the main project folder:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="at">--data-dir</span> data/hypertension <span class="at">--output-dir</span> results/hypertension</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Review the figures and saved tables. The analysis is descriptive; functional profiles represent relative potential, not activity.</p>
+<p><strong>Checkpoint:</strong> confirm that all three figures and four table/record files exist, then return to <a href="../../examples/hypertension/01-see-the-result.html">the preview</a> to inspect the figures.</p>
+<p><a href="../../examples/hypertension/05-verify-and-explain.html">Next: Verify and explain</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

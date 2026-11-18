@@ -1,9 +1,50 @@
 # Start here
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/hypertension/README.md` before running.
+This example takes you from three prepared tables to figures, checked numerical results and a short report. Complete [Required setup](../../00-setup.qmd) and synthetic practice first, then repeat the workflow here with a larger dataset.
+
+::: {.callout-note icon=false}
+## Our question
+
+How do taxonomic composition, calculated Shannon diversity and the supplied functional profiles vary across samples labelled HTN, pHTN and Control?
 :::
 
-Question: How do microbial composition, Shannon diversity, and relative functional profiles vary between groups?
+## What you are working with
 
-Define your study question, comparison groups, and independent sampling unit.
+The metadata contains **195 sample IDs**: 98 HTN, 56 pHTN and 41 Control. These are sample counts; do not assume they represent 195 independent participants until participant and sampling information has been checked.
+
+| Input | Current status | What you can use it for |
+|---|---|---|
+| Sample metadata | Sample IDs and group labels, with `enterotype` and `source_shannon_index` | Match samples and organize descriptive comparisons |
+| Taxonomic abundance | 12 synthetic placeholder taxa | Practise composition, diversity calculation and verification |
+| Functional features | 14 supplied numerical features; source and units still need confirmation | Practise processing and inspect provisional relative profiles |
+
+::: {.callout-warning}
+## A workflow exercise with incomplete study inputs
+
+The taxonomic abundances are synthetic placeholders. Composition and Shannon results calculated from them **do not describe the hypertension study**. Functional interpretations remain provisional until the source, feature definitions and units are documented. A successful script run confirms technical compatibility; it does not establish biological validity.
+:::
+
+## By the end, you should be able to
+
+- Explain how the metadata connects to the two abundance tables.
+- Validate the inputs and run the supplied Python workflow.
+- Read stacked bar plots and distinguish richness from evenness.
+- Recalculate one sample's results and compare them with saved values.
+- Write a descriptive observation supported by numbers, with a clear limitation.
+
+## Your route through the example
+
+| Step | What you will do |
+|---|---|
+| [Preview the results](01-see-the-result.qmd) | Learn what each figure shows |
+| [Meet the data](02-meet-the-data.qmd) | Inspect the files and their orientation |
+| [Check the inputs](03-check-the-inputs.qmd) | Resolve formatting and value problems |
+| [Run the analysis](04-run-the-analysis.qmd) | Generate the figures and tables |
+| [Verify and explain](05-verify-and-explain.qmd) | Check one sample and support your observations |
+| [Write the report](06-export-the-report.qmd) | Produce a short, transparent account of the exercise |
+
+Run all terminal commands from the **main project folder**, with your Python environment active. Commands shown in this guide are copied into the terminal; rendering the guide does not execute them.
+
+**Before you continue:** explain why the question can guide a practice exercise even though the current files cannot answer the biological study question.
+
+[Next: Preview the results](01-see-the-result.qmd)

@@ -319,31 +319,102 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Explore processed taxonomic and functional profiles with Python. Start with synthetic practice, verify the outputs, and explain what the evidence supports.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<p>Explore processed taxonomic and functional profiles with Python. Learn one workflow with synthetic practice, repeat it with the hypertension example, then apply it to your own study. Check the inputs, verify the outputs, and explain what the results support.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 One workflow for every dataset
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>Learn these seven steps once, then repeat them with each worked example and your own study.</p>
 <ol type="1">
-<li><strong>Define the question.</strong></li>
-<li><strong>Preview the results.</strong></li>
-<li><strong>Meet the inputs.</strong></li>
-<li><strong>Check the inputs.</strong></li>
-<li><strong>Run the analysis.</strong></li>
-<li><strong>Verify and explain.</strong></li>
-<li><strong>Write the report</strong>, showing the results that support your statements and explaining what the analysis cannot establish.</li>
+<li><strong>Define the question</strong> you want to answer.</li>
+<li><strong>Preview the results</strong> you will produce.</li>
+<li><strong>Meet the inputs</strong> and understand their structure.</li>
+<li><strong>Check the inputs</strong> for completeness and consistency.</li>
+<li><strong>Run the analysis</strong> using the supplied command.</li>
+<li><strong>Verify and explain</strong> the patterns using figures and tables.</li>
+<li><strong>Write the report</strong>, supporting your findings with figures and numbers and explaining what the analysis cannot establish.</li>
 </ol>
 </div>
 </div>
-<p>Start with <a href="./00-setup.html">Required setup</a>, then <a href="./examples/synthetic/00-start-here.html">Synthetic practice</a>. The hypertension section awaits verified real profiles and study documentation.</p>
+<section id="the-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="the-datasets">The datasets</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>What it contains</th>
+<th>What you will learn</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="./examples/synthetic/00-start-here.html">Synthetic practice</a></td>
+<td>Fictional taxonomic and functional abundances with sample groups</td>
+<td>Learn the complete workflow with guided commands, figure explanations, an independent check of S01 and a short report</td>
+</tr>
+<tr class="even">
+<td><a href="./examples/hypertension/00-start-here.html">Hypertension example</a></td>
+<td>Metadata for 195 samples: 98 HTN, 56 pHTN and 41 Control; placeholder taxonomic abundances and supplied functional features</td>
+<td>Repeat the workflow with a larger dataset and distinguish working outputs from biologically interpretable results</td>
+</tr>
+<tr class="odd">
+<td><a href="./examples/my-study/00-start-here.html">Your own study</a></td>
+<td>Your processed taxonomic profiles, functional features and sample metadata</td>
+<td>Prepare compatible TSV files, run the same commands with your study paths, and write a report supported by your results</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hypertension example: current data status
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The taxonomic abundances are <strong>synthetic placeholders</strong>. Their composition and calculated Shannon diversity do not represent the hypertension study. The functional features still require confirmation of their source, definitions and measurement units before biological interpretation. Use this example to practise the workflow while those checks are completed.</p>
+</div>
+</div>
+</section>
+<section id="start-with-a-guided-lesson" class="level2">
+<h2 class="anchored" data-anchor-id="start-with-a-guided-lesson">Start with a guided lesson</h2>
+<p>Complete <a href="./00-setup.html">Required setup</a>, then work through <a href="./examples/synthetic/00-start-here.html">Synthetic practice</a> in order. Each page explains the task, gives the command to run and shows how to check your work. You will inspect the inputs, generate the figures, verify S01 and write a short report. The functional labels in synthetic practice are fictional identifiers, not real pathway names.</p>
+<p>Run commands in your terminal from the main project folder. The guide displays the commands; rendering its pages does not execute the analysis.</p>
+</section>
+<section id="what-you-will-produce" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-will-produce">What you will produce</h2>
+<ul>
+<li><strong>Taxonomic composition:</strong> a stacked bar plot showing within-sample proportions.</li>
+<li><strong>Shannon diversity:</strong> a plot showing each sample’s calculated diversity and group medians.</li>
+<li><strong>Functional profile:</strong> a stacked bar plot showing within-sample proportions of the supplied functional features.</li>
+<li><strong>Tables and a short report:</strong> numerical results you can check and use to support your observations.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Setup is required before running the workflow. Each dataset follows the same page structure, with commands using its own input and output folders. Start with synthetic practice, then repeat the steps with another dataset.</p>
+</div>
+</div>
+<p>The guide starts from prepared abundance tables. It does not process raw sequencing reads. The outputs are descriptive: visual differences alone do not establish statistical significance or causation, and functional profiles describe the supplied annotations rather than directly measured biological activity.</p>
+<p><a href="./00-setup.html">Next: Set up your workspace</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

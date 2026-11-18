@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -289,8 +324,16 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#three-figures-three-questions" id="toc-three-figures-three-questions" class="nav-link active" data-scroll-target="#three-figures-three-questions">Three figures, three questions</a></li>
+  <li><a href="#how-to-read-the-figures" id="toc-how-to-read-the-figures" class="nav-link" data-scroll-target="#how-to-read-the-figures">How to read the figures</a></li>
+  <li><a href="#display-your-figures-here-after-analysis" id="toc-display-your-figures-here-after-analysis" class="nav-link" data-scroll-target="#display-your-figures-here-after-analysis">Display your figures here after analysis</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -314,22 +357,69 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in <code>data/my-study/README.md</code> before running.</p>
-</div>
-</div>
-<p>After a validated analysis, add the three figures from your results folder. Do not substitute synthetic results for study results.</p>
+<p>This page explains the outputs you will create. Your study has not been analysed yet, so there are no findings to describe. Use the <a href="../../examples/synthetic/01-see-the-result.html">synthetic preview</a> as a visual reference, then return here after running your analysis.</p>
+<section id="three-figures-three-questions" class="level2">
+<h2 class="anchored" data-anchor-id="three-figures-three-questions">Three figures, three questions</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Figure</th>
+<th>What it shows</th>
+<th>What to look for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>composition.png</code></td>
+<td>Taxon proportions within each sample</td>
+<td>Dominant taxa, evenness and variation among samples</td>
+</tr>
+<tr class="even">
+<td><code>shannon-diversity.png</code></td>
+<td>Calculated sample diversity and group medians</td>
+<td>Richness, evenness, spread and overlap</td>
+</tr>
+<tr class="odd">
+<td><code>functional-features.png</code></td>
+<td>Proportions within the supplied functional feature set</td>
+<td>Relative distributions of features whose definitions and units you understand</td>
+</tr>
+</tbody>
+</table>
+<p>All three files will be written to <code>results/my-study/figures/</code>.</p>
+</section>
+<section id="how-to-read-the-figures" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-read-the-figures">How to read the figures</h2>
+<p><strong>Stacked bars:</strong> each bar is a sample and each segment is a feature’s share of that sample’s supplied total. A bar sums to 1, even when original sample totals differ. A larger proportion does not necessarily mean a larger absolute abundance. The workflow displays up to ten features with the highest mean proportions and combines remaining features as <strong>Other</strong>.</p>
+<p><strong>Diversity dots:</strong> each dot is a sample and its vertical position is its Shannon diversity. Horizontal offsets separate dots visually. Black lines mark group medians. Read these together with the individual values, detected-taxon counts and overlap. With one group, describe sample variation rather than a group comparison.</p>
+<p><strong>Functional profiles:</strong> proportions use only the supplied feature total as their denominator. Confirm that the features are comparable and understand whether categories overlap. A functional label or abundance estimate is not direct evidence of activity.</p>
+<p>Samples in stacked bars follow metadata order. Group boundaries are not explicitly labelled, so check the metadata before assigning a section of bars to a group.</p>
+</section>
+<section id="display-your-figures-here-after-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="display-your-figures-here-after-analysis">Display your figures here after analysis</h2>
+<p>After completing <a href="../../examples/my-study/04-run-the-analysis.html">Run the analysis</a>, open this page’s source file, <code>examples/my-study/01-see-the-result.qmd</code>, in your editor. Paste the following Markdown <strong>below this code block</strong>, save and render the guide. The paths are relative to this lesson page.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## My taxonomic composition</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="al">![Taxonomic composition of my samples.](../../results/my-study/figures/composition.png)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## My Shannon diversity</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="al">![Calculated Shannon diversity; black lines show group medians.](../../results/my-study/figures/shannon-diversity.png)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## My functional profile</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="al">![Relative proportions of my supplied functional features.](../../results/my-study/figures/functional-features.png)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The code block deliberately displays the Markdown as an example until your figure files exist. Do not paste results from another dataset or write an interpretation before checking your own outputs.</p>
+<p><strong>Your task:</strong> for each figure, write one question you will investigate. You do not need to know the answer yet.</p>
+<p><a href="../../examples/my-study/02-meet-the-data.html">Next: Prepare your inputs</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

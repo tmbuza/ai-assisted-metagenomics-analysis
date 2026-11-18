@@ -324,8 +324,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#check-s01-with-the-supplied-script" id="toc-check-s01-with-the-supplied-script" class="nav-link active" data-scroll-target="#check-s01-with-the-supplied-script">1. Check S01 with the supplied script</a></li>
+  <li><a href="#recalculate-the-values-independently" id="toc-recalculate-the-values-independently" class="nav-link" data-scroll-target="#recalculate-the-values-independently">2. Recalculate the values independently</a></li>
+  <li><a href="#explain-richness-and-evenness" id="toc-explain-richness-and-evenness" class="nav-link" data-scroll-target="#explain-richness-and-evenness">3. Explain richness and evenness</a></li>
+  <li><a href="#check-one-functional-proportion" id="toc-check-one-functional-proportion" class="nav-link" data-scroll-target="#check-one-functional-proportion">4. Check one functional proportion</a></li>
+  <li><a href="#write-observations-with-evidence" id="toc-write-observations-with-evidence" class="nav-link" data-scroll-target="#write-observations-with-evidence">5. Write observations with evidence</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -349,11 +359,131 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Choose a sample ID from your metadata (start with S01). Recalculate its taxon total, detected taxa and natural-log Shannon diversity:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/verify_sample.py data/synthetic results/synthetic S01</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Compare the manual values with the saved results. Explain Shannon using richness and evenness. Then write one observation per figure, checking values in the tables. State limitations and a useful follow-up check.</p>
+<p>Verification means tracing a saved number back to the input and checking the calculation yourself. Start with S01, then use tables to support your figure descriptions.</p>
+<section id="check-s01-with-the-supplied-script" class="level2">
+<h2 class="anchored" data-anchor-id="check-s01-with-the-supplied-script">1. Check S01 with the supplied script</h2>
+<p>Run from the main project folder:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/verify_sample.py <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  data/synthetic results/synthetic S01</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Record the total taxonomic abundance, detected taxa and natural-log Shannon diversity. Compare them with the S01 row in <code>results/synthetic/tables/alpha-diversity.tsv</code>.</p>
+</section>
+<section id="recalculate-the-values-independently" class="level2">
+<h2 class="anchored" data-anchor-id="recalculate-the-values-independently">2. Recalculate the values independently</h2>
+<p>Copy this complete block into the terminal. It selects S01, calculates each quantity and compares it with the saved result:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-</span> <span class="op">&lt;&lt;'PY'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">import math</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">import pandas as pd</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">sample = "S01"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">taxa = pd.read_csv("data/synthetic/taxon-abundance.tsv", sep="\t", index_col=0)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">saved = pd.read_csv("results/synthetic/tables/alpha-diversity.tsv", sep="\t", index_col=0)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st"># Select one sample and calculate its total and observed richness.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st">x = taxa[sample].astype(float)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="st">total = float(x.sum())</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="st">detected = int((x &gt; 0).sum())</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st"># Convert positive values to proportions before calculating Shannon.</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">p = x[x &gt; 0] / total</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="st">shannon = -sum(float(value) * math.log(float(value)) for value in p)</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="st">for name, manual in [("total_abundance", total),</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="st">                     ("detected_taxa", detected),</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="st">                     ("shannon", shannon)]:</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="st">    recorded = float(saved.loc[sample, name])</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="st">    agrees = math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="st">    print(f"{name}: manual={manual:.6f}; saved={recorded:.6f}; agrees={agrees}")</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="st"># Check a taxon proportion as an additional link to the composition plot.</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="st">relative = pd.read_csv("results/synthetic/tables/taxon-relative-abundance.tsv", sep="\t", index_col=0)</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="st">taxon = x.idxmax()</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="st">manual = x.loc[taxon] / total</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="st">recorded = relative.loc[taxon, sample]</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="st">print(f"Largest taxon in {sample}: {taxon}; proportion={manual:.6f} ({100 * manual:.2f}%)")</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="st">print("Taxon proportion agrees:", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="op">PY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>All agreement checks should be <code>True</code>. Small final-decimal differences may reflect rounding. Larger discrepancies call for checking the sample ID, input version, most recent run and logarithm base. Do not edit saved values merely to force agreement.</p>
+<p><strong>Record your answer:</strong> S01 has total …, detected taxa … and Shannon …. My independent calculations [agree/do not agree] with the saved results.</p>
+</section>
+<section id="explain-richness-and-evenness" class="level2">
+<h2 class="anchored" data-anchor-id="explain-richness-and-evenness">3. Explain richness and evenness</h2>
+<p>For two equally abundant taxa, proportions are 0.5 and 0.5 and Shannon is approximately 0.6931. For two taxa with proportions 0.9 and 0.1, Shannon is approximately 0.3251. Richness is two in both examples; greater evenness produces the higher Shannon value.</p>
+<p>Now check whether richness is constant in this dataset and summarize the groups:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-</span> <span class="op">&lt;&lt;'PY'</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">import pandas as pd</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">alpha = pd.read_csv("results/synthetic/tables/alpha-diversity.tsv", sep="\t")</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">print("Detected-taxon counts observed:", sorted(alpha["detected_taxa"].unique().tolist()))</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">summary = alpha.groupby("group", sort=False).agg(</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">    samples=("shannon", "size"),</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">    median_shannon=("shannon", "median"),</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">    minimum_shannon=("shannon", "min"),</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">    maximum_shannon=("shannon", "max"),</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">    sd_shannon=("shannon", "std"),</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">print(summary.round(6).to_string())</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="op">PY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The original lesson expects all samples to have <strong>eight</strong> detected taxa. If the output confirms <code>[8]</code>, Shannon differences reflect evenness. If it does not, investigate the input version and revise that explanation: richness may also contribute.</p>
+<p>Use medians to compare typical values and ranges or standard deviations to describe variation. Standard deviation summarizes spread around a group’s mean; it is not an uncertainty interval for the median. Neither summary establishes statistical significance.</p>
+</section>
+<section id="check-one-functional-proportion" class="level2">
+<h2 class="anchored" data-anchor-id="check-one-functional-proportion">4. Check one functional proportion</h2>
+<p>This example selects the first fictional feature in the input file. It checks the arithmetic without assuming a biological meaning for that label:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-</span> <span class="op">&lt;&lt;'PY'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">import math</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">import pandas as pd</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">sample = "S01"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">raw = pd.read_csv("data/synthetic/functional-features.tsv", sep="\t", index_col=0)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">saved = pd.read_csv("results/synthetic/tables/functional-relative-abundance.tsv", sep="\t", index_col=0)</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">feature = raw.index[0]</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">value = float(raw.loc[feature, sample])</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">total = float(raw[sample].sum())</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">manual = value / total</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">recorded = float(saved.loc[feature, sample])</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">print(f"{feature}: value={value:g}; functional total={total:g}")</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="st">print(f"Calculated proportion={manual:.6f} ({100 * manual:.2f}%)")</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="st">print(f"Saved proportion={recorded:.6f}")</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="st">print("Agrees:", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="op">PY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A larger proportion can result from a larger feature value, smaller values for other features, or both. These plots show relative distributions within the supplied feature set.</p>
+</section>
+<section id="write-observations-with-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="write-observations-with-evidence">5. Write observations with evidence</h2>
+<p>Return to <a href="../../examples/synthetic/01-see-the-result.html">the three figures</a> and complete one observation for each:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Figure</th>
+<th>Include in your observation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Composition</td>
+<td>Sample ID, fictional taxon ID and checked proportion</td>
+</tr>
+<tr class="even">
+<td>Shannon diversity</td>
+<td>Group medians, spread, overlap and detected-taxon counts</td>
+</tr>
+<tr class="odd">
+<td>Functional profile</td>
+<td>Fictional feature ID, sample ID and checked proportion</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example wording:</strong> “Group … has a calculated median Shannon of …, compared with … in Group …. The distributions overlap. All samples have … detected taxa, so …. These descriptive results do not establish statistical significance.”</p>
+<p>Keep a short evidence note for each statement: the table used, numerical value and limitation. If you ask AI to help draft an explanation, provide those checked values and review every claim yourself.</p>
+<p><strong>Ready to report:</strong> you can reproduce S01’s results and explain the patterns without assigning real pathway names or claiming causation.</p>
+<p><a href="../../examples/synthetic/06-export-the-report.html">Next: Write the report</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

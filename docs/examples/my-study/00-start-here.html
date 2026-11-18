@@ -289,8 +289,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#start-with-a-question" id="toc-start-with-a-question" class="nav-link active" data-scroll-target="#start-with-a-question">Start with a question</a></li>
+  <li><a href="#make-a-short-study-note" id="toc-make-a-short-study-note" class="nav-link" data-scroll-target="#make-a-short-study-note">Make a short study note</a></li>
+  <li><a href="#what-you-need" id="toc-what-you-need" class="nav-link" data-scroll-target="#what-you-need">What you need</a></li>
+  <li><a href="#your-route" id="toc-your-route" class="nav-link" data-scroll-target="#your-route">Your route</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -314,23 +323,79 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in <code>data/my-study/README.md</code> before running.</p>
-</div>
-</div>
-<p>Question: How do microbial composition, Shannon diversity, and relative functional profiles vary between groups?</p>
-<p>Define your study question, comparison groups, and independent sampling unit.</p>
+<p>You have practised the workflow with example data. Now repeat it with your own prepared taxonomic and functional tables. You will use the same scripts, but supply your own question, sample information and interpretation.</p>
+<p>If this is your first analysis, complete <a href="../../examples/synthetic/00-start-here.html">Synthetic practice</a> and <a href="../../00-setup.html">Required setup</a> first.</p>
+<section id="start-with-a-question" class="level2">
+<h2 class="anchored" data-anchor-id="start-with-a-question">Start with a question</h2>
+<p>Write one question that your files can help describe. For example:</p>
+<blockquote class="blockquote">
+<p>How do taxonomic composition, Shannon diversity and relative functional profiles vary between [my groups]?</p>
+</blockquote>
+<p>Replace the bracketed words with your group names. If you have only one group, ask how profiles vary <strong>among samples</strong> instead. A descriptive question does not assume that a difference exists or that one factor causes another.</p>
+</section>
+<section id="make-a-short-study-note" class="level2">
+<h2 class="anchored" data-anchor-id="make-a-short-study-note">Make a short study note</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Prompt</th>
+<th>Your answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>What does one sample represent?</td>
+<td>[For example, one specimen collected at one time]</td>
+</tr>
+<tr class="even">
+<td>What groups or conditions will I describe?</td>
+<td>[Names and meanings]</td>
+</tr>
+<tr class="odd">
+<td>What is the independent sampling unit?</td>
+<td>[For example, participant, animal or site]</td>
+</tr>
+<tr class="even">
+<td>Does one unit contribute multiple samples?</td>
+<td>[Yes, no or not yet known]</td>
+</tr>
+<tr class="odd">
+<td>Where did the tables come from?</td>
+<td>[Study, source and processing workflow]</td>
+</tr>
+<tr class="even">
+<td>What do the abundance values measure?</td>
+<td>[Units and normalization for each table]</td>
+</tr>
+</tbody>
+</table>
+<p>A sample ID is a file identifier. It does not prove independence: two samples may come from the same participant. The current script does not model repeated measurements or adjust for other variables.</p>
+</section>
+<section id="what-you-need" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-need">What you need</h2>
+<p>You need three compatible TSV files: sample metadata, taxonomic abundances and functional features. This workflow starts from processed tables, not raw sequencing reads. Do not create fictional functional values to fill a missing table. If you have only taxonomic data, the current three-file workflow needs adapting before use.</p>
+<p>Keep an unchanged copy of your original files. Prepare working copies in <code>data/my-study/</code> and save results in <code>results/my-study/</code>.</p>
+</section>
+<section id="your-route" class="level2">
+<h2 class="anchored" data-anchor-id="your-route">Your route</h2>
+<ol type="1">
+<li><a href="../../examples/my-study/01-see-the-result.html">Preview the outputs</a>.</li>
+<li><a href="../../examples/my-study/02-meet-the-data.html">Prepare and understand your inputs</a>.</li>
+<li><a href="../../examples/my-study/03-check-the-inputs.html">Validate the files</a>.</li>
+<li><a href="../../examples/my-study/04-run-the-analysis.html">Run the workflow</a>.</li>
+<li><a href="../../examples/my-study/05-verify-and-explain.html">Verify a sample and explain the results</a>.</li>
+<li><a href="../../examples/my-study/06-export-the-report.html">Write your report</a>.</li>
+</ol>
+<p>Run commands in the terminal from the <strong>main project folder</strong>, with your Python environment active. Rendering the guide does not run the analysis. For blocks beginning <code>python - &lt;&lt;'PY'</code>, copy the entire block, including the closing <code>PY</code> line.</p>
+<p><strong>Ready to continue:</strong> you have a question, know what a sample represents and can identify the source of your three tables.</p>
+<p><a href="../../examples/my-study/01-see-the-result.html">Next: Preview the outputs</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

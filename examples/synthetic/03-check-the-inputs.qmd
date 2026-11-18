@@ -1,9 +1,59 @@
 # Check the inputs
 
-Run the checks before analysis:
+Before calculating results, ask whether the three files are consistent and contain usable values. This step prevents avoidable errors from being carried into the figures.
+
+## Run the check
+
+From the main project folder:
 
 ```bash
-python scripts/python/run_workflow.py --data-dir data/synthetic --output-dir results/synthetic --check-only
+python scripts/python/run_workflow.py \
+  --data-dir data/synthetic \
+  --output-dir results/synthetic \
+  --check-only
 ```
 
-Resolve every reported problem. Automatic checks do not establish study design validity or biological suitability.
+`--data-dir` selects the input folder. `--output-dir` names the results folder used for a full run. `--check-only` stops after validation.
+
+The success message follows this pattern:
+
+```text
+Input checks passed: <number of samples> samples; 2 groups.
+```
+
+The sample count should match the number you inspected on the previous page. The angle-bracketed text above is an explanation of the message, not a command or literal output.
+
+## What is checked?
+
+The script checks that:
+
+- Files have unique headers starting with the required identifier names.
+- Tables are nonempty, with no blank values or duplicate row identifiers.
+- Each sample has a nonempty group label.
+- Sample columns match metadata IDs exactly.
+- Abundances are numeric, finite and nonnegative.
+- Every sample has a positive total in each abundance table.
+
+An individual zero is allowed; an all-zero sample cannot be converted to proportions. The script reorders abundance columns to match metadata after checking the IDs.
+
+## Fix the cause of an error
+
+| Problem | What to check |
+|---|---|
+| Expected headers beginning with `taxon_id` or `feature_id` | First header, duplicate headers and whether features are rows |
+| Sample IDs must match metadata exactly | Missing or extra IDs, spelling, case and surrounding spaces |
+| Blank values or duplicate IDs | The original file and why the value or identifier is repeated or absent |
+| Invalid numerical values or zero totals | Text in abundance cells, negatives, nonfinite values and all-zero samples |
+| File not found | Current project folder and exact TSV filenames |
+
+Do not drop samples or invent values simply to make a check pass. Resolve the source problem and repeat the command.
+
+## What does passing mean?
+
+It means the files satisfy the script's technical requirements. It does not show that a study has a valid design, that samples are independent, or that observed differences are statistically significant.
+
+`--check-only` creates no new figures and does not refresh existing results. You must run the next step to generate outputs from the checked inputs.
+
+**Checkpoint:** the check passes, sample and group counts match your notes, and you can explain one problem that validation would catch.
+
+[Next: Run the analysis](04-run-the-analysis.qmd)

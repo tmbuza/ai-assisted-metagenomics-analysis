@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -289,8 +324,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-three-file-contract" id="toc-the-three-file-contract" class="nav-link active" data-scroll-target="#the-three-file-contract">The three-file contract</a></li>
+  <li><a href="#inspect-the-inputs" id="toc-inspect-the-inputs" class="nav-link" data-scroll-target="#inspect-the-inputs">Inspect the inputs</a></li>
+  <li><a href="#understand-the-metadata" id="toc-understand-the-metadata" class="nav-link" data-scroll-target="#understand-the-metadata">Understand the metadata</a></li>
+  <li><a href="#record-what-the-files-cannot-tell-you" id="toc-record-what-the-files-cannot-tell-you" class="nav-link" data-scroll-target="#record-what-the-files-cannot-tell-you">Record what the files cannot tell you</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -314,22 +358,125 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in <code>data/hypertension/README.md</code> before running.</p>
-</div>
-</div>
-<p>Read the input contract in <a href="../../README.md">README</a>. Inspect all three TSV files. Identify groups, sample IDs, abundance units, taxonomic resolution, and functional feature definitions. Record source and preprocessing details. Check participant IDs, timing, batch, medication and other relevant covariates.</p>
+<p>Before running an analysis, identify what each row, column and value represents. All three input files belong in <code>data/hypertension/</code> and must be tab-separated text files (TSV).</p>
+<section id="the-three-file-contract" class="level2">
+<h2 class="anchored" data-anchor-id="the-three-file-contract">The three-file contract</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>One row represents</th>
+<th>First column</th>
+<th>Remaining columns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sample-metadata.tsv</code></td>
+<td>One sample</td>
+<td><code>sample_id</code></td>
+<td><code>group</code> and other metadata</td>
+</tr>
+<tr class="even">
+<td><code>taxon-abundance.tsv</code></td>
+<td>One taxon</td>
+<td><code>taxon_id</code></td>
+<td>Sample IDs containing numeric abundance values</td>
+</tr>
+<tr class="odd">
+<td><code>functional-features.tsv</code></td>
+<td>One functional feature</td>
+<td><code>feature_id</code></td>
+<td>Sample IDs containing numeric feature values</td>
+</tr>
+</tbody>
+</table>
+<p>Notice the orientation: <strong>metadata has samples in rows; abundance tables have samples in columns</strong>. Renaming <code>sample_id</code> to <code>taxon_id</code> will not fix an abundance table that is the wrong way round; it must be transposed.</p>
+<p>For this version, expect 195 metadata rows, 12 taxon rows and 14 functional-feature rows. Each abundance table has 195 sample columns in addition to its identifier column.</p>
+</section>
+<section id="inspect-the-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="inspect-the-inputs">Inspect the inputs</h2>
+<p>Run this block in the terminal from the main project folder:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-</span> <span class="op">&lt;&lt;'PY'</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">from pathlib import Path</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">import pandas as pd</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">folder = Path("data/hypertension")</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">metadata = pd.read_csv(folder / "sample-metadata.tsv", sep="\t")</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">taxa = pd.read_csv(folder / "taxon-abundance.tsv", sep="\t", index_col=0)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">functions = pd.read_csv(folder / "functional-features.tsv", sep="\t", index_col=0)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">print("Metadata rows:", len(metadata))</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">print("Taxon table (taxa, samples):", taxa.shape)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">print("Functional table (features, samples):", functions.shape)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">print("\nSamples per group:")</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">print(metadata["group"].value_counts().to_string())</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">print("\nFirst three metadata rows:")</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">print(metadata.head(3).to_string(index=False))</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">print("\nFirst three taxa and samples:")</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">print(taxa.iloc[:3, :3].to_string())</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">print("\nFunctional feature names:")</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">print(functions.index.tolist())</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="op">PY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Expected dimensions are <code>195</code>, <code>(12, 195)</code> and <code>(14, 195)</code>. Group counts should be HTN 98, pHTN 56 and Control 41. These expectations apply to the current practice files; update them if you replace the inputs.</p>
+</section>
+<section id="understand-the-metadata" class="level2">
+<h2 class="anchored" data-anchor-id="understand-the-metadata">Understand the metadata</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>How to use it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sample_id</code></td>
+<td>Exact key connecting a metadata row to abundance columns</td>
+</tr>
+<tr class="even">
+<td><code>group</code></td>
+<td>Label used to group dots in the diversity figure</td>
+</tr>
+<tr class="odd">
+<td><code>enterotype</code></td>
+<td>Supplied annotation; the current workflow does not adjust for it</td>
+</tr>
+<tr class="even">
+<td><code>source_shannon_index</code></td>
+<td>Supplied source value, separate from Shannon calculated from the placeholder taxa</td>
+</tr>
+</tbody>
+</table>
+<p>Do not use <code>source_shannon_index</code> as a reference answer for the placeholder calculation. The underlying profiles and preprocessing may differ, and the placeholder taxa are not the source study profiles.</p>
+</section>
+<section id="record-what-the-files-cannot-tell-you" class="level2">
+<h2 class="anchored" data-anchor-id="record-what-the-files-cannot-tell-you">Record what the files cannot tell you</h2>
+<p>In <code>data/hypertension/README.md</code>, document what is known and mark unresolved items as <strong>not yet verified</strong>:</p>
+<ul>
+<li>Original study citation, source location, access date and preprocessing steps.</li>
+<li>Meaning of HTN, pHTN and Control, including the study’s classification criteria.</li>
+<li>Whether multiple samples come from the same participant and when they were collected.</li>
+<li>Taxonomic resolution, abundance units and how the placeholders were generated.</li>
+<li>Functional definitions, measurement units, normalization and whether features overlap.</li>
+<li>Availability of medication, age, diet, sampling site and batch information.</li>
+</ul>
+<p>The script uses <code>group</code> for descriptive grouping. It does not adjust for other variables or account for repeated sampling.</p>
+<p><strong>Your task:</strong> choose one sample ID and locate it in all three files. Then state one technical fact you have confirmed and one study detail that remains unresolved.</p>
+<p><a href="../../examples/hypertension/03-check-the-inputs.html">Next: Check the inputs</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -106,6 +106,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/css/cdi.css">
 </head>
@@ -324,8 +353,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#run-the-command" id="toc-run-the-command" class="nav-link active" data-scroll-target="#run-the-command">Run the command</a></li>
+  <li><a href="#understand-the-calculations" id="toc-understand-the-calculations" class="nav-link" data-scroll-target="#understand-the-calculations">Understand the calculations</a></li>
+  <li><a href="#find-your-outputs" id="toc-find-your-outputs" class="nav-link" data-scroll-target="#find-your-outputs">Find your outputs</a></li>
+  <li><a href="#inspect-before-explaining" id="toc-inspect-before-explaining" class="nav-link" data-scroll-target="#inspect-before-explaining">Inspect before explaining</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -349,11 +387,119 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Run from the main project folder:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="at">--data-dir</span> data/synthetic <span class="at">--output-dir</span> results/synthetic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Review the figures and saved tables. The analysis is descriptive; functional profiles represent relative potential, not activity.</p>
+<p>Now turn the checked inputs into descriptive figures and tables. Keep the input files unchanged so you can reproduce the run.</p>
+<section id="run-the-command" class="level2">
+<h2 class="anchored" data-anchor-id="run-the-command">Run the command</h2>
+<p>From the main project folder:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--data-dir</span> data/synthetic <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-dir</span> results/synthetic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The script repeats the input checks and finishes with:</p>
+<pre class="text"><code>Results saved to results/synthetic</code></pre>
+<p>It creates output folders when needed. Rerunning replaces the same named outputs. Preserve a separate copy before changing inputs if you need to compare versions.</p>
+</section>
+<section id="understand-the-calculations" class="level2">
+<h2 class="anchored" data-anchor-id="understand-the-calculations">Understand the calculations</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Result</th>
+<th>Calculation</th>
+<th>How to interpret it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Total taxonomic abundance</td>
+<td>Sum of taxon values for one sample</td>
+<td>Total within the supplied practice table</td>
+</tr>
+<tr class="even">
+<td>Detected taxa</td>
+<td>Number of taxon values greater than zero</td>
+<td>Observed richness within the supplied table</td>
+</tr>
+<tr class="odd">
+<td>Taxon proportion</td>
+<td>Taxon value divided by that sample’s taxon total</td>
+<td>A share between 0 and 1</td>
+</tr>
+<tr class="even">
+<td>Shannon diversity</td>
+<td><span class="math inline">\(-\sum_{i:p_i&gt;0}p_i\ln(p_i)\)</span></td>
+<td>Combines richness and evenness; uses the natural logarithm</td>
+</tr>
+<tr class="odd">
+<td>Functional proportion</td>
+<td>Feature value divided by that sample’s functional total</td>
+<td>Share of the supplied fictional feature total</td>
+</tr>
+</tbody>
+</table>
+<p>Multiplying a proportion by 100 gives a percentage. Taxon proportions and functional proportions each sum to 1 separately for every sample. Shannon uses all supplied taxa, not only those displayed individually in a plot.</p>
+<p>For stacked bars, the script displays up to ten features with the highest mean proportions across samples and combines the remainder as <strong>Other</strong>. This is a display choice, not a test of which features differ between groups.</p>
+</section>
+<section id="find-your-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="find-your-outputs">Find your outputs</h2>
+<p>All paths below are inside <code>results/synthetic/</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>What to inspect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>figures/composition.png</code></td>
+<td>Relative taxonomic composition per sample</td>
+</tr>
+<tr class="even">
+<td><code>figures/shannon-diversity.png</code></td>
+<td>Sample diversity values and group medians</td>
+</tr>
+<tr class="odd">
+<td><code>figures/functional-features.png</code></td>
+<td>Relative fictional functional profiles</td>
+</tr>
+<tr class="even">
+<td><code>tables/alpha-diversity.tsv</code></td>
+<td>One row per sample: total, detected taxa, Shannon and metadata</td>
+</tr>
+<tr class="odd">
+<td><code>tables/taxon-relative-abundance.tsv</code></td>
+<td>All taxon proportions, with samples in columns</td>
+</tr>
+<tr class="even">
+<td><code>tables/functional-relative-abundance.tsv</code></td>
+<td>All functional proportions, with samples in columns</td>
+</tr>
+<tr class="odd">
+<td><code>tables/run-record.json</code></td>
+<td>Python/package versions, input directory and method description</td>
+</tr>
+</tbody>
+</table>
+<p>The run record supports reproducibility but does not record every input detail. Keep the exact inputs or their Git version with your work.</p>
+</section>
+<section id="inspect-before-explaining" class="level2">
+<h2 class="anchored" data-anchor-id="inspect-before-explaining">Inspect before explaining</h2>
+<p>Open <code>alpha-diversity.tsv</code>, find S01 and record its three calculated values. Then open the figures and return to <a href="../../examples/synthetic/01-see-the-result.html">the preview</a>. Do they show the patterns described there?</p>
+<p>The current workflow is descriptive: it performs no hypothesis tests or adjustment for other variables. Functional feature names remain fictional identifiers, not measured biological activities.</p>
+<p><strong>Checkpoint:</strong> find all three figures and four table/record files, and explain the difference between an original abundance and its proportion.</p>
+<p><a href="../../examples/synthetic/05-verify-and-explain.html">Next: Verify and explain</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

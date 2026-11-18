@@ -1,5 +1,44 @@
 # Start here
 
-Question: How do microbial composition, Shannon diversity, and relative functional profiles vary between groups?
+Begin here after completing [Required setup](../../00-setup.qmd). You will use a small fictional dataset to learn the complete analysis workflow before working with the larger hypertension example or your own study.
 
-Use the synthetic data to practise the full workflow. Differences were constructed for teaching.
+::: {.callout-note icon=false}
+## Our question
+
+How do taxonomic composition, Shannon diversity and relative functional profiles differ between the fictional groups A and B?
+:::
+
+The data were constructed for teaching. Group labels, taxon abundances and functional features do not represent a real experiment. The functional labels are invented identifiers and must not be assigned real pathway names.
+
+## What you will learn
+
+By the end, you should be able to:
+
+- Connect sample metadata to taxonomic and functional abundance tables.
+- Check the inputs and run the supplied Python script.
+- Explain proportions, detected taxa, Shannon diversity and group medians.
+- Recalculate sample S01 and compare it with saved results.
+- Write a short report supported by figures and numbers.
+
+## Follow the pages in order
+
+| Page | Your task |
+|---|---|
+| [Preview the results](01-see-the-result.qmd) | Learn to read the three figures |
+| [Meet the data](02-meet-the-data.qmd) | Understand rows, columns and sample IDs |
+| [Check the inputs](03-check-the-inputs.qmd) | Confirm that the files can be processed |
+| [Run the analysis](04-run-the-analysis.qmd) | Generate figures and numerical tables |
+| [Verify and explain](05-verify-and-explain.qmd) | Check one sample and explain the patterns |
+| [Write the report](06-export-the-report.qmd) | Create a short reproducible report |
+
+## How to use the commands
+
+Run all commands in the **terminal**, from the main project folder, with the Python environment active. This is the folder containing `scripts/`, `data/` and `_quarto.yml`.
+
+The code blocks are instructions to copy into your terminal. Rendering the guide does not execute them. When a block starts with `python - <<'PY'`, copy the whole block, including the final `PY` line: it runs the enclosed Python code in your terminal.
+
+Input files are in `data/synthetic/`; outputs go to `results/synthetic/`. Keeping these folders separate helps you trace a result back to its input.
+
+**Before you continue:** state the question in your own words. What would you need to check before interpreting a similar pattern in a real study?
+
+[Next: Preview the results](01-see-the-result.qmd)

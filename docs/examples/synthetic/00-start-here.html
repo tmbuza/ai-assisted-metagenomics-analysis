@@ -289,8 +289,16 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-you-will-learn" id="toc-what-you-will-learn" class="nav-link active" data-scroll-target="#what-you-will-learn">What you will learn</a></li>
+  <li><a href="#follow-the-pages-in-order" id="toc-follow-the-pages-in-order" class="nav-link" data-scroll-target="#follow-the-pages-in-order">Follow the pages in order</a></li>
+  <li><a href="#how-to-use-the-commands" id="toc-how-to-use-the-commands" class="nav-link" data-scroll-target="#how-to-use-the-commands">How to use the commands</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -314,10 +322,79 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Question: How do microbial composition, Shannon diversity, and relative functional profiles vary between groups?</p>
-<p>Use the synthetic data to practise the full workflow. Differences were constructed for teaching.</p>
+<p>Begin here after completing <a href="../../00-setup.html">Required setup</a>. You will use a small fictional dataset to learn the complete analysis workflow before working with the larger hypertension example or your own study.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Our question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How do taxonomic composition, Shannon diversity and relative functional profiles differ between the fictional groups A and B?</p>
+</div>
+</div>
+<p>The data were constructed for teaching. Group labels, taxon abundances and functional features do not represent a real experiment. The functional labels are invented identifiers and must not be assigned real pathway names.</p>
+<section id="what-you-will-learn" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-will-learn">What you will learn</h2>
+<p>By the end, you should be able to:</p>
+<ul>
+<li>Connect sample metadata to taxonomic and functional abundance tables.</li>
+<li>Check the inputs and run the supplied Python script.</li>
+<li>Explain proportions, detected taxa, Shannon diversity and group medians.</li>
+<li>Recalculate sample S01 and compare it with saved results.</li>
+<li>Write a short report supported by figures and numbers.</li>
+</ul>
+</section>
+<section id="follow-the-pages-in-order" class="level2">
+<h2 class="anchored" data-anchor-id="follow-the-pages-in-order">Follow the pages in order</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Page</th>
+<th>Your task</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../../examples/synthetic/01-see-the-result.html">Preview the results</a></td>
+<td>Learn to read the three figures</td>
+</tr>
+<tr class="even">
+<td><a href="../../examples/synthetic/02-meet-the-data.html">Meet the data</a></td>
+<td>Understand rows, columns and sample IDs</td>
+</tr>
+<tr class="odd">
+<td><a href="../../examples/synthetic/03-check-the-inputs.html">Check the inputs</a></td>
+<td>Confirm that the files can be processed</td>
+</tr>
+<tr class="even">
+<td><a href="../../examples/synthetic/04-run-the-analysis.html">Run the analysis</a></td>
+<td>Generate figures and numerical tables</td>
+</tr>
+<tr class="odd">
+<td><a href="../../examples/synthetic/05-verify-and-explain.html">Verify and explain</a></td>
+<td>Check one sample and explain the patterns</td>
+</tr>
+<tr class="even">
+<td><a href="../../examples/synthetic/06-export-the-report.html">Write the report</a></td>
+<td>Create a short reproducible report</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="how-to-use-the-commands" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-use-the-commands">How to use the commands</h2>
+<p>Run all commands in the <strong>terminal</strong>, from the main project folder, with the Python environment active. This is the folder containing <code>scripts/</code>, <code>data/</code> and <code>_quarto.yml</code>.</p>
+<p>The code blocks are instructions to copy into your terminal. Rendering the guide does not execute them. When a block starts with <code>python - &lt;&lt;'PY'</code>, copy the whole block, including the final <code>PY</code> line: it runs the enclosed Python code in your terminal.</p>
+<p>Input files are in <code>data/synthetic/</code>; outputs go to <code>results/synthetic/</code>. Keeping these folders separate helps you trace a result back to its input.</p>
+<p><strong>Before you continue:</strong> state the question in your own words. What would you need to check before interpreting a similar pattern in a real study?</p>
+<p><a href="../../examples/synthetic/01-see-the-result.html">Next: Preview the results</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

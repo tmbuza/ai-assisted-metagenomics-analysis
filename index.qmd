@@ -6,18 +6,53 @@ format:
     body-classes: front-page
 ---
 
-Explore processed taxonomic and functional profiles with Python. Start with synthetic practice, verify the outputs, and explain what the evidence supports.
+Explore processed taxonomic and functional profiles with Python. Learn one workflow with synthetic practice, repeat it with the hypertension example, then apply it to your own study. Check the inputs, verify the outputs, and explain what the results support.
 
-::: {.callout-tip}
+::: {.callout-note icon=false}
 ## One workflow for every dataset
 
-1. **Define the question.**
-2. **Preview the results.**
-3. **Meet the inputs.**
-4. **Check the inputs.**
-5. **Run the analysis.**
-6. **Verify and explain.**
-7. **Write the report**, showing the results that support your statements and explaining what the analysis cannot establish.
+Learn these seven steps once, then repeat them with each worked example and your own study.
+
+1. **Define the question** you want to answer.
+2. **Preview the results** you will produce.
+3. **Meet the inputs** and understand their structure.
+4. **Check the inputs** for completeness and consistency.
+5. **Run the analysis** using the supplied command.
+6. **Verify and explain** the patterns using figures and tables.
+7. **Write the report**, supporting your findings with figures and numbers and explaining what the analysis cannot establish.
 :::
 
-Start with [Required setup](00-setup.qmd), then [Synthetic practice](examples/synthetic/00-start-here.qmd). The hypertension section awaits verified real profiles and study documentation.
+## The datasets
+
+| Dataset | What it contains | What you will learn |
+|---|---|---|
+| [Synthetic practice](examples/synthetic/00-start-here.qmd) | Fictional taxonomic and functional abundances with sample groups | Learn the complete workflow with guided commands, figure explanations, an independent check of S01 and a short report |
+| [Hypertension example](examples/hypertension/00-start-here.qmd) | Metadata for 195 samples: 98 HTN, 56 pHTN and 41 Control; placeholder taxonomic abundances and supplied functional features | Repeat the workflow with a larger dataset and distinguish working outputs from biologically interpretable results |
+| [Your own study](examples/my-study/00-start-here.qmd) | Your processed taxonomic profiles, functional features and sample metadata | Prepare compatible TSV files, run the same commands with your study paths, and write a report supported by your results |
+
+::: {.callout-warning}
+## Hypertension example: current data status
+
+The taxonomic abundances are **synthetic placeholders**. Their composition and calculated Shannon diversity do not represent the hypertension study. The functional features still require confirmation of their source, definitions and measurement units before biological interpretation. Use this example to practise the workflow while those checks are completed.
+:::
+
+## Start with a guided lesson
+
+Complete [Required setup](00-setup.qmd), then work through [Synthetic practice](examples/synthetic/00-start-here.qmd) in order. Each page explains the task, gives the command to run and shows how to check your work. You will inspect the inputs, generate the figures, verify S01 and write a short report. The functional labels in synthetic practice are fictional identifiers, not real pathway names.
+
+Run commands in your terminal from the main project folder. The guide displays the commands; rendering its pages does not execute the analysis.
+
+## What you will produce
+
+- **Taxonomic composition:** a stacked bar plot showing within-sample proportions.
+- **Shannon diversity:** a plot showing each sample's calculated diversity and group medians.
+- **Functional profile:** a stacked bar plot showing within-sample proportions of the supplied functional features.
+- **Tables and a short report:** numerical results you can check and use to support your observations.
+
+::: {.callout-note}
+Setup is required before running the workflow. Each dataset follows the same page structure, with commands using its own input and output folders. Start with synthetic practice, then repeat the steps with another dataset.
+:::
+
+The guide starts from prepared abundance tables. It does not process raw sequencing reads. The outputs are descriptive: visual differences alone do not establish statistical significance or causation, and functional profiles describe the supplied annotations rather than directly measured biological activity.
+
+[Next: Set up your workspace](00-setup.qmd)

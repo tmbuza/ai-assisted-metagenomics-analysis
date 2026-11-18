@@ -1,13 +1,61 @@
 # Run the analysis
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/my-study/README.md` before running.
-:::
+Use the same workflow as in synthetic practice, now pointing to your own input folder.
+
+## Generate your results
 
 Run from the main project folder:
 
 ```bash
-python scripts/python/run_workflow.py --data-dir data/my-study --output-dir results/my-study
+python scripts/python/run_workflow.py \
+  --data-dir data/my-study \
+  --output-dir results/my-study
 ```
 
-Review the figures and saved tables. The analysis is descriptive; functional profiles represent relative potential, not activity.
+The script repeats validation, then prints:
+
+```text
+Results saved to results/my-study
+```
+
+It creates the output folders if necessary and replaces files with the same output names when rerun. Preserve a copy if you need to compare different input versions. If you previously used the example files in `data/my-study/`, confirm that the new run uses your intended study inputs.
+
+## What the script calculates
+
+- **Taxon proportions:** each taxon value divided by its sample's taxonomic total.
+- **Detected taxa:** the count of taxon values greater than zero in each sample.
+- **Shannon diversity:** $H=-\sum_{i:p_i>0}p_i\ln(p_i)$, using all supplied taxa and the natural logarithm.
+- **Functional proportions:** each feature value divided by its sample's supplied functional total.
+
+The two types of proportions use separate denominators. Functional proportions describe the supplied feature set; they do not necessarily represent all genes or functions in the sample. Before biological interpretation, confirm whether these sums and comparisons are meaningful for your units and feature definitions.
+
+## Locate the outputs
+
+All paths below are inside `results/my-study/`.
+
+| File | What it contains |
+|---|---|
+| `figures/composition.png` | Taxon proportions per sample |
+| `figures/shannon-diversity.png` | Shannon values and group medians |
+| `figures/functional-features.png` | Functional proportions per sample |
+| `tables/alpha-diversity.tsv` | Totals, detected taxa, calculated Shannon and metadata |
+| `tables/taxon-relative-abundance.tsv` | Proportions for all supplied taxa |
+| `tables/functional-relative-abundance.tsv` | Proportions for all supplied functional features |
+| `tables/run-record.json` | Python/package versions, input directory and method description |
+
+Stacked plots show up to ten features selected by highest mean proportions across samples. Any remaining features are combined as **Other**. Tables retain all features and Shannon uses all supplied taxa.
+
+## Inspect your first run
+
+1. Open `alpha-diversity.tsv` and check that sample IDs and groups are yours.
+2. Locate the three figures and inspect their axes and legends.
+3. Return to [See the result](01-see-the-result.qmd) to display your figures in the guide if desired.
+4. Keep the exact inputs and provenance notes with your analysis. The run record does not include input checksums or every preparation decision.
+
+With many samples, labels may overlap. That is a presentation problem rather than evidence of an incorrect calculation. Use saved tables for sample-specific checks and adapt plotting labels separately if needed.
+
+The workflow is descriptive. It does not account for repeated samples, adjust for confounding variables or test group differences. A functional profile does not directly measure activity.
+
+**Checkpoint:** all seven output files exist and contain results from your study. Now verify a sample before interpreting patterns.
+
+[Next: Verify and explain](05-verify-and-explain.qmd)

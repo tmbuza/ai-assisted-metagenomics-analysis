@@ -289,8 +289,16 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-you-are-working-with" id="toc-what-you-are-working-with" class="nav-link active" data-scroll-target="#what-you-are-working-with">What you are working with</a></li>
+  <li><a href="#by-the-end-you-should-be-able-to" id="toc-by-the-end-you-should-be-able-to" class="nav-link" data-scroll-target="#by-the-end-you-should-be-able-to">By the end, you should be able to</a></li>
+  <li><a href="#your-route-through-the-example" id="toc-your-route-through-the-example" class="nav-link" data-scroll-target="#your-route-through-the-example">Your route through the example</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -314,23 +322,120 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>This example takes you from three prepared tables to figures, checked numerical results and a short report. Complete <a href="../../00-setup.html">Required setup</a> and synthetic practice first, then repeat the workflow here with a larger dataset.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Our question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How do taxonomic composition, calculated Shannon diversity and the supplied functional profiles vary across samples labelled HTN, pHTN and Control?</p>
+</div>
+</div>
+<section id="what-you-are-working-with" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-are-working-with">What you are working with</h2>
+<p>The metadata contains <strong>195 sample IDs</strong>: 98 HTN, 56 pHTN and 41 Control. These are sample counts; do not assume they represent 195 independent participants until participant and sampling information has been checked.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Current status</th>
+<th>What you can use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sample metadata</td>
+<td>Sample IDs and group labels, with <code>enterotype</code> and <code>source_shannon_index</code></td>
+<td>Match samples and organize descriptive comparisons</td>
+</tr>
+<tr class="even">
+<td>Taxonomic abundance</td>
+<td>12 synthetic placeholder taxa</td>
+<td>Practise composition, diversity calculation and verification</td>
+</tr>
+<tr class="odd">
+<td>Functional features</td>
+<td>14 supplied numerical features; source and units still need confirmation</td>
+<td>Practise processing and inspect provisional relative profiles</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+A workflow exercise with incomplete study inputs
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in <code>data/hypertension/README.md</code> before running.</p>
+<p>The taxonomic abundances are synthetic placeholders. Composition and Shannon results calculated from them <strong>do not describe the hypertension study</strong>. Functional interpretations remain provisional until the source, feature definitions and units are documented. A successful script run confirms technical compatibility; it does not establish biological validity.</p>
 </div>
 </div>
-<p>Question: How do microbial composition, Shannon diversity, and relative functional profiles vary between groups?</p>
-<p>Define your study question, comparison groups, and independent sampling unit.</p>
+</section>
+<section id="by-the-end-you-should-be-able-to" class="level2">
+<h2 class="anchored" data-anchor-id="by-the-end-you-should-be-able-to">By the end, you should be able to</h2>
+<ul>
+<li>Explain how the metadata connects to the two abundance tables.</li>
+<li>Validate the inputs and run the supplied Python workflow.</li>
+<li>Read stacked bar plots and distinguish richness from evenness.</li>
+<li>Recalculate one sample’s results and compare them with saved values.</li>
+<li>Write a descriptive observation supported by numbers, with a clear limitation.</li>
+</ul>
+</section>
+<section id="your-route-through-the-example" class="level2">
+<h2 class="anchored" data-anchor-id="your-route-through-the-example">Your route through the example</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>What you will do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../../examples/hypertension/01-see-the-result.html">Preview the results</a></td>
+<td>Learn what each figure shows</td>
+</tr>
+<tr class="even">
+<td><a href="../../examples/hypertension/02-meet-the-data.html">Meet the data</a></td>
+<td>Inspect the files and their orientation</td>
+</tr>
+<tr class="odd">
+<td><a href="../../examples/hypertension/03-check-the-inputs.html">Check the inputs</a></td>
+<td>Resolve formatting and value problems</td>
+</tr>
+<tr class="even">
+<td><a href="../../examples/hypertension/04-run-the-analysis.html">Run the analysis</a></td>
+<td>Generate the figures and tables</td>
+</tr>
+<tr class="odd">
+<td><a href="../../examples/hypertension/05-verify-and-explain.html">Verify and explain</a></td>
+<td>Check one sample and support your observations</td>
+</tr>
+<tr class="even">
+<td><a href="../../examples/hypertension/06-export-the-report.html">Write the report</a></td>
+<td>Produce a short, transparent account of the exercise</td>
+</tr>
+</tbody>
+</table>
+<p>Run all terminal commands from the <strong>main project folder</strong>, with your Python environment active. Commands shown in this guide are copied into the terminal; rendering the guide does not execute them.</p>
+<p><strong>Before you continue:</strong> explain why the question can guide a practice exercise even though the current files cannot answer the biological study question.</p>
+<p><a href="../../examples/hypertension/01-see-the-result.html">Next: Preview the results</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

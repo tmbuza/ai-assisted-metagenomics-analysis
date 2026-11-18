@@ -1,9 +1,128 @@
 # Verify and explain
 
-Choose a sample ID from your metadata (start with S01). Recalculate its taxon total, detected taxa and natural-log Shannon diversity:
+Verification means tracing a saved number back to the input and checking the calculation yourself. Start with S01, then use tables to support your figure descriptions.
+
+## 1. Check S01 with the supplied script
+
+Run from the main project folder:
 
 ```bash
-python scripts/python/verify_sample.py data/synthetic results/synthetic S01
+python scripts/python/verify_sample.py \
+  data/synthetic results/synthetic S01
 ```
 
-Compare the manual values with the saved results. Explain Shannon using richness and evenness. Then write one observation per figure, checking values in the tables. State limitations and a useful follow-up check.
+Record the total taxonomic abundance, detected taxa and natural-log Shannon diversity. Compare them with the S01 row in `results/synthetic/tables/alpha-diversity.tsv`.
+
+## 2. Recalculate the values independently
+
+Copy this complete block into the terminal. It selects S01, calculates each quantity and compares it with the saved result:
+
+```bash
+python - <<'PY'
+import math
+import pandas as pd
+
+sample = "S01"
+taxa = pd.read_csv("data/synthetic/taxon-abundance.tsv", sep="\t", index_col=0)
+saved = pd.read_csv("results/synthetic/tables/alpha-diversity.tsv", sep="\t", index_col=0)
+
+# Select one sample and calculate its total and observed richness.
+x = taxa[sample].astype(float)
+total = float(x.sum())
+detected = int((x > 0).sum())
+
+# Convert positive values to proportions before calculating Shannon.
+p = x[x > 0] / total
+shannon = -sum(float(value) * math.log(float(value)) for value in p)
+
+for name, manual in [("total_abundance", total),
+                     ("detected_taxa", detected),
+                     ("shannon", shannon)]:
+    recorded = float(saved.loc[sample, name])
+    agrees = math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9)
+    print(f"{name}: manual={manual:.6f}; saved={recorded:.6f}; agrees={agrees}")
+
+# Check a taxon proportion as an additional link to the composition plot.
+relative = pd.read_csv("results/synthetic/tables/taxon-relative-abundance.tsv", sep="\t", index_col=0)
+taxon = x.idxmax()
+manual = x.loc[taxon] / total
+recorded = relative.loc[taxon, sample]
+print(f"Largest taxon in {sample}: {taxon}; proportion={manual:.6f} ({100 * manual:.2f}%)")
+print("Taxon proportion agrees:", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))
+PY
+```
+
+All agreement checks should be `True`. Small final-decimal differences may reflect rounding. Larger discrepancies call for checking the sample ID, input version, most recent run and logarithm base. Do not edit saved values merely to force agreement.
+
+**Record your answer:** S01 has total ..., detected taxa ... and Shannon .... My independent calculations [agree/do not agree] with the saved results.
+
+## 3. Explain richness and evenness
+
+For two equally abundant taxa, proportions are 0.5 and 0.5 and Shannon is approximately 0.6931. For two taxa with proportions 0.9 and 0.1, Shannon is approximately 0.3251. Richness is two in both examples; greater evenness produces the higher Shannon value.
+
+Now check whether richness is constant in this dataset and summarize the groups:
+
+```bash
+python - <<'PY'
+import pandas as pd
+
+alpha = pd.read_csv("results/synthetic/tables/alpha-diversity.tsv", sep="\t")
+print("Detected-taxon counts observed:", sorted(alpha["detected_taxa"].unique().tolist()))
+summary = alpha.groupby("group", sort=False).agg(
+    samples=("shannon", "size"),
+    median_shannon=("shannon", "median"),
+    minimum_shannon=("shannon", "min"),
+    maximum_shannon=("shannon", "max"),
+    sd_shannon=("shannon", "std"),
+)
+print(summary.round(6).to_string())
+PY
+```
+
+The original lesson expects all samples to have **eight** detected taxa. If the output confirms `[8]`, Shannon differences reflect evenness. If it does not, investigate the input version and revise that explanation: richness may also contribute.
+
+Use medians to compare typical values and ranges or standard deviations to describe variation. Standard deviation summarizes spread around a group's mean; it is not an uncertainty interval for the median. Neither summary establishes statistical significance.
+
+## 4. Check one functional proportion
+
+This example selects the first fictional feature in the input file. It checks the arithmetic without assuming a biological meaning for that label:
+
+```bash
+python - <<'PY'
+import math
+import pandas as pd
+
+sample = "S01"
+raw = pd.read_csv("data/synthetic/functional-features.tsv", sep="\t", index_col=0)
+saved = pd.read_csv("results/synthetic/tables/functional-relative-abundance.tsv", sep="\t", index_col=0)
+feature = raw.index[0]
+value = float(raw.loc[feature, sample])
+total = float(raw[sample].sum())
+manual = value / total
+recorded = float(saved.loc[feature, sample])
+print(f"{feature}: value={value:g}; functional total={total:g}")
+print(f"Calculated proportion={manual:.6f} ({100 * manual:.2f}%)")
+print(f"Saved proportion={recorded:.6f}")
+print("Agrees:", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))
+PY
+```
+
+A larger proportion can result from a larger feature value, smaller values for other features, or both. These plots show relative distributions within the supplied feature set.
+
+## 5. Write observations with evidence
+
+Return to [the three figures](01-see-the-result.qmd) and complete one observation for each:
+
+| Figure | Include in your observation |
+|---|---|
+| Composition | Sample ID, fictional taxon ID and checked proportion |
+| Shannon diversity | Group medians, spread, overlap and detected-taxon counts |
+| Functional profile | Fictional feature ID, sample ID and checked proportion |
+
+**Example wording:** “Group ... has a calculated median Shannon of ..., compared with ... in Group .... The distributions overlap. All samples have ... detected taxa, so .... These descriptive results do not establish statistical significance.”
+
+Keep a short evidence note for each statement: the table used, numerical value and limitation. If you ask AI to help draft an explanation, provide those checked values and review every claim yourself.
+
+**Ready to report:** you can reproduce S01's results and explain the patterns without assigning real pathway names or claiming causation.
+
+[Next: Write the report](06-export-the-report.qmd)

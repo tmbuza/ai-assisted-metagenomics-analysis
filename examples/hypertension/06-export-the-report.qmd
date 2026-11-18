@@ -1,9 +1,117 @@
 # Export the report
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/hypertension/README.md` before running.
+Turn your checked outputs into a short account that another learner can understand and reproduce. Report this version as a **workflow demonstration**, with the current input limitations visible.
+
+## Create your report
+
+In VS Code or another text editor, create `reports/hypertension-report.qmd`. Copy the template below into it. The figure paths are relative to the `reports/` folder. Replace every square-bracketed prompt with your own checked observation.
+
+````markdown
+---
+title: "Hypertension example: descriptive workflow demonstration"
+format:
+  html:
+    toc: true
+---
+
+## Question and data
+
+How do taxonomic composition, calculated Shannon diversity and supplied
+functional profiles vary across samples labelled HTN, pHTN and Control?
+
+The input metadata contains 195 samples: 98 HTN, 56 pHTN and 41 Control.
+The taxonomic table contains 12 synthetic placeholder taxa. The functional
+table contains 14 supplied features whose source, definitions and units
+still need confirmation. These outputs demonstrate the workflow and are
+not verified biological findings from the hypertension study.
+
+## Methods
+
+I checked the three TSV files and ran the supplied Python workflow.
+Taxonomic and functional values were separately divided by their respective
+within-sample totals. Detected taxa had values greater than zero.
+Shannon diversity used all supplied taxa and the natural logarithm.
+Stacked bar plots display the ten features with the highest mean
+proportions, with the remainder combined as Other. The analysis was descriptive.
+
+## Verification
+
+For ERR1398068, independent calculation gave total taxonomic abundance
+4,761, 12 detected taxa and Shannon diversity 2.202635.
+[State whether these values agreed with the saved results.]
+
+For this sample, LPS_biosynthesis was 436 out of a supplied functional
+total of 45,300: a proportion of approximately 0.009625.
+[State whether this agreed with the saved functional table.]
+
+## Results
+
+### Taxonomic composition
+
+![Composition of synthetic placeholder taxa.](../results/hypertension/figures/composition.png)
+
+[Describe one sample using a taxon ID and a checked proportion from
+ taxon-relative-abundance.tsv.]
+
+### Shannon diversity
+
+![Shannon diversity calculated from placeholder taxa; black lines show group medians.](../results/hypertension/figures/shannon-diversity.png)
+
+[Quote group medians from alpha-diversity.tsv. Describe spread and overlap,
+ and discuss detected-taxon counts before attributing differences to evenness.]
+
+### Functional profile
+
+![Relative proportions of supplied functional features.](../results/hypertension/figures/functional-features.png)
+
+[Describe a checked proportion from functional-relative-abundance.tsv.
+ Avoid interpreting it as directly measured pathway activity.]
+
+## Limitations and next steps
+
+Synthetic taxonomic profiles cannot support conclusions about hypertension.
+The supplied source_shannon_index is separate from diversity calculated from
+these placeholders. Functional interpretations require verified provenance,
+definitions and units. Sample independence and potential confounding
+variables have not been established. Visual differences alone do not establish
+statistical significance or causation.
+
+[State one practical next step needed before making a biological claim.]
+
+## Reproducibility
+
+Inputs: data/hypertension/.
+Outputs: results/hypertension/.
+Environment details: results/hypertension/tables/run-record.json.
+Provenance notes: data/hypertension/README.md.
+
+[Record the analysis date and input version or Git commit used.]
+````
+
+## Render the report
+
+Save the file, then run from the main project folder:
+
+```bash
+quarto render reports/hypertension-report.qmd --to html
+```
+
+Quarto prints the output location. Open that HTML file and check that all three figures display, captions are readable and no template prompts remain. This renders existing results; it does not rerun the analysis.
+
+If an image is missing, confirm that the analysis generated it in `results/hypertension/figures/` and that the report is saved in `reports/` as instructed.
+
+## Review before sharing
+
+- Does each observation include a checked number and name its source table?
+- Are the synthetic taxon status and unresolved functional-data details clear?
+- Have you kept source Shannon separate from calculated values?
+- Have you avoided unsupported claims about significance, causation or activity?
+- Can another learner find the inputs, commands, outputs and provenance notes?
+
+::: {.callout-tip}
+## What you have learned
+
+You have checked the inputs, generated descriptive outputs, verified calculations and written a transparent report. The next step toward a biological case study is to replace the placeholder taxa and resolve the functional-data provenance and study-design questions.
 :::
 
-Copy `reports/synthetic-report.qmd` to a study-specific filename. Update the title, paths, methods, evidence, and limitations for your data; then render that file with Quarto.
-
-Report the question, inputs and units, methods, checked findings, and limitations. Do not claim significance or causation from visuals alone.
+[Return to the example overview](00-start-here.qmd)

@@ -1,13 +1,51 @@
 # Check the inputs
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/my-study/README.md` before running.
-:::
+Run the validator before generating results. It checks the file requirements described on [Meet the data](02-meet-the-data.qmd).
 
-Run the checks before analysis:
+## Run the command
+
+From the main project folder:
 
 ```bash
-python scripts/python/run_workflow.py --data-dir data/my-study --output-dir results/my-study --check-only
+python scripts/python/run_workflow.py \
+  --data-dir data/my-study \
+  --output-dir results/my-study \
+  --check-only
 ```
 
-Resolve every reported problem. Automatic checks do not establish study design validity or biological suitability.
+Look for a message beginning `Input checks passed:` followed by your actual sample and group counts. Compare those counts with your study notes.
+
+For one group, the script also prints:
+
+```text
+One group detected. Continuing with descriptive analysis.
+```
+
+This is an informational message. You can still describe sample composition and diversity, but there is no between-group comparison.
+
+`--check-only` stops after validation. It does not create new figures or refresh existing results.
+
+## What is checked?
+
+The script checks for nonempty tables, unique headers and row IDs, blank cells, nonempty group values, matching sample IDs, numeric finite nonnegative abundances and positive sample totals in both abundance tables.
+
+## Work through an error one at a time
+
+| Error or symptom | What to inspect |
+|---|---|
+| File not found | Current project folder and exact filenames |
+| Headers must begin with `taxon_id` or `feature_id` | First header, duplicate names and table orientation |
+| Sample IDs must match metadata exactly | Missing/extra IDs, case and surrounding spaces |
+| Blank cells or duplicate IDs | Source files, accidental duplicates and missing annotations |
+| Numeric conversion fails | Text mixed into abundance cells or wrong separators |
+| Values must be finite and nonnegative with positive totals | Negative/transformed values, infinity and all-zero samples |
+
+Check the original source, correct a working copy and rerun the command. Do not remove samples or fill unknown values merely to silence an error. Document any justified exclusion or transformation.
+
+## Passing is a technical checkpoint
+
+Validation cannot confirm study provenance, meaningful units, independent sampling, comparable processing or suitable study design. Nor can it establish statistical significance. A correctly formatted file can still be biologically unsuitable.
+
+**Ready to continue:** the check passes, counts match your notes and you can explain any preparation changes you made.
+
+[Next: Run the workflow](04-run-the-analysis.qmd)

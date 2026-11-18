@@ -324,8 +324,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#run-the-validation-command" id="toc-run-the-validation-command" class="nav-link active" data-scroll-target="#run-the-validation-command">Run the validation command</a></li>
+  <li><a href="#what-the-script-checks" id="toc-what-the-script-checks" class="nav-link" data-scroll-target="#what-the-script-checks">What the script checks</a></li>
+  <li><a href="#if-a-check-fails" id="toc-if-a-check-fails" class="nav-link" data-scroll-target="#if-a-check-fails">If a check fails</a></li>
+  <li><a href="#what-passing-does-not-establish" id="toc-what-passing-does-not-establish" class="nav-link" data-scroll-target="#what-passing-does-not-establish">What passing does not establish</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -349,24 +358,99 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
+<p>Validation catches problems that can prevent a reliable calculation, such as mismatched sample IDs or negative values. Run it before creating new results.</p>
+<section id="run-the-validation-command" class="level2">
+<h2 class="anchored" data-anchor-id="run-the-validation-command">Run the validation command</h2>
+<p>From the main project folder, with the Python environment active:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--data-dir</span> data/hypertension <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-dir</span> results/hypertension <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--check-only</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For the supplied files, expect:</p>
+<pre class="text"><code>Input checks passed: 195 samples; 3 groups.</code></pre>
+<p><code>--check-only</code> stops after validation. It does not create new analysis outputs or refresh existing figures. Any figures already on disk may come from an earlier run.</p>
+</section>
+<section id="what-the-script-checks" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-script-checks">What the script checks</h2>
+<ul>
+<li>Required files have unique headers beginning with <code>sample_id</code>, <code>taxon_id</code> or <code>feature_id</code>, as appropriate.</li>
+<li>Tables are nonempty, with no blank cells or duplicate row identifiers.</li>
+<li>Metadata has a nonempty <code>group</code> value for every sample.</li>
+<li>Sample columns in each abundance table match metadata sample IDs exactly.</li>
+<li>Abundances are numeric, finite and nonnegative, with a positive total for every sample in each abundance table.</li>
+</ul>
+<p>Zero abundance for an individual feature is allowed. An all-zero sample is rejected because it cannot be normalized to proportions.</p>
+</section>
+<section id="if-a-check-fails" class="level2">
+<h2 class="anchored" data-anchor-id="if-a-check-fails">If a check fails</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Message or symptom</th>
+<th>What to inspect</th>
+<th>How to resolve it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Expected unique headers beginning with <code>taxon_id</code></td>
+<td>First row and orientation</td>
+<td>Put taxa in rows, samples in columns and <code>taxon_id</code> in the first header; remove duplicate headers</td>
+</tr>
+<tr class="even">
+<td>Expected unique headers beginning with <code>feature_id</code></td>
+<td>Functional header and orientation</td>
+<td>Put features in rows and use <code>feature_id</code> as the first header</td>
+</tr>
+<tr class="odd">
+<td>Sample IDs must match metadata exactly</td>
+<td>Spelling, spaces, missing or extra samples</td>
+<td>Reconcile IDs against the original files; avoid dropping samples merely to silence an error</td>
+</tr>
+<tr class="even">
+<td>Empty table, blank values or duplicate IDs</td>
+<td>Missing cells and repeated IDs</td>
+<td>Resolve the source problem; do not replace unknown values with zero automatically</td>
+</tr>
+<tr class="odd">
+<td>Numeric conversion or nonnegative-value error</td>
+<td>Text, negatives or zero-total samples</td>
+<td>Confirm source values and units before correcting them</td>
+</tr>
+<tr class="even">
+<td>File not found</td>
+<td>Current folder and filenames</td>
+<td>Run from the main project folder and check the three TSV filenames</td>
+</tr>
+</tbody>
+</table>
+<p>After any correction, rerun the validation command.</p>
+</section>
+<section id="what-passing-does-not-establish" class="level2">
+<h2 class="anchored" data-anchor-id="what-passing-does-not-establish">What passing does not establish</h2>
+<p>A file can be correctly formatted while containing synthetic values, unsuitable units, incorrect annotations or dependent samples. This check cannot establish provenance, confirm clinical group definitions or show that functional values are biologically comparable.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Checkpoint
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in <code>data/hypertension/README.md</code> before running.</p>
+<p>Continue when the command passes and you can explain both what was checked and what remains unresolved. Keep the placeholder taxon status and functional-data questions in your provenance notes.</p>
 </div>
 </div>
-<p>Run the checks before analysis:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="at">--data-dir</span> data/hypertension <span class="at">--output-dir</span> results/hypertension <span class="at">--check-only</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Resolve every reported problem. Automatic checks do not establish study design validity or biological suitability.</p>
+<p><a href="../../examples/hypertension/04-run-the-analysis.html">Next: Run the analysis</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

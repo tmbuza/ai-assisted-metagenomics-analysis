@@ -1,13 +1,57 @@
 # Check the inputs
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/hypertension/README.md` before running.
-:::
+Validation catches problems that can prevent a reliable calculation, such as mismatched sample IDs or negative values. Run it before creating new results.
 
-Run the checks before analysis:
+## Run the validation command
+
+From the main project folder, with the Python environment active:
 
 ```bash
-python scripts/python/run_workflow.py --data-dir data/hypertension --output-dir results/hypertension --check-only
+python scripts/python/run_workflow.py \
+  --data-dir data/hypertension \
+  --output-dir results/hypertension \
+  --check-only
 ```
 
-Resolve every reported problem. Automatic checks do not establish study design validity or biological suitability.
+For the supplied files, expect:
+
+```text
+Input checks passed: 195 samples; 3 groups.
+```
+
+`--check-only` stops after validation. It does not create new analysis outputs or refresh existing figures. Any figures already on disk may come from an earlier run.
+
+## What the script checks
+
+- Required files have unique headers beginning with `sample_id`, `taxon_id` or `feature_id`, as appropriate.
+- Tables are nonempty, with no blank cells or duplicate row identifiers.
+- Metadata has a nonempty `group` value for every sample.
+- Sample columns in each abundance table match metadata sample IDs exactly.
+- Abundances are numeric, finite and nonnegative, with a positive total for every sample in each abundance table.
+
+Zero abundance for an individual feature is allowed. An all-zero sample is rejected because it cannot be normalized to proportions.
+
+## If a check fails
+
+| Message or symptom | What to inspect | How to resolve it |
+|---|---|---|
+| Expected unique headers beginning with `taxon_id` | First row and orientation | Put taxa in rows, samples in columns and `taxon_id` in the first header; remove duplicate headers |
+| Expected unique headers beginning with `feature_id` | Functional header and orientation | Put features in rows and use `feature_id` as the first header |
+| Sample IDs must match metadata exactly | Spelling, spaces, missing or extra samples | Reconcile IDs against the original files; avoid dropping samples merely to silence an error |
+| Empty table, blank values or duplicate IDs | Missing cells and repeated IDs | Resolve the source problem; do not replace unknown values with zero automatically |
+| Numeric conversion or nonnegative-value error | Text, negatives or zero-total samples | Confirm source values and units before correcting them |
+| File not found | Current folder and filenames | Run from the main project folder and check the three TSV filenames |
+
+After any correction, rerun the validation command.
+
+## What passing does not establish
+
+A file can be correctly formatted while containing synthetic values, unsuitable units, incorrect annotations or dependent samples. This check cannot establish provenance, confirm clinical group definitions or show that functional values are biologically comparable.
+
+::: {.callout-tip}
+## Checkpoint
+
+Continue when the command passes and you can explain both what was checked and what remains unresolved. Keep the placeholder taxon status and functional-data questions in your provenance notes.
+:::
+
+[Next: Run the analysis](04-run-the-analysis.qmd)

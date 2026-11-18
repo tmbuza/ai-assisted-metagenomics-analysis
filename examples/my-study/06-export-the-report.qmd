@@ -1,9 +1,119 @@
 # Export the report
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/my-study/README.md` before running.
+Your report should let another person understand the question, trace the evidence and see the limits of the analysis. Use your own values; do not carry answers over from synthetic practice or hypertension.
+
+## Create a study report
+
+Create `reports/my-study-report.qmd` in your editor. Copy this template and replace every square-bracketed prompt. The figure paths are correct for a report saved in `reports/`.
+
+````markdown
+---
+title: "My study: descriptive metagenomics report"
+format:
+  html:
+    toc: true
+---
+
+## Question
+
+[State the question and the groups or samples being described.]
+
+## Data and study design
+
+[Describe the source, number of samples, group sizes, independent sampling
+ unit and any repeated sampling. Give the study/source citation.]
+
+[State taxonomic resolution and abundance units. Explain functional feature
+ definitions, units, normalization and whether categories overlap.]
+
+[Record preparation, filtering and exclusions. Identify unresolved details.]
+
+## Methods
+
+I validated the three TSV inputs and ran the supplied Python workflow.
+Taxon and functional values were separately divided by their respective
+within-sample totals. Detected taxa had positive abundance. Shannon diversity
+used all supplied taxa and the natural logarithm. Stacked bars display up to
+ten features with the highest mean proportions and combine others as Other.
+The analysis was descriptive and did not test group differences or adjust
+for repeated sampling or other variables.
+
+[Explain whether the functional denominator is meaningful for these inputs.]
+
+## Verification
+
+For sample [ID], independent calculation gave total taxonomic abundance
+[value], detected taxa [value] and Shannon diversity [value].
+[Report whether these agreed with saved results.]
+
+[Record one taxon proportion and one functional proportion you checked.
+ Explain any discrepancy before using the result.]
+
+## Results
+
+### Taxonomic composition
+
+![Taxonomic composition of my samples.](../results/my-study/figures/composition.png)
+
+[Describe a checked pattern using sample IDs, taxa and numerical proportions.]
+
+### Shannon diversity
+
+![Calculated diversity; black lines show group medians.](../results/my-study/figures/shannon-diversity.png)
+
+[Describe values, spread and overlap. Check detected-taxon counts before
+ attributing differences to evenness. With one group, describe sample variation.]
+
+### Functional profile
+
+![Relative proportions of the supplied functional features.](../results/my-study/figures/functional-features.png)
+
+[Describe a checked feature proportion and explain its denominator.
+ Distinguish functional annotation/abundance from measured activity.]
+
+## Limitations and next steps
+
+[Discuss provenance, units, sampling design, feature selection, normalization
+ and relevant confounding variables. State what remains unknown.]
+
+Visual differences alone do not establish statistical significance or causation.
+
+[Name one practical next check and explain why it matters.]
+
+## Reproducibility
+
+Inputs: data/my-study/.
+Outputs: results/my-study/.
+Environment record: results/my-study/tables/run-record.json.
+Provenance notes: data/my-study/README.md.
+
+[Record analysis date, input version or Git commit and any script changes.]
+````
+
+## Render and inspect
+
+Save the report and run from the main project folder:
+
+```bash
+quarto render reports/my-study-report.qmd --to html
+```
+
+Open the output location printed by Quarto. Confirm that all three figures display, captions are readable and no unfinished prompts remain. Rendering the report uses existing results; it does not execute the Python workflow again.
+
+If a figure is missing, check its filename and location in `results/my-study/figures/`. Confirm the report is in `reports/`, because relative image paths depend on that location.
+
+## Final learner check
+
+- Can you explain the question and what one sample represents?
+- Can each numerical statement be traced to a saved table?
+- Did your independent checks agree with the saved results?
+- Have you documented units, preparation and unresolved questions?
+- Are observations distinguished from claims requiring additional analysis?
+
+::: {.callout-tip}
+## Your completed work
+
+You have moved from prepared study tables to outputs you can check and explain. Keep your report, provenance notes, exact inputs and scripts together so the work can be reproduced and reviewed.
 :::
 
-Copy `reports/synthetic-report.qmd` to a study-specific filename. Update the title, paths, methods, evidence, and limitations for your data; then render that file with Quarto.
-
-Report the question, inputs and units, methods, checked findings, and limitations. Do not claim significance or causation from visuals alone.
+[Return to your study overview](00-start-here.qmd)

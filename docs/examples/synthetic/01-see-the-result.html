@@ -289,8 +289,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#composition-what-makes-up-each-sample" id="toc-composition-what-makes-up-each-sample" class="nav-link active" data-scroll-target="#composition-what-makes-up-each-sample">Composition: what makes up each sample?</a></li>
+  <li><a href="#diversity-how-evenly-is-abundance-distributed" id="toc-diversity-how-evenly-is-abundance-distributed" class="nav-link" data-scroll-target="#diversity-how-evenly-is-abundance-distributed">Diversity: how evenly is abundance distributed?</a></li>
+  <li><a href="#functions-how-are-the-fictional-features-distributed" id="toc-functions-how-are-the-fictional-features-distributed" class="nav-link" data-scroll-target="#functions-how-are-the-fictional-features-distributed">Functions: how are the fictional features distributed?</a></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding">Check your understanding</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -314,28 +323,72 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../results/synthetic/figures/composition.png" class="img-fluid figure-img"></p>
-<figcaption>Synthetic taxonomic composition</figcaption>
+<p>First, look at what you will produce. These figures are read from <code>results/synthetic/figures/</code>. If they have not been generated yet, continue through the input checks and analysis, then return here.</p>
+<section id="composition-what-makes-up-each-sample" class="level2">
+<h2 class="anchored" data-anchor-id="composition-what-makes-up-each-sample">Composition: what makes up each sample?</h2>
+<div id="fig-synthetic-preview-composition" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-synthetic-preview-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../results/synthetic/figures/composition.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-synthetic-preview-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: Relative composition of the fictional taxa. Each bar represents one sample.
+</figcaption>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../results/synthetic/figures/shannon-diversity.png" class="img-fluid figure-img"></p>
-<figcaption>Synthetic sample diversity</figcaption>
+<p>Each colour represents a taxon. Its segment height is the taxon’s abundance divided by the sample’s total taxonomic abundance. Every bar sums to 1, or 100%, even when original totals differ.</p>
+<p>Compare samples with one large segment against samples with more similarly sized segments. Similar segment sizes indicate more even abundance distributions. Sample order follows the metadata; check group labels before assigning a pattern to A or B.</p>
+<p>The script displays up to ten taxa with the highest mean proportions. If more taxa are present, it combines the remainder as <strong>Other</strong>. The full relative-abundance table retains every taxon.</p>
+<p><strong>Try this:</strong> pick one bar and identify its largest segment. You will check its numerical proportion later.</p>
+</section>
+<section id="diversity-how-evenly-is-abundance-distributed" class="level2">
+<h2 class="anchored" data-anchor-id="diversity-how-evenly-is-abundance-distributed">Diversity: how evenly is abundance distributed?</h2>
+<div id="fig-synthetic-preview-shannon" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-synthetic-preview-shannon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../results/synthetic/figures/shannon-diversity.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-synthetic-preview-shannon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: Shannon diversity by fictional group. Each dot is a sample; black lines show group medians.
+</figcaption>
 </figure>
 </div>
-<p>Group A has a higher median Shannon diversity and less variation than Group B, although the groups overlap. All samples contain eight detected taxa, so the diversity differences reflect how evenly abundance is distributed among taxa. This plot alone does not establish statistical significance.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../results/synthetic/figures/functional-features.png" class="img-fluid figure-img"></p>
-<figcaption>Synthetic functional profile</figcaption>
+<p>The original lesson describes Group A as having a higher median Shannon diversity and less variation than Group B, with overlap between groups. Confirm that description against your current figure and saved table before using it in your report.</p>
+<ul>
+<li><strong>Richness</strong> is the number of taxa with abundance greater than zero.</li>
+<li><strong>Evenness</strong> describes how evenly abundance is distributed among detected taxa.</li>
+<li><strong>Shannon diversity</strong> combines richness and evenness.</li>
+</ul>
+<p>This practice example is expected to have eight detected taxa per sample. Confirm that with the verification code. When richness is the same, differences in Shannon reflect evenness.</p>
+<p>The black line is a group’s median, or middle value. Look at the individual dots as well: a median does not describe all variation. Horizontal offsets only separate dots visually. This plot alone does not establish statistical significance.</p>
+</section>
+<section id="functions-how-are-the-fictional-features-distributed" class="level2">
+<h2 class="anchored" data-anchor-id="functions-how-are-the-fictional-features-distributed">Functions: how are the fictional features distributed?</h2>
+<div id="fig-synthetic-preview-functions" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-synthetic-preview-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../results/synthetic/figures/functional-features.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-synthetic-preview-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.3: Relative proportions of fictional functional features. Each bar represents one sample.
+</figcaption>
 </figure>
 </div>
-<p>Describe visible differences. These figures do not establish statistical significance or causation.</p>
+<p>Each functional value is divided by the total of the supplied functional values for that sample. A proportion of 0.25 therefore means 25% of that supplied total.</p>
+<p>These are invented features, not identified pathways. You can describe their numerical patterns, but cannot infer a named pathway, biological function or measured activity from their labels.</p>
+</section>
+<section id="check-your-understanding" class="level2">
+<h2 class="anchored" data-anchor-id="check-your-understanding">Check your understanding</h2>
+<ol type="1">
+<li>Can two samples with different original totals have identical proportions? Why?</li>
+<li>Can two samples with eight detected taxa have different Shannon values?</li>
+<li>Does a larger functional proportion necessarily mean a larger original value?</li>
+</ol>
+<p><strong>Ready to continue:</strong> you can explain what one bar, one coloured segment, one dot and one median line represent.</p>
+<p><a href="../../examples/synthetic/02-meet-the-data.html">Next: Meet the data</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

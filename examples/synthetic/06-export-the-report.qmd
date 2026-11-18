@@ -1,9 +1,113 @@
 # Export the report
 
-Edit `reports/synthetic-report.qmd` and replace every prompt with checked results and your own explanation.
+A report connects the question, calculations and observations. Keep it short enough to follow, but include the evidence needed to check your claims.
+
+## Create or update the report
+
+Open `reports/synthetic-report.qmd`. If it does not exist, create it in the `reports/` folder. Use the template below, replacing every square-bracketed prompt with your own checked results.
+
+The figure paths are relative to the report's location in `reports/`. They differ from paths used in the lesson pages.
+
+````markdown
+---
+title: "Synthetic metagenomics practice report"
+format:
+  html:
+    toc: true
+---
+
+## Question and inputs
+
+How do taxonomic composition, Shannon diversity and relative functional
+profiles differ between the fictional groups A and B?
+
+I used the three TSV files in data/synthetic/.
+The data and group differences were constructed for teaching; the functional
+labels are invented and do not identify real pathways.
+
+[Report sample count, group sizes and numbers of taxa and functional features.]
+
+## Methods
+
+I validated the files and ran the supplied Python workflow.
+Taxon and functional values were normalized separately by their respective
+within-sample totals. Detected taxa had values greater than zero.
+Shannon diversity used all supplied taxa and the natural logarithm.
+Plots display up to ten features with the highest mean proportions,
+combining any remaining features as Other. This was a descriptive analysis.
+
+## Verification
+
+For S01, I independently calculated total taxonomic abundance ..., detected
+taxa ... and Shannon diversity ....
+[State whether these agreed with the saved alpha-diversity table.]
+
+[Report one taxon proportion and one fictional functional proportion you checked.]
+
+## Results
+
+### Taxonomic composition
+
+![Relative composition of fictional taxa.](../results/synthetic/figures/composition.png)
+
+[Describe a sample with a taxon ID and checked proportion from
+ taxon-relative-abundance.tsv.]
+
+### Shannon diversity
+
+![Shannon diversity by fictional group; black lines show group medians.](../results/synthetic/figures/shannon-diversity.png)
+
+[Quote group medians and describe spread and overlap using alpha-diversity.tsv.
+ State the detected-taxon counts and explain the contribution of evenness.]
+
+### Functional profile
+
+![Relative proportions of fictional functional features.](../results/synthetic/figures/functional-features.png)
+
+[Describe a fictional feature and a checked proportion from
+ functional-relative-abundance.tsv. Do not assign a real pathway name.]
+
+## Limitations and next steps
+
+The data are fictional. The analysis is descriptive and does not establish
+statistical significance or causation. Proportions depend on the supplied
+feature set and do not directly measure biological activity.
+
+[State one check you would require before applying this workflow to a real study.]
+
+## Reproducibility
+
+Inputs: data/synthetic/.
+Outputs: results/synthetic/.
+Environment details: results/synthetic/tables/run-record.json.
+
+[Record the analysis date and input version or Git commit used.]
+````
+
+## Render the report
+
+Save your edits and run from the main project folder:
 
 ```bash
 quarto render reports/synthetic-report.qmd --to html
 ```
 
-Report the question, inputs and units, methods, checked findings, and limitations. Do not claim significance or causation from visuals alone.
+Quarto prints the output location. Open the generated HTML and confirm that all three figures display, captions are readable and no unfinished prompts remain. Rendering uses existing analysis results; it does not rerun the Python workflow.
+
+If a figure is missing, check that it exists in `results/synthetic/figures/` and that the report is saved in `reports/` as instructed.
+
+## Review your explanation
+
+- Does the report answer the opening question?
+- Can you trace every numerical claim to a saved table?
+- Did the S01 calculations agree, and have you explained any discrepancy?
+- Have you distinguished proportions from original abundance values?
+- Are fictional labels kept separate from real biological claims?
+
+::: {.callout-tip}
+## Ready for another dataset
+
+You have learned the workflow once: inspect, check, run, verify and explain. Repeat the same steps with the [hypertension example](../hypertension/00-start-here.qmd), paying attention to its placeholder taxa and unresolved functional-data details.
+:::
+
+[Return to the synthetic overview](00-start-here.qmd)

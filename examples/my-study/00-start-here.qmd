@@ -1,9 +1,47 @@
 # Start here
 
-::: {.callout-warning}
-This section is a preparation scaffold. No verified dataset or case-study interpretation is supplied. Complete the provenance notes in `data/my-study/README.md` before running.
-:::
+You have practised the workflow with example data. Now repeat it with your own prepared taxonomic and functional tables. You will use the same scripts, but supply your own question, sample information and interpretation.
 
-Question: How do microbial composition, Shannon diversity, and relative functional profiles vary between groups?
+If this is your first analysis, complete [Synthetic practice](../synthetic/00-start-here.qmd) and [Required setup](../../00-setup.qmd) first.
 
-Define your study question, comparison groups, and independent sampling unit.
+## Start with a question
+
+Write one question that your files can help describe. For example:
+
+> How do taxonomic composition, Shannon diversity and relative functional profiles vary between [my groups]?
+
+Replace the bracketed words with your group names. If you have only one group, ask how profiles vary **among samples** instead. A descriptive question does not assume that a difference exists or that one factor causes another.
+
+## Make a short study note
+
+| Prompt | Your answer |
+|---|---|
+| What does one sample represent? | [For example, one specimen collected at one time] |
+| What groups or conditions will I describe? | [Names and meanings] |
+| What is the independent sampling unit? | [For example, participant, animal or site] |
+| Does one unit contribute multiple samples? | [Yes, no or not yet known] |
+| Where did the tables come from? | [Study, source and processing workflow] |
+| What do the abundance values measure? | [Units and normalization for each table] |
+
+A sample ID is a file identifier. It does not prove independence: two samples may come from the same participant. The current script does not model repeated measurements or adjust for other variables.
+
+## What you need
+
+You need three compatible TSV files: sample metadata, taxonomic abundances and functional features. This workflow starts from processed tables, not raw sequencing reads. Do not create fictional functional values to fill a missing table. If you have only taxonomic data, the current three-file workflow needs adapting before use.
+
+Keep an unchanged copy of your original files. Prepare working copies in `data/my-study/` and save results in `results/my-study/`.
+
+## Your route
+
+1. [Preview the outputs](01-see-the-result.qmd).
+2. [Prepare and understand your inputs](02-meet-the-data.qmd).
+3. [Validate the files](03-check-the-inputs.qmd).
+4. [Run the workflow](04-run-the-analysis.qmd).
+5. [Verify a sample and explain the results](05-verify-and-explain.qmd).
+6. [Write your report](06-export-the-report.qmd).
+
+Run commands in the terminal from the **main project folder**, with your Python environment active. Rendering the guide does not run the analysis. For blocks beginning `python - <<'PY'`, copy the entire block, including the closing `PY` line.
+
+**Ready to continue:** you have a question, know what a sample represents and can identify the source of your three tables.
+
+[Next: Preview the outputs](01-see-the-result.qmd)
