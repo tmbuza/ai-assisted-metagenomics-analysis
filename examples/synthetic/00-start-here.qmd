@@ -1,4 +1,4 @@
-# Start here
+# Synthetic practice: learn the workflow
 
 Begin here after completing [Required setup](../../00-setup.qmd). You will use a small fictional dataset to learn the complete analysis workflow before working with the larger hypertension example or your own study.
 

@@ -44,7 +44,117 @@
     "href": "00-setup.html",
     "title": "Required setup",
     "section": "",
-    "text": "Follow steps 1–2 in the project README. Run all commands in a terminal from the main project folder. Quarto is only needed to preview or render the guide and report.",
+    "text": "1. Gather the software and project files\nThis page takes you from the downloaded project to your first successful input check. You do not need to read the README or clone a Git repository to get started.\nUse the official Python download page, VS Code website and Quarto installation page. Choose installers for your operating system and follow their instructions. Close and reopen your terminal after installation so new commands can be found.\nYou can run the Python analysis before installing Quarto. You need Quarto when you want to preview or render QMD pages or the HTML report. The terminal-based steps here do not require a Jupyter notebook.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#gather-the-software-and-project-files",
+    "href": "00-setup.html#gather-the-software-and-project-files",
+    "title": "Required setup",
+    "section": "",
+    "text": "Item\nWhat you need it for\n\n\n\n\nProject download\nContains the data, scripts, lessons and report template\n\n\nPython 3.10 or later\nRuns the input checks, analysis and verification\n\n\nVS Code or another text editor\nOpens the project and lets you edit reports\n\n\nQuarto\nPreviews or renders the guide and reports; separate from Python",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#open-the-main-project-folder",
+    "href": "00-setup.html#open-the-main-project-folder",
+    "title": "Required setup",
+    "section": "2. Open the main project folder",
+    "text": "2. Open the main project folder\n\nDownload the complete project ZIP and extract it. Do not work inside the compressed ZIP.\nIn VS Code, choose File → Open Folder and select ai-assisted-metagenomics-analysis.\nCheck the file list: you should see _quarto.yml, requirements.txt, data/, scripts/ and examples/ directly inside the selected folder.\nChoose Terminal → New Terminal.\n\nThis is the main project folder. Run all guide commands here. If your download created an extra outer folder, open the inner folder that actually contains those files.\nTo see your current location and files:\n\nmacOS or Linux terminal\npwd\nls\n\n\nWindows PowerShell\nGet-Location\nGet-ChildItem\nIf the expected files are missing, reopen the correct folder and a new terminal before continuing.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#create-a-python-environment",
+    "href": "00-setup.html#create-a-python-environment",
+    "title": "Required setup",
+    "section": "3. Create a Python environment",
+    "text": "3. Create a Python environment\nA virtual environment is a project-specific place for Python packages. We will name it .venv, keeping the analysis packages separate from other projects.\nFollow only the instructions for your operating system. Run each line in order.\n\nmacOS or Linux\npython3 --version\npython3 -m venv .venv\nsource .venv/bin/activate\nThe version must be Python 3.10 or later. If python3 is missing or older, install a supported Python version first. If Linux reports that venv is unavailable, use your distribution’s instructions to install the matching Python venv support, then repeat environment creation.\n\n\nWindows PowerShell\npy --version\npy -m venv .venv\n.\\.venv\\Scripts\\Activate.ps1\nIf py is unavailable but python --version reports Python 3.10 or later, use python -m venv .venv to create the environment instead.\nIf PowerShell blocks the activation script, you can use Command Prompt without changing PowerShell’s policy. In VS Code’s terminal dropdown, open a Command Prompt terminal in the same project folder, then run:\n.venv\\Scripts\\activate.bat\n\n\nCheck that activation worked\nYour prompt will usually start with (.venv). The exact computer name and folder text will differ from examples in this guide.\nRun:\npython --version\npython -c \"import sys; print(sys.executable); print('Virtual environment active:', sys.prefix != sys.base_prefix)\"\nThe interpreter path should point inside this project’s .venv folder, and the last line should say Virtual environment active: True. After activation, use python for the remaining commands on all platforms.\nIf .venv already exists: activate it and check the interpreter; you do not need to recreate it for every session. If you moved the project or changed the Python installation, the old environment may need recreating.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#install-and-check-the-analysis-packages",
+    "href": "00-setup.html#install-and-check-the-analysis-packages",
+    "title": "Required setup",
+    "section": "4. Install and check the analysis packages",
+    "text": "4. Install and check the analysis packages\nWith the environment active, run:\npython -m pip install --upgrade pip\npython -m pip install -r requirements.txt\nrequirements.txt is the project’s package list. python -m pip installs into the Python environment you just checked. Installation needs an internet connection and may take a few minutes. Wait until the terminal prompt returns before entering the next command.\nNow check the packages used by the workflow:\npython -c \"import numpy, pandas, matplotlib; print('Analysis packages loaded successfully.')\"\nExpected message:\nAnalysis packages loaded successfully.\nIf an import fails, check activation and repeat the requirements installation. Keep any installation error message; do not continue as though installation succeeded.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#check-the-synthetic-inputs",
+    "href": "00-setup.html#check-the-synthetic-inputs",
+    "title": "Required setup",
+    "section": "5. Check the synthetic inputs",
+    "text": "5. Check the synthetic inputs\nKeep the bundled synthetic files unchanged for your first run. This command validates them without generating new analysis results:\npython scripts/python/run_workflow.py --data-dir data/synthetic --output-dir results/synthetic --check-only\nFor the bundled dataset described in this project, expect:\nInput checks passed: 12 samples; 2 groups.\nIf your input version has been intentionally changed, compare the reported counts with its metadata. If they differ unexpectedly, check that you downloaded the intended project version and are using data/synthetic/.\nThe check confirms technical compatibility: headers, sample IDs and numerical values meet the script’s requirements. It does not establish biological validity or statistical significance. --check-only does not refresh existing figures.\n\n\n\n\n\n\nSetup checkpoint\n\n\n\nContinue when the environment check says True, the package imports succeed and the synthetic input check passes. You are ready to run the analysis in Synthetic practice.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#understand-where-things-live",
+    "href": "00-setup.html#understand-where-things-live",
+    "title": "Required setup",
+    "section": "6. Understand where things live",
+    "text": "6. Understand where things live\n\n\n\n\n\n\n\nLocation\nPurpose\n\n\n\n\ndata/\nInput tables, separated by dataset\n\n\nscripts/python/\nReusable checking, analysis and verification code\n\n\nexamples/\nSeven lesson pages per dataset\n\n\nresults/\nGenerated figures, tables and run records\n\n\nreports/\nYour QMD reports\n\n\ndocs/\nRendered guide produced by the project build\n\n\n.venv/\nLocal Python environment\n\n\n\nCommands use paths such as data/synthetic/ relative to the main project folder. Opening a terminal inside examples/synthetic/ changes what those paths refer to and can cause file-not-found errors.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#preview-and-render-with-quarto",
+    "href": "00-setup.html#preview-and-render-with-quarto",
+    "title": "Required setup",
+    "section": "7. Preview and render with Quarto",
+    "text": "7. Preview and render with Quarto\nIf Quarto is installed, check that the command is available:\nquarto --version\nTo preview the guide from the main project folder:\nquarto preview\nOpen the local address printed in the terminal if a browser does not open automatically. Preview keeps running while you work. To stop it and get your terminal prompt back, press Ctrl+C. You can also open a second terminal, but activate .venv there before running Python commands.\nTo build the complete guide:\nquarto render\nThe project is configured to write the guide to docs/. To render a completed synthetic report separately:\nquarto render reports/synthetic-report.qmd --to html\nFollow the lesson before completing the report. Quarto prints the rendered report’s location. The QMD pages display commands and existing figures; rendering does not run the Python analysis. Regenerate results in the terminal after changing inputs, then render again.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#copy-code-into-the-right-place",
+    "href": "00-setup.html#copy-code-into-the-right-place",
+    "title": "Required setup",
+    "section": "8. Copy code into the right place",
+    "text": "8. Copy code into the right place\nCopy code from a displayed block without the surrounding Markdown backticks. Do not copy terminal prompts such as $, &gt; or (.venv).\n\n\n\n\n\n\n\nWhat you see in the guide\nWhat to do\n\n\n\n\npython scripts/python/...\nPaste the command into your terminal\n\n\npython -c \"...\"\nPaste the whole line into your terminal\n\n\nA block starting python - &lt;&lt;'PY'\nIn macOS/Linux Bash or Zsh, paste the whole block through its final PY line\n\n\nA report template starting with ---\nPaste into the named .qmd file in your editor\n\n\n\nWindows PowerShell and Command Prompt do not support the Bash &lt;&lt;'PY' wrapper. For those longer Python examples, copy only the Python lines between the opening wrapper and closing PY into a file named check_values.py in the main project folder. Save it, then run:\npython check_values.py\nDo not include python - &lt;&lt;'PY' or the final PY in that file. You can use this saved-script approach on macOS or Linux too. The calculations are the same.\nIf your prompt is &gt;&gt;&gt;, you are inside interactive Python. Enter exit() to return to the terminal before running shell commands. If a Bash terminal shows continuation prompts &gt; after an incomplete paste, finish with the closing PY on its own line or press Ctrl+C and paste the complete block again.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#return-for-another-session",
+    "href": "00-setup.html#return-for-another-session",
+    "title": "Required setup",
+    "section": "9. Return for another session",
+    "text": "9. Return for another session\nOpen the project and a terminal, then activate the existing environment:\n\nmacOS/Linux: source .venv/bin/activate\nPowerShell: .\\.venv\\Scripts\\Activate.ps1\nCommand Prompt: .venv\\Scripts\\activate.bat\n\nYou do not need to reinstall packages each time. To leave the environment:\ndeactivate",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#if-something-goes-wrong",
+    "href": "00-setup.html#if-something-goes-wrong",
+    "title": "Required setup",
+    "section": "If something goes wrong",
+    "text": "If something goes wrong\n\n\n\nSymptom\nFirst thing to try\n\n\n\n\nPython or py not found\nCheck installation and reopen the terminal\n\n\nrequirements.txt or a script not found\nConfirm the main project folder is open\n\n\nModuleNotFoundError\nActivate .venv, check the interpreter and install requirements\n\n\nPowerShell activation blocked\nUse the Command Prompt activation option above\n\n\nInput check failed\nRead the named file/error and follow input troubleshooting\n\n\nquarto not found\nInstall Quarto separately and reopen the terminal; Python analysis can proceed\n\n\nFigure missing after rendering\nRun the analysis first, then check output paths and render again\n\n\n\nIf you need help, share the exact command, full error message, operating system and whether .venv is active. Those details make the problem easier to reproduce.\nNext: Start synthetic practice",
     "crumbs": [
       "Required setup",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
@@ -53,45 +163,45 @@
   {
     "objectID": "examples/synthetic/00-start-here.html",
     "href": "examples/synthetic/00-start-here.html",
-    "title": "Start here",
+    "title": "Synthetic practice: learn the workflow",
     "section": "",
     "text": "What you will learn\nBegin here after completing Required setup. You will use a small fictional dataset to learn the complete analysis workflow before working with the larger hypertension example or your own study.\nThe data were constructed for teaching. Group labels, taxon abundances and functional features do not represent a real experiment. The functional labels are invented identifiers and must not be assigned real pathway names.\nBy the end, you should be able to:",
     "crumbs": [
       "Synthetic practice",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Synthetic practice: learn the workflow</span>"
     ]
   },
   {
     "objectID": "examples/synthetic/00-start-here.html#what-you-will-learn",
     "href": "examples/synthetic/00-start-here.html#what-you-will-learn",
-    "title": "Start here",
+    "title": "Synthetic practice: learn the workflow",
     "section": "",
     "text": "Connect sample metadata to taxonomic and functional abundance tables.\nCheck the inputs and run the supplied Python script.\nExplain proportions, detected taxa, Shannon diversity and group medians.\nRecalculate sample S01 and compare it with saved results.\nWrite a short report supported by figures and numbers.",
     "crumbs": [
       "Synthetic practice",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Synthetic practice: learn the workflow</span>"
     ]
   },
   {
     "objectID": "examples/synthetic/00-start-here.html#follow-the-pages-in-order",
     "href": "examples/synthetic/00-start-here.html#follow-the-pages-in-order",
-    "title": "Start here",
+    "title": "Synthetic practice: learn the workflow",
     "section": "Follow the pages in order",
     "text": "Follow the pages in order\n\n\n\nPage\nYour task\n\n\n\n\nPreview the results\nLearn to read the three figures\n\n\nMeet the data\nUnderstand rows, columns and sample IDs\n\n\nCheck the inputs\nConfirm that the files can be processed\n\n\nRun the analysis\nGenerate figures and numerical tables\n\n\nVerify and explain\nCheck one sample and explain the patterns\n\n\nWrite the report\nCreate a short reproducible report",
     "crumbs": [
       "Synthetic practice",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Synthetic practice: learn the workflow</span>"
     ]
   },
   {
     "objectID": "examples/synthetic/00-start-here.html#how-to-use-the-commands",
     "href": "examples/synthetic/00-start-here.html#how-to-use-the-commands",
-    "title": "Start here",
+    "title": "Synthetic practice: learn the workflow",
     "section": "How to use the commands",
     "text": "How to use the commands\nRun all commands in the terminal, from the main project folder, with the Python environment active. This is the folder containing scripts/, data/ and _quarto.yml.\nThe code blocks are instructions to copy into your terminal. Rendering the guide does not execute them. When a block starts with python - &lt;&lt;'PY', copy the whole block, including the final PY line: it runs the enclosed Python code in your terminal.\nInput files are in data/synthetic/; outputs go to results/synthetic/. Keeping these folders separate helps you trace a result back to its input.\nBefore you continue: state the question in your own words. What would you need to check before interpreting a similar pattern in a real study?\nNext: Preview the results",
     "crumbs": [
       "Synthetic practice",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Synthetic practice: learn the workflow</span>"
     ]
   },
   {
@@ -427,45 +537,45 @@
   {
     "objectID": "examples/hypertension/00-start-here.html",
     "href": "examples/hypertension/00-start-here.html",
-    "title": "Start here",
+    "title": "Hypertension example: apply the workflow",
     "section": "",
     "text": "What you are working with\nThis example takes you from three prepared tables to figures, checked numerical results and a short report. Complete Required setup and synthetic practice first, then repeat the workflow here with a larger dataset.\nThe metadata contains 195 sample IDs: 98 HTN, 56 pHTN and 41 Control. These are sample counts; do not assume they represent 195 independent participants until participant and sampling information has been checked.",
     "crumbs": [
       "Hypertension case study — preparation",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Hypertension example: apply the workflow</span>"
     ]
   },
   {
     "objectID": "examples/hypertension/00-start-here.html#what-you-are-working-with",
     "href": "examples/hypertension/00-start-here.html#what-you-are-working-with",
-    "title": "Start here",
+    "title": "Hypertension example: apply the workflow",
     "section": "",
     "text": "Input\nCurrent status\nWhat you can use it for\n\n\n\n\nSample metadata\nSample IDs and group labels, with enterotype and source_shannon_index\nMatch samples and organize descriptive comparisons\n\n\nTaxonomic abundance\n12 synthetic placeholder taxa\nPractise composition, diversity calculation and verification\n\n\nFunctional features\n14 supplied numerical features; source and units still need confirmation\nPractise processing and inspect provisional relative profiles\n\n\n\n\n\n\n\n\n\nA workflow exercise with incomplete study inputs\n\n\n\nThe taxonomic abundances are synthetic placeholders. Composition and Shannon results calculated from them do not describe the hypertension study. Functional interpretations remain provisional until the source, feature definitions and units are documented. A successful script run confirms technical compatibility; it does not establish biological validity.",
     "crumbs": [
       "Hypertension case study — preparation",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Hypertension example: apply the workflow</span>"
     ]
   },
   {
     "objectID": "examples/hypertension/00-start-here.html#by-the-end-you-should-be-able-to",
     "href": "examples/hypertension/00-start-here.html#by-the-end-you-should-be-able-to",
-    "title": "Start here",
+    "title": "Hypertension example: apply the workflow",
     "section": "By the end, you should be able to",
     "text": "By the end, you should be able to\n\nExplain how the metadata connects to the two abundance tables.\nValidate the inputs and run the supplied Python workflow.\nRead stacked bar plots and distinguish richness from evenness.\nRecalculate one sample’s results and compare them with saved values.\nWrite a descriptive observation supported by numbers, with a clear limitation.",
     "crumbs": [
       "Hypertension case study — preparation",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Hypertension example: apply the workflow</span>"
     ]
   },
   {
     "objectID": "examples/hypertension/00-start-here.html#your-route-through-the-example",
     "href": "examples/hypertension/00-start-here.html#your-route-through-the-example",
-    "title": "Start here",
+    "title": "Hypertension example: apply the workflow",
     "section": "Your route through the example",
     "text": "Your route through the example\n\n\n\nStep\nWhat you will do\n\n\n\n\nPreview the results\nLearn what each figure shows\n\n\nMeet the data\nInspect the files and their orientation\n\n\nCheck the inputs\nResolve formatting and value problems\n\n\nRun the analysis\nGenerate the figures and tables\n\n\nVerify and explain\nCheck one sample and support your observations\n\n\nWrite the report\nProduce a short, transparent account of the exercise\n\n\n\nRun all terminal commands from the main project folder, with your Python environment active. Commands shown in this guide are copied into the terminal; rendering the guide does not execute them.\nBefore you continue: explain why the question can guide a practice exercise even though the current files cannot answer the biological study question.\nNext: Preview the results",
     "crumbs": [
       "Hypertension case study — preparation",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Hypertension example: apply the workflow</span>"
     ]
   },
   {
@@ -812,56 +922,56 @@
   {
     "objectID": "examples/my-study/00-start-here.html",
     "href": "examples/my-study/00-start-here.html",
-    "title": "Start here",
+    "title": "Your study: analyse your own data",
     "section": "",
     "text": "Start with a question\nYou have practised the workflow with example data. Now repeat it with your own prepared taxonomic and functional tables. You will use the same scripts, but supply your own question, sample information and interpretation.\nIf this is your first analysis, complete Synthetic practice and Required setup first.\nWrite one question that your files can help describe. For example:\nReplace the bracketed words with your group names. If you have only one group, ask how profiles vary among samples instead. A descriptive question does not assume that a difference exists or that one factor causes another.",
     "crumbs": [
       "Your own study",
-      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Your study: analyse your own data</span>"
     ]
   },
   {
     "objectID": "examples/my-study/00-start-here.html#start-with-a-question",
     "href": "examples/my-study/00-start-here.html#start-with-a-question",
-    "title": "Start here",
+    "title": "Your study: analyse your own data",
     "section": "",
     "text": "How do taxonomic composition, Shannon diversity and relative functional profiles vary between [my groups]?",
     "crumbs": [
       "Your own study",
-      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Your study: analyse your own data</span>"
     ]
   },
   {
     "objectID": "examples/my-study/00-start-here.html#make-a-short-study-note",
     "href": "examples/my-study/00-start-here.html#make-a-short-study-note",
-    "title": "Start here",
+    "title": "Your study: analyse your own data",
     "section": "Make a short study note",
     "text": "Make a short study note\n\n\n\n\n\n\n\nPrompt\nYour answer\n\n\n\n\nWhat does one sample represent?\n[For example, one specimen collected at one time]\n\n\nWhat groups or conditions will I describe?\n[Names and meanings]\n\n\nWhat is the independent sampling unit?\n[For example, participant, animal or site]\n\n\nDoes one unit contribute multiple samples?\n[Yes, no or not yet known]\n\n\nWhere did the tables come from?\n[Study, source and processing workflow]\n\n\nWhat do the abundance values measure?\n[Units and normalization for each table]\n\n\n\nA sample ID is a file identifier. It does not prove independence: two samples may come from the same participant. The current script does not model repeated measurements or adjust for other variables.",
     "crumbs": [
       "Your own study",
-      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Your study: analyse your own data</span>"
     ]
   },
   {
     "objectID": "examples/my-study/00-start-here.html#what-you-need",
     "href": "examples/my-study/00-start-here.html#what-you-need",
-    "title": "Start here",
+    "title": "Your study: analyse your own data",
     "section": "What you need",
     "text": "What you need\nYou need three compatible TSV files: sample metadata, taxonomic abundances and functional features. This workflow starts from processed tables, not raw sequencing reads. Do not create fictional functional values to fill a missing table. If you have only taxonomic data, the current three-file workflow needs adapting before use.\nKeep an unchanged copy of your original files. Prepare working copies in data/my-study/ and save results in results/my-study/.",
     "crumbs": [
       "Your own study",
-      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Your study: analyse your own data</span>"
     ]
   },
   {
     "objectID": "examples/my-study/00-start-here.html#your-route",
     "href": "examples/my-study/00-start-here.html#your-route",
-    "title": "Start here",
+    "title": "Your study: analyse your own data",
     "section": "Your route",
     "text": "Your route\n\nPreview the outputs.\nPrepare and understand your inputs.\nValidate the files.\nRun the workflow.\nVerify a sample and explain the results.\nWrite your report.\n\nRun commands in the terminal from the main project folder, with your Python environment active. Rendering the guide does not run the analysis. For blocks beginning python - &lt;&lt;'PY', copy the entire block, including the closing PY line.\nReady to continue: you have a question, know what a sample represents and can identify the source of your three tables.\nNext: Preview the outputs",
     "crumbs": [
       "Your own study",
-      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Start here</span>"
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Your study: analyse your own data</span>"
     ]
   },
   {
@@ -1166,18 +1276,117 @@
     "href": "99-appendix.html",
     "title": "Appendix A — Appendix",
     "section": "",
-    "text": "Shannon diversity\nFor positive taxon proportions \\(p_i\\), \\(H=-\\sum_i p_i\\ln(p_i)\\). Zero proportions contribute zero. Detected taxa count features with abundance greater than zero. Total abundance is the sum of the supplied units, not necessarily read depth.",
+    "text": "A small vocabulary\nUse this page as a reference while working through the examples. Begin with Required setup if you have not prepared your environment.\nA sample ID is an identifier, not evidence that the sample is independent of every other sample.",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
     ]
   },
   {
-    "objectID": "99-appendix.html#functional-profiles",
-    "href": "99-appendix.html#functional-profiles",
+    "objectID": "99-appendix.html#a-small-vocabulary",
+    "href": "99-appendix.html#a-small-vocabulary",
     "title": "Appendix A — Appendix",
-    "section": "Functional profiles",
-    "text": "Functional profiles\nFeature abundance, pathway abundance, and pathway coverage have different meanings. Confirm the source units and feature definitions before deciding whether within-sample normalization is appropriate. This starter requires an abundance-like matrix with positive sample totals.",
+    "section": "",
+    "text": "Term\nMeaning in this guide\n\n\n\n\nSample\nOne column of values in an abundance table, linked to one metadata row\n\n\nTaxon\nA taxonomic feature represented by one row; its rank/resolution must be documented\n\n\nFunctional feature\nA supplied numerical feature whose definition and units must be understood\n\n\nAbundance\nThe original numerical value supplied for a feature and sample\n\n\nProportion\nA feature value divided by the corresponding within-sample total\n\n\nDetected taxa\nNumber of taxon values greater than zero in the supplied table\n\n\nMetadata\nInformation describing the samples, including the required group label\n\n\nIndependent sampling unit\nThe participant, animal, site or other unit that provides independent information\n\n\nTSV\nPlain-text table with tabs separating columns",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#taxonomic-proportions-and-detected-taxa",
+    "href": "99-appendix.html#taxonomic-proportions-and-detected-taxa",
+    "title": "Appendix A — Appendix",
+    "section": "Taxonomic proportions and detected taxa",
+    "text": "Taxonomic proportions and detected taxa\nFor one sample with taxon values \\(x_1,\\ldots,x_k\\), the total is \\(T=\\sum_i x_i\\) and the proportion of taxon \\(i\\) is \\(p_i=x_i/T\\). Values must be finite and nonnegative, with \\(T&gt;0\\).\nThe proportions sum to 1. Multiply by 100 to express them as percentages. Total abundance is the sum of the supplied units; it is not necessarily sequencing depth or cell count.\nDetected taxa count rows with values greater than zero. Zero-valued rows remain in the table but do not contribute to observed richness. Resolution, filtering and profiling method affect what this count represents.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#shannon-diversity",
+    "href": "99-appendix.html#shannon-diversity",
+    "title": "Appendix A — Appendix",
+    "section": "Shannon diversity",
+    "text": "Shannon diversity\nUsing natural logarithms:\n\\[\nH=-\\sum_{i:p_i&gt;0}p_i\\ln(p_i).\n\\]\nZero proportions contribute zero and are excluded from the logarithm calculation. Richness and evenness both affect Shannon diversity.\n\n\n\nProportions\nDetected taxa\nShannon, approximately\n\n\n\n\n0.5, 0.5\n2\n0.6931\n\n\n0.9, 0.1\n2\n0.3251\n\n\n\nBoth examples have two detected taxa, but the more even distribution has higher Shannon diversity. If richness differs between samples, both richness and evenness may contribute to a difference. With \\(S\\) detected taxa, equal proportions give the maximum \\(H=\\ln(S)\\) for that \\(S\\). With only one detected taxon, \\(H=0\\).\nShannon computed from a filtered or placeholder table need not match a source study’s reported value. Compare values only after checking the same profiles, filtering, taxonomic resolution and logarithm base were used.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#verified-synthetic-example-s01",
+    "href": "99-appendix.html#verified-synthetic-example-s01",
+    "title": "Appendix A — Appendix",
+    "section": "Verified synthetic example: S01",
+    "text": "Verified synthetic example: S01\nThe learner’s independent calculation for the current synthetic dataset agreed with the saved workflow values:\n\n\n\nQuantity\nChecked value\n\n\n\n\nTotal taxonomic abundance\n546\n\n\nDetected taxa\n8\n\n\nNatural-log Shannon diversity\n2.012363\n\n\nLargest taxon\nTaxon_06\n\n\nTaxon_06 proportion\n0.170330, approximately 17.03%\n\n\n\nThese values are reference answers for that input version, not universal answers for every dataset. If you change the inputs, recalculate them. An agreement check supports the quantities checked for that sample; it does not validate an entire study or establish a group difference.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#functional-profiles-and-their-limits",
+    "href": "99-appendix.html#functional-profiles-and-their-limits",
+    "title": "Appendix A — Appendix",
+    "section": "Functional profiles and their limits",
+    "text": "Functional profiles and their limits\nThe script divides each supplied functional value by that sample’s supplied functional total. Before interpreting the result, confirm what the original values measure and whether summing them is meaningful.\n\nFeature abundance, pathway abundance and pathway coverage are different measurements.\nOverlapping categories can share underlying information; they are not necessarily independent parts of a biological whole.\nA selected set of features gives proportions within that set, not necessarily proportions of every function in the sample.\nA larger proportion can reflect an increase in one feature, decreases in others or both.\nRelative profiles do not directly measure pathway activity or absolute quantities.\n\nThe synthetic functional labels are invented identifiers, not named biological pathways. The hypertension functional data still require verified source, definitions and units. For your study, record those details before making biological claims.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#read-plots-alongside-tables",
+    "href": "99-appendix.html#read-plots-alongside-tables",
+    "title": "Appendix A — Appendix",
+    "section": "Read plots alongside tables",
+    "text": "Read plots alongside tables\nStacked bars display up to ten features selected by highest mean within-sample proportions across all samples. Remaining features are combined as Other. That selection is for display, not a test of which features differ between groups. Shannon uses all supplied taxa.\nDiversity dots show individual values; black lines show group medians. Horizontal offsets separate dots only. Examine spread, sample counts, detected-taxon counts and overlap alongside medians.\nSaved tables are the numerical evidence for observations. A visual difference alone does not establish significance, causation or an appropriate statistical model.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#what-an-agreement-check-means",
+    "href": "99-appendix.html#what-an-agreement-check-means",
+    "title": "Appendix A — Appendix",
+    "section": "What an agreement check means",
+    "text": "What an agreement check means\nIndependent Python code reads the input, recalculates values and compares them with saved results. math.isclose allows tiny numerical differences due to floating-point representation. A True result indicates agreement within the stated tolerance.\nIf values disagree, check sample selection, input versions, output folder, method and whether results were regenerated. Do not edit a saved result to make it match. Correct the cause and repeat the analysis.\nFor instructions on running long Python blocks in different terminals, see Copy code into the right place.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#keep-the-work-reproducible",
+    "href": "99-appendix.html#keep-the-work-reproducible",
+    "title": "Appendix A — Appendix",
+    "section": "Keep the work reproducible",
+    "text": "Keep the work reproducible\nRetain the exact inputs, source/preparation notes, scripts, outputs and report. Record the analysis date and input or Git version. The workflow’s run-record.json records Python/package versions and the input directory, but does not record input checksums or every preprocessing decision.\nThe starter’s dependencies are not pinned to exact versions. A run record describes the environment used; it does not recreate it by itself. For a research release, record and manage the environment and input versions explicitly.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#use-ai-with-checked-evidence",
+    "href": "99-appendix.html#use-ai-with-checked-evidence",
+    "title": "Appendix A — Appendix",
+    "section": "Use AI with checked evidence",
+    "text": "Use AI with checked evidence\nAI can help explain a line of Python, clarify an error or draft a result paragraph. Supply the exact command or checked numerical values and relevant units. Then check the explanation against the source tables and study design. Do not treat plausible wording as verification.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#official-software-references",
+    "href": "99-appendix.html#official-software-references",
+    "title": "Appendix A — Appendix",
+    "section": "Official software references",
+    "text": "Official software references\n\nPython virtual environments\nQuarto installation and getting started\n\nReturn to the guide overview",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"

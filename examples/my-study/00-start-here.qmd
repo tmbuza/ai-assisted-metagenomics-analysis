@@ -1,4 +1,4 @@
-# Start here
+# Your study: analyse your own data
 
 You have practised the workflow with example data. Now repeat it with your own prepared taxonomic and functional tables. You will use the same scripts, but supply your own question, sample information and interpretation.
 

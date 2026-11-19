@@ -1,16 +1,40 @@
 # AI-Assisted Metagenomics Analysis
 
-A CDI learning project for exploring microbial composition, Shannon diversity, and functional profiles with Python. Use AI to help explain code and draft interpretations, then check the inputs, calculations, and claims yourself.
+A free CDI learning project for exploring processed taxonomic and functional profiles with Python. Learn to check inputs, run an analysis, verify calculations and explain results with evidence and limitations.
 
-Start with the complete synthetic practice. The hypertension case study is a preparation section: real taxonomic profiles, functional units, source attribution, and study design must be verified before analysis. Your own study uses the same input contract.
+Use AI to help understand code or draft an explanation, then check the calculations and claims yourself.
 
-## 1. Open the project
+## Start here
 
-Download and unzip this folder, then open it in VS Code. Open a terminal in `ai-assisted-metagenomics-analysis`, the folder containing this README. Run all commands below there. You do not need to clone a repository to use this download.
+**New to the project? Follow the complete Required setup page in the guide.** It covers software, the project folder, Python environments, package installation, terminal use and troubleshooting. The source is [`00-setup.qmd`](00-setup.qmd).
 
-## 2. Create a Python environment
+To open the guide locally after installing Quarto, run this from the main project folder:
 
-Use Python 3.10 or later. On macOS or Linux:
+```bash
+quarto preview
+```
+
+Open the address printed in the terminal. Press **Ctrl+C** to stop preview. Quarto is a separate application; it is not installed by pip. You can complete the Python analysis without it.
+
+The QMD links in this README point to lesson source files in the repository. Use the rendered guide for the formatted learning experience. Learner-facing guide pages explain their requirements directly rather than sending learners back to this README.
+
+## The learning route
+
+| Example | Purpose | Current data status |
+|---|---|---|
+| [Synthetic practice](examples/synthetic/00-start-here.qmd) | Learn the complete workflow, inspect Python calculations and verify S01 | Fictional data; functional labels are invented identifiers, not real pathways |
+| [Hypertension example](examples/hypertension/00-start-here.qmd) | Repeat the workflow with 195 samples: 98 HTN, 56 pHTN and 41 Control | Taxonomic abundances are synthetic placeholders; functional source, definitions and units still require verification |
+| [Your own study](examples/my-study/00-start-here.qmd) | Prepare your tables, verify a sample and write your own report | Learner-supplied data, with documented provenance and units |
+
+Each example follows the same sequence: define the question, preview results, meet the inputs, validate, analyse, verify and explain, then write the report. Exact commands appear in the corresponding lesson pages.
+
+## Quick start for terminal users
+
+Download and extract the complete project. Open `ai-assisted-metagenomics-analysis` in your editor and open a terminal there. You should see `_quarto.yml`, `requirements.txt`, `scripts/` and `data/`. No Git clone is required for a downloaded copy.
+
+Use Python 3.10 or later. Create an environment once, then activate it whenever you open a new terminal.
+
+### macOS or Linux
 
 ```bash
 python3 --version
@@ -18,93 +42,91 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-On Windows PowerShell:
+### Windows PowerShell
 
 ```powershell
 py --version
 py -m venv .venv
-.venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 ```
 
-With the environment active, install the analysis packages:
+If PowerShell blocks activation, open Command Prompt in the project folder and use `.venv\Scripts\activate.bat`. The setup page explains alternatives if `py` is unavailable.
+
+### Install, check, run and verify
+
+With the environment active:
 
 ```bash
-pip install --upgrade pip
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
-```
-
-## 3. Check the inputs
-
-```bash
+python -c "import numpy, pandas, matplotlib; print('Analysis packages loaded successfully.')"
 python scripts/python/run_workflow.py --data-dir data/synthetic --output-dir results/synthetic --check-only
-```
-
-Expected message: `Input checks passed: 12 samples; 2 groups.`
-
-## 4. Run the analysis
-
-```bash
 python scripts/python/run_workflow.py --data-dir data/synthetic --output-dir results/synthetic
-```
-
-This creates composition, Shannon diversity, and functional-profile figures in `results/synthetic/figures`, and tables plus a run record in `results/synthetic/tables`. Bundled figures let you preview the result before running the code.
-
-## 5. Verify one sample
-
-```bash
 python scripts/python/verify_sample.py data/synthetic results/synthetic S01
 ```
 
-The verification independently recalculates the sample total, number of detected taxa, and Shannon diversity, then compares them with the saved table. A mismatch exits with an error. These synthetic abundance units are illustrative, not sequencing-read counts.
+For the bundled synthetic version, validation reports `Input checks passed: 12 samples; 2 groups.` The independently checked S01 reference values are total abundance **546**, **8** detected taxa and natural-log Shannon diversity **2.012363**. If inputs change, recalculate these values rather than forcing agreement.
 
-## 6. Explain and report
+`--check-only` does not refresh outputs. The full run creates or replaces named results in `results/synthetic/`. Verification recalculates one sample and compares it with the saved diversity table. The lesson also shows Python code for independent checks of taxon and functional proportions.
 
-Follow `examples/synthetic/00-start-here.qmd` through `06-export-the-report.qmd`. Edit `reports/synthetic-report.qmd`, replacing the prompts with your interpretation and checked values.
+The longer lesson blocks using `python - <<'PY'` are for Bash/Zsh. In PowerShell or Command Prompt, save only the enclosed Python lines as a `.py` file and run it with `python filename.py`; see the setup page for the full explanation.
 
-Quarto is a separate application; it is not installed by pip. If Quarto is installed:
+## Inputs and outputs
+
+All inputs are TSV files with unique headers and row identifiers. Metadata has samples in rows; both abundance tables have samples in columns.
+
+| Filename | First header | Remaining columns |
+|---|---|---|
+| `sample-metadata.tsv` | `sample_id` | Required `group`; optional sample annotations |
+| `taxon-abundance.tsv` | `taxon_id` | Sample IDs with taxonomic abundance values |
+| `functional-features.tsv` | `feature_id` | Sample IDs with functional feature values |
+
+Sample IDs must match exactly across the three files; order may differ. Tables must have no blank cells. Abundances must be finite, numeric and nonnegative, with a positive total per sample in each abundance table. One descriptive group is supported. The current workflow requires both abundance tables; do not invent functional values to fill a missing file.
+
+Each run writes three figures to `results/<dataset>/figures/`: composition, Shannon diversity and functional profile. It also writes diversity and relative-abundance tables plus `run-record.json` to `results/<dataset>/tables/`.
+
+## Reports and rendering
+
+Each example's final page includes a report template and correct figure paths. Complete the prompts with your checked values. For synthetic practice:
 
 ```bash
 quarto render reports/synthetic-report.qmd --to html
-quarto preview
 ```
 
-To build the whole guide:
+To build the full guide:
 
 ```bash
 quarto render
 ```
 
-The book is written to `docs/`. Python analysis runs explicitly in the terminal; Quarto pages do not execute analysis code.
+The guide build writes to `docs/`. Quarto displays existing results; it does not execute the Python analysis in these lesson pages. After changing inputs, rerun Python before rendering the updated figures.
 
-## Input contract
+## Scope and reproducibility
 
-All input files are tab-separated. Taxa and functional features are rows; sample IDs are columns. Column names and sample IDs must be unique. All three files must have exactly matching sample IDs; order may differ.
+This workflow begins with processed profiles, not raw sequencing reads. It is descriptive: it does not test group differences, account for repeated samples, adjust for confounders or establish causation.
 
-| File | First column | Other columns |
-| --- | --- | --- |
-| `taxon-abundance.tsv` | `taxon_id` | Nonnegative finite numeric abundances per sample |
-| `functional-features.tsv` | `feature_id` | Nonnegative finite numeric abundances per sample |
-| `sample-metadata.tsv` | `sample_id` | Required `group`; optional study covariates |
+Taxonomic and functional values are normalized separately within samples. Confirm the units and feature definitions before deciding whether this is biologically appropriate. Relative profiles do not directly establish absolute abundance or functional activity. Hypertension placeholder composition and Shannon values cannot support conclusions about the source study.
 
-Each sample must have a positive total in both abundance tables. Record profiling tool, database/version, taxonomic rank, functional definitions, and units before using real data. Do not mix taxonomic ranks or incompatible units. Functional values are normalized within each sample for the exploratory plot; raw values are retained in the input. A relative functional profile does not measure pathway activity or absolute abundance.
-
-For your own data, put the three files in `data/my-study/`, document provenance in its README, then substitute `data/my-study` and `results/my-study` in the check and run commands. Add generated figures to `_quarto.yml` resources when extending the guide. For repeated samples, account for participant IDs and timepoints before inference.
-
-## Scope and limitations
-
-This workflow starts from processed profiles, not raw FASTQ files. It provides descriptive analysis only: no significance tests, differential abundance, causal inference, or clinical conclusions. Shannon describes the supplied taxonomic profiles and depends on resolution, filtering, and profiling method. Functional features indicate inferred functional potential, not measured activity. Synthetic group differences are constructed teaching examples.
+Keep original inputs, preparation/source notes, scripts, outputs and the report together. Record the input version and analysis date. Dependencies are unpinned in this starter; the run record captures installed package versions but does not recreate the environment or record input checksums by itself.
 
 ## Folder guide
 
-- `examples/`: seven learning steps for each dataset.
-- `data/`: synthetic inputs and preparation notes for other datasets.
-- `scripts/python/`: input checking, analysis, and independent sample verification.
-- `results/`: generated figures and tables, separated by dataset.
-- `reports/`: learner report template.
-- `assets/css/`: guide styling.
+| Folder | Contents |
+|---|---|
+| `examples/` | Seven lesson pages per dataset |
+| `data/` | Input tables and provenance notes |
+| `scripts/python/` | Analysis and verification scripts |
+| `results/` | Figures, tables and run records by dataset |
+| `reports/` | QMD reports |
+| `assets/css/` | Guide styling |
+| `docs/` | Rendered guide |
 
 ## Troubleshooting
 
-`ModuleNotFoundError`: activate `.venv` and rerun installation. File not found: check that the terminal is in the main project folder. Input check failure: correct the reported IDs, missing values, or numeric values before running again. `quarto: command not found`: install Quarto separately; Python analysis remains available. To finish a session, run `deactivate`.
+- **File not found:** confirm you are in the main project folder.
+- **`ModuleNotFoundError`:** activate `.venv` and reinstall requirements using `python -m pip`.
+- **Input check failed:** inspect the named file and follow the example's input-check page.
+- **`quarto` not found:** install Quarto separately and reopen the terminal.
+- **Results disagree:** check the sample ID, input version, output folder and whether the analysis was rerun.
 
-Dependencies are intentionally unpinned in this starter; each run records installed versions. Review and lock versions before using this for a reproducible research release.
+For a detailed walkthrough, use [Required setup](00-setup.qmd). For definitions, formulas and interpretation guidance, use the [Appendix](99-appendix.qmd). To finish a Python session, run `deactivate` in the terminal.

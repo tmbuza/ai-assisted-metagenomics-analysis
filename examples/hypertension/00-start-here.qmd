@@ -1,4 +1,4 @@
-# Start here
+# Hypertension example: apply the workflow
 
 This example takes you from three prepared tables to figures, checked numerical results and a short report. Complete [Required setup](../../00-setup.qmd) and synthetic practice first, then repeat the workflow here with a larger dataset.
 

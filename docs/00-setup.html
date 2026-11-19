@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -141,7 +176,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/synthetic/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Start here</span></a>
+  <a href="./examples/synthetic/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Synthetic practice: learn the workflow</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -187,7 +222,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Start here</span></a>
+  <a href="./examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension example: apply the workflow</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -233,7 +268,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/my-study/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Start here</span></a>
+  <a href="./examples/my-study/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Your study: analyse your own data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -289,8 +324,32 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#gather-the-software-and-project-files" id="toc-gather-the-software-and-project-files" class="nav-link active" data-scroll-target="#gather-the-software-and-project-files">1. Gather the software and project files</a></li>
+  <li><a href="#open-the-main-project-folder" id="toc-open-the-main-project-folder" class="nav-link" data-scroll-target="#open-the-main-project-folder">2. Open the main project folder</a>
+  <ul class="collapse">
+  <li><a href="#macos-or-linux-terminal" id="toc-macos-or-linux-terminal" class="nav-link" data-scroll-target="#macos-or-linux-terminal">macOS or Linux terminal</a></li>
+  <li><a href="#windows-powershell" id="toc-windows-powershell" class="nav-link" data-scroll-target="#windows-powershell">Windows PowerShell</a></li>
+  </ul></li>
+  <li><a href="#create-a-python-environment" id="toc-create-a-python-environment" class="nav-link" data-scroll-target="#create-a-python-environment">3. Create a Python environment</a>
+  <ul class="collapse">
+  <li><a href="#macos-or-linux" id="toc-macos-or-linux" class="nav-link" data-scroll-target="#macos-or-linux">macOS or Linux</a></li>
+  <li><a href="#windows-powershell-1" id="toc-windows-powershell-1" class="nav-link" data-scroll-target="#windows-powershell-1">Windows PowerShell</a></li>
+  <li><a href="#check-that-activation-worked" id="toc-check-that-activation-worked" class="nav-link" data-scroll-target="#check-that-activation-worked">Check that activation worked</a></li>
+  </ul></li>
+  <li><a href="#install-and-check-the-analysis-packages" id="toc-install-and-check-the-analysis-packages" class="nav-link" data-scroll-target="#install-and-check-the-analysis-packages">4. Install and check the analysis packages</a></li>
+  <li><a href="#check-the-synthetic-inputs" id="toc-check-the-synthetic-inputs" class="nav-link" data-scroll-target="#check-the-synthetic-inputs">5. Check the synthetic inputs</a></li>
+  <li><a href="#understand-where-things-live" id="toc-understand-where-things-live" class="nav-link" data-scroll-target="#understand-where-things-live">6. Understand where things live</a></li>
+  <li><a href="#preview-and-render-with-quarto" id="toc-preview-and-render-with-quarto" class="nav-link" data-scroll-target="#preview-and-render-with-quarto">7. Preview and render with Quarto</a></li>
+  <li><a href="#copy-code-into-the-right-place" id="toc-copy-code-into-the-right-place" class="nav-link" data-scroll-target="#copy-code-into-the-right-place">8. Copy code into the right place</a></li>
+  <li><a href="#return-for-another-session" id="toc-return-for-another-session" class="nav-link" data-scroll-target="#return-for-another-session">9. Return for another session</a></li>
+  <li><a href="#if-something-goes-wrong" id="toc-if-something-goes-wrong" class="nav-link" data-scroll-target="#if-something-goes-wrong">If something goes wrong</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -314,9 +373,294 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Follow steps 1–2 in <a href="README.md">the project README</a>. Run all commands in a terminal from the main project folder. Quarto is only needed to preview or render the guide and report.</p>
+<p>This page takes you from the downloaded project to your first successful input check. You do not need to read the README or clone a Git repository to get started.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What you will accomplish
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Open the correct project folder, prepare a Python environment, install the analysis packages and confirm that the synthetic inputs can be read. Then continue to the guided synthetic lesson.</p>
+</div>
+</div>
+<section id="gather-the-software-and-project-files" class="level2">
+<h2 class="anchored" data-anchor-id="gather-the-software-and-project-files">1. Gather the software and project files</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>What you need it for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Project download</td>
+<td>Contains the data, scripts, lessons and report template</td>
+</tr>
+<tr class="even">
+<td>Python 3.10 or later</td>
+<td>Runs the input checks, analysis and verification</td>
+</tr>
+<tr class="odd">
+<td>VS Code or another text editor</td>
+<td>Opens the project and lets you edit reports</td>
+</tr>
+<tr class="even">
+<td>Quarto</td>
+<td>Previews or renders the guide and reports; separate from Python</td>
+</tr>
+</tbody>
+</table>
+<p>Use the official <a href="https://www.python.org/downloads/">Python download page</a>, <a href="https://code.visualstudio.com/">VS Code website</a> and <a href="https://quarto.org/docs/get-started/">Quarto installation page</a>. Choose installers for your operating system and follow their instructions. Close and reopen your terminal after installation so new commands can be found.</p>
+<p><strong>You can run the Python analysis before installing Quarto.</strong> You need Quarto when you want to preview or render QMD pages or the HTML report. The terminal-based steps here do not require a Jupyter notebook.</p>
+</section>
+<section id="open-the-main-project-folder" class="level2">
+<h2 class="anchored" data-anchor-id="open-the-main-project-folder">2. Open the main project folder</h2>
+<ol type="1">
+<li>Download the complete project ZIP and extract it. Do not work inside the compressed ZIP.</li>
+<li>In VS Code, choose <strong>File → Open Folder</strong> and select <code>ai-assisted-metagenomics-analysis</code>.</li>
+<li>Check the file list: you should see <code>_quarto.yml</code>, <code>requirements.txt</code>, <code>data/</code>, <code>scripts/</code> and <code>examples/</code> directly inside the selected folder.</li>
+<li>Choose <strong>Terminal → New Terminal</strong>.</li>
+</ol>
+<p>This is the <strong>main project folder</strong>. Run all guide commands here. If your download created an extra outer folder, open the inner folder that actually contains those files.</p>
+<p>To see your current location and files:</p>
+<section id="macos-or-linux-terminal" class="level3">
+<h3 class="anchored" data-anchor-id="macos-or-linux-terminal">macOS or Linux terminal</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="windows-powershell" class="level3">
+<h3 class="anchored" data-anchor-id="windows-powershell">Windows PowerShell</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Location</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-ChildItem</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the expected files are missing, reopen the correct folder and a new terminal before continuing.</p>
+</section>
+</section>
+<section id="create-a-python-environment" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-python-environment">3. Create a Python environment</h2>
+<p>A virtual environment is a project-specific place for Python packages. We will name it <code>.venv</code>, keeping the analysis packages separate from other projects.</p>
+<p>Follow <strong>only the instructions for your operating system</strong>. Run each line in order.</p>
+<section id="macos-or-linux" class="level3">
+<h3 class="anchored" data-anchor-id="macos-or-linux">macOS or Linux</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">--version</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv .venv</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The version must be Python 3.10 or later. If <code>python3</code> is missing or older, install a supported Python version first. If Linux reports that <code>venv</code> is unavailable, use your distribution’s instructions to install the matching Python venv support, then repeat environment creation.</p>
+</section>
+<section id="windows-powershell-1" class="level3">
+<h3 class="anchored" data-anchor-id="windows-powershell-1">Windows PowerShell</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>py <span class="op">--</span>version</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>py <span class="op">-</span>m venv <span class="op">.</span><span class="fu">venv</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\<span class="op">.</span><span class="fu">venv</span>\Scripts\Activate<span class="op">.</span><span class="fu">ps1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If <code>py</code> is unavailable but <code>python --version</code> reports Python 3.10 or later, use <code>python -m venv .venv</code> to create the environment instead.</p>
+<p>If PowerShell blocks the activation script, you can use <strong>Command Prompt</strong> without changing PowerShell’s policy. In VS Code’s terminal dropdown, open a Command Prompt terminal in the same project folder, then run:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bat code-with-copy"><code class="sourceCode dosbat"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>.venv\Scripts\activate.bat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="check-that-activation-worked" class="level3">
+<h3 class="anchored" data-anchor-id="check-that-activation-worked">Check that activation worked</h3>
+<p>Your prompt will usually start with <code>(.venv)</code>. The exact computer name and folder text will differ from examples in this guide.</p>
+<p>Run:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import sys; print(sys.executable); print('Virtual environment active:', sys.prefix != sys.base_prefix)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The interpreter path should point inside this project’s <code>.venv</code> folder, and the last line should say <code>Virtual environment active: True</code>. After activation, use <code>python</code> for the remaining commands on all platforms.</p>
+<p><strong>If <code>.venv</code> already exists:</strong> activate it and check the interpreter; you do not need to recreate it for every session. If you moved the project or changed the Python installation, the old environment may need recreating.</p>
+</section>
+</section>
+<section id="install-and-check-the-analysis-packages" class="level2">
+<h2 class="anchored" data-anchor-id="install-and-check-the-analysis-packages">4. Install and check the analysis packages</h2>
+<p>With the environment active, run:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">--upgrade</span> pip</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>requirements.txt</code> is the project’s package list. <code>python -m pip</code> installs into the Python environment you just checked. Installation needs an internet connection and may take a few minutes. Wait until the terminal prompt returns before entering the next command.</p>
+<p>Now check the packages used by the workflow:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import numpy, pandas, matplotlib; print('Analysis packages loaded successfully.')"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Expected message:</p>
+<pre class="text"><code>Analysis packages loaded successfully.</code></pre>
+<p>If an import fails, check activation and repeat the requirements installation. Keep any installation error message; do not continue as though installation succeeded.</p>
+</section>
+<section id="check-the-synthetic-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="check-the-synthetic-inputs">5. Check the synthetic inputs</h2>
+<p>Keep the bundled synthetic files unchanged for your first run. This command validates them without generating new analysis results:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="at">--data-dir</span> data/synthetic <span class="at">--output-dir</span> results/synthetic <span class="at">--check-only</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For the bundled dataset described in this project, expect:</p>
+<pre class="text"><code>Input checks passed: 12 samples; 2 groups.</code></pre>
+<p>If your input version has been intentionally changed, compare the reported counts with its metadata. If they differ unexpectedly, check that you downloaded the intended project version and are using <code>data/synthetic/</code>.</p>
+<p>The check confirms technical compatibility: headers, sample IDs and numerical values meet the script’s requirements. It does not establish biological validity or statistical significance. <code>--check-only</code> does not refresh existing figures.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Setup checkpoint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Continue when the environment check says <code>True</code>, the package imports succeed and the synthetic input check passes. You are ready to run the analysis in <a href="./examples/synthetic/00-start-here.html">Synthetic practice</a>.</p>
+</div>
+</div>
+</section>
+<section id="understand-where-things-live" class="level2">
+<h2 class="anchored" data-anchor-id="understand-where-things-live">6. Understand where things live</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Location</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>data/</code></td>
+<td>Input tables, separated by dataset</td>
+</tr>
+<tr class="even">
+<td><code>scripts/python/</code></td>
+<td>Reusable checking, analysis and verification code</td>
+</tr>
+<tr class="odd">
+<td><code>examples/</code></td>
+<td>Seven lesson pages per dataset</td>
+</tr>
+<tr class="even">
+<td><code>results/</code></td>
+<td>Generated figures, tables and run records</td>
+</tr>
+<tr class="odd">
+<td><code>reports/</code></td>
+<td>Your QMD reports</td>
+</tr>
+<tr class="even">
+<td><code>docs/</code></td>
+<td>Rendered guide produced by the project build</td>
+</tr>
+<tr class="odd">
+<td><code>.venv/</code></td>
+<td>Local Python environment</td>
+</tr>
+</tbody>
+</table>
+<p>Commands use paths such as <code>data/synthetic/</code> relative to the main project folder. Opening a terminal inside <code>examples/synthetic/</code> changes what those paths refer to and can cause file-not-found errors.</p>
+</section>
+<section id="preview-and-render-with-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="preview-and-render-with-quarto">7. Preview and render with Quarto</h2>
+<p>If Quarto is installed, check that the command is available:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To preview the guide from the main project folder:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Open the local address printed in the terminal if a browser does not open automatically. Preview keeps running while you work. To stop it and get your terminal prompt back, press <strong>Ctrl+C</strong>. You can also open a second terminal, but activate <code>.venv</code> there before running Python commands.</p>
+<p>To build the complete guide:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The project is configured to write the guide to <code>docs/</code>. To render a completed synthetic report separately:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render reports/synthetic-report.qmd <span class="at">--to</span> html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Follow the lesson before completing the report. Quarto prints the rendered report’s location. The QMD pages display commands and existing figures; rendering does <strong>not</strong> run the Python analysis. Regenerate results in the terminal after changing inputs, then render again.</p>
+</section>
+<section id="copy-code-into-the-right-place" class="level2">
+<h2 class="anchored" data-anchor-id="copy-code-into-the-right-place">8. Copy code into the right place</h2>
+<p>Copy code from a displayed block without the surrounding Markdown backticks. Do not copy terminal prompts such as <code>$</code>, <code>&gt;</code> or <code>(.venv)</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What you see in the guide</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>python scripts/python/...</code></td>
+<td>Paste the command into your terminal</td>
+</tr>
+<tr class="even">
+<td><code>python -c "..."</code></td>
+<td>Paste the whole line into your terminal</td>
+</tr>
+<tr class="odd">
+<td>A block starting <code>python - &lt;&lt;'PY'</code></td>
+<td>In macOS/Linux Bash or Zsh, paste the whole block through its final <code>PY</code> line</td>
+</tr>
+<tr class="even">
+<td>A report template starting with <code>---</code></td>
+<td>Paste into the named <code>.qmd</code> file in your editor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Windows PowerShell and Command Prompt do not support the Bash <code>&lt;&lt;'PY'</code> wrapper.</strong> For those longer Python examples, copy only the Python lines between the opening wrapper and closing <code>PY</code> into a file named <code>check_values.py</code> in the main project folder. Save it, then run:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> check_values.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Do not include <code>python - &lt;&lt;'PY'</code> or the final <code>PY</code> in that file. You can use this saved-script approach on macOS or Linux too. The calculations are the same.</p>
+<p>If your prompt is <code>&gt;&gt;&gt;</code>, you are inside interactive Python. Enter <code>exit()</code> to return to the terminal before running shell commands. If a Bash terminal shows continuation prompts <code>&gt;</code> after an incomplete paste, finish with the closing <code>PY</code> on its own line or press Ctrl+C and paste the complete block again.</p>
+</section>
+<section id="return-for-another-session" class="level2">
+<h2 class="anchored" data-anchor-id="return-for-another-session">9. Return for another session</h2>
+<p>Open the project and a terminal, then activate the existing environment:</p>
+<ul>
+<li>macOS/Linux: <code>source .venv/bin/activate</code></li>
+<li>PowerShell: <code>.\.venv\Scripts\Activate.ps1</code></li>
+<li>Command Prompt: <code>.venv\Scripts\activate.bat</code></li>
+</ul>
+<p>You do not need to reinstall packages each time. To leave the environment:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">deactivate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="if-something-goes-wrong" class="level2">
+<h2 class="anchored" data-anchor-id="if-something-goes-wrong">If something goes wrong</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symptom</th>
+<th>First thing to try</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Python or <code>py</code> not found</td>
+<td>Check installation and reopen the terminal</td>
+</tr>
+<tr class="even">
+<td><code>requirements.txt</code> or a script not found</td>
+<td>Confirm the main project folder is open</td>
+</tr>
+<tr class="odd">
+<td><code>ModuleNotFoundError</code></td>
+<td>Activate <code>.venv</code>, check the interpreter and install requirements</td>
+</tr>
+<tr class="even">
+<td>PowerShell activation blocked</td>
+<td>Use the Command Prompt activation option above</td>
+</tr>
+<tr class="odd">
+<td>Input check failed</td>
+<td>Read the named file/error and follow <a href="./examples/synthetic/03-check-the-inputs.html">input troubleshooting</a></td>
+</tr>
+<tr class="even">
+<td><code>quarto</code> not found</td>
+<td>Install Quarto separately and reopen the terminal; Python analysis can proceed</td>
+</tr>
+<tr class="odd">
+<td>Figure missing after rendering</td>
+<td>Run the analysis first, then check output paths and render again</td>
+</tr>
+</tbody>
+</table>
+<p>If you need help, share the exact command, full error message, operating system and whether <code>.venv</code> is active. Those details make the problem easier to reproduce.</p>
+<p><a href="./examples/synthetic/00-start-here.html">Next: Start synthetic practice</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -727,8 +1071,8 @@ ul.task-list li input[type="checkbox"] {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./examples/synthetic/00-start-here.html" class="pagination-link" aria-label="Start here">
-        <span class="nav-page-text"><span class="chapter-title">Start here</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./examples/synthetic/00-start-here.html" class="pagination-link" aria-label="Synthetic practice: learn the workflow">
+        <span class="nav-page-text"><span class="chapter-title">Synthetic practice: learn the workflow</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -169,7 +169,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/synthetic/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Start here</span></a>
+  <a href="./examples/synthetic/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Synthetic practice: learn the workflow</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -215,7 +215,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Start here</span></a>
+  <a href="./examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension example: apply the workflow</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -261,7 +261,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/my-study/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Start here</span></a>
+  <a href="./examples/my-study/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Your study: analyse your own data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -322,8 +322,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#shannon-diversity" id="toc-shannon-diversity" class="nav-link active" data-scroll-target="#shannon-diversity">Shannon diversity</a></li>
-  <li><a href="#functional-profiles" id="toc-functional-profiles" class="nav-link" data-scroll-target="#functional-profiles">Functional profiles</a></li>
+  <li><a href="#a-small-vocabulary" id="toc-a-small-vocabulary" class="nav-link active" data-scroll-target="#a-small-vocabulary">A small vocabulary</a></li>
+  <li><a href="#taxonomic-proportions-and-detected-taxa" id="toc-taxonomic-proportions-and-detected-taxa" class="nav-link" data-scroll-target="#taxonomic-proportions-and-detected-taxa">Taxonomic proportions and detected taxa</a></li>
+  <li><a href="#shannon-diversity" id="toc-shannon-diversity" class="nav-link" data-scroll-target="#shannon-diversity">Shannon diversity</a></li>
+  <li><a href="#verified-synthetic-example-s01" id="toc-verified-synthetic-example-s01" class="nav-link" data-scroll-target="#verified-synthetic-example-s01">Verified synthetic example: S01</a></li>
+  <li><a href="#functional-profiles-and-their-limits" id="toc-functional-profiles-and-their-limits" class="nav-link" data-scroll-target="#functional-profiles-and-their-limits">Functional profiles and their limits</a></li>
+  <li><a href="#read-plots-alongside-tables" id="toc-read-plots-alongside-tables" class="nav-link" data-scroll-target="#read-plots-alongside-tables">Read plots alongside tables</a></li>
+  <li><a href="#what-an-agreement-check-means" id="toc-what-an-agreement-check-means" class="nav-link" data-scroll-target="#what-an-agreement-check-means">What an agreement check means</a></li>
+  <li><a href="#keep-the-work-reproducible" id="toc-keep-the-work-reproducible" class="nav-link" data-scroll-target="#keep-the-work-reproducible">Keep the work reproducible</a></li>
+  <li><a href="#use-ai-with-checked-evidence" id="toc-use-ai-with-checked-evidence" class="nav-link" data-scroll-target="#use-ai-with-checked-evidence">Use AI with checked evidence</a></li>
+  <li><a href="#official-software-references" id="toc-official-software-references" class="nav-link" data-scroll-target="#official-software-references">Official software references</a></li>
   </ul>
 </nav>
     </div>
@@ -349,13 +357,173 @@ window.Quarto = {
 </header>
 
 
+<p>Use this page as a reference while working through the examples. Begin with <a href="./00-setup.html">Required setup</a> if you have not prepared your environment.</p>
+<section id="a-small-vocabulary" class="level2">
+<h2 class="anchored" data-anchor-id="a-small-vocabulary">A small vocabulary</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Meaning in this guide</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sample</td>
+<td>One column of values in an abundance table, linked to one metadata row</td>
+</tr>
+<tr class="even">
+<td>Taxon</td>
+<td>A taxonomic feature represented by one row; its rank/resolution must be documented</td>
+</tr>
+<tr class="odd">
+<td>Functional feature</td>
+<td>A supplied numerical feature whose definition and units must be understood</td>
+</tr>
+<tr class="even">
+<td>Abundance</td>
+<td>The original numerical value supplied for a feature and sample</td>
+</tr>
+<tr class="odd">
+<td>Proportion</td>
+<td>A feature value divided by the corresponding within-sample total</td>
+</tr>
+<tr class="even">
+<td>Detected taxa</td>
+<td>Number of taxon values greater than zero in the supplied table</td>
+</tr>
+<tr class="odd">
+<td>Metadata</td>
+<td>Information describing the samples, including the required group label</td>
+</tr>
+<tr class="even">
+<td>Independent sampling unit</td>
+<td>The participant, animal, site or other unit that provides independent information</td>
+</tr>
+<tr class="odd">
+<td>TSV</td>
+<td>Plain-text table with tabs separating columns</td>
+</tr>
+</tbody>
+</table>
+<p>A sample ID is an identifier, not evidence that the sample is independent of every other sample.</p>
+</section>
+<section id="taxonomic-proportions-and-detected-taxa" class="level2">
+<h2 class="anchored" data-anchor-id="taxonomic-proportions-and-detected-taxa">Taxonomic proportions and detected taxa</h2>
+<p>For one sample with taxon values <span class="math inline">\(x_1,\ldots,x_k\)</span>, the total is <span class="math inline">\(T=\sum_i x_i\)</span> and the proportion of taxon <span class="math inline">\(i\)</span> is <span class="math inline">\(p_i=x_i/T\)</span>. Values must be finite and nonnegative, with <span class="math inline">\(T&gt;0\)</span>.</p>
+<p>The proportions sum to 1. Multiply by 100 to express them as percentages. Total abundance is the sum of the supplied units; it is not necessarily sequencing depth or cell count.</p>
+<p>Detected taxa count rows with values greater than zero. Zero-valued rows remain in the table but do not contribute to observed richness. Resolution, filtering and profiling method affect what this count represents.</p>
+</section>
 <section id="shannon-diversity" class="level2">
 <h2 class="anchored" data-anchor-id="shannon-diversity">Shannon diversity</h2>
-<p>For positive taxon proportions <span class="math inline">\(p_i\)</span>, <span class="math inline">\(H=-\sum_i p_i\ln(p_i)\)</span>. Zero proportions contribute zero. Detected taxa count features with abundance greater than zero. Total abundance is the sum of the supplied units, not necessarily read depth.</p>
+<p>Using natural logarithms:</p>
+<p><span class="math display">\[
+H=-\sum_{i:p_i&gt;0}p_i\ln(p_i).
+\]</span></p>
+<p>Zero proportions contribute zero and are excluded from the logarithm calculation. Richness and evenness both affect Shannon diversity.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Proportions</th>
+<th style="text-align: right;">Detected taxa</th>
+<th style="text-align: right;">Shannon, approximately</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.5, 0.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.6931</td>
+</tr>
+<tr class="even">
+<td>0.9, 0.1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.3251</td>
+</tr>
+</tbody>
+</table>
+<p>Both examples have two detected taxa, but the more even distribution has higher Shannon diversity. If richness differs between samples, both richness and evenness may contribute to a difference. With <span class="math inline">\(S\)</span> detected taxa, equal proportions give the maximum <span class="math inline">\(H=\ln(S)\)</span> for that <span class="math inline">\(S\)</span>. With only one detected taxon, <span class="math inline">\(H=0\)</span>.</p>
+<p>Shannon computed from a filtered or placeholder table need not match a source study’s reported value. Compare values only after checking the same profiles, filtering, taxonomic resolution and logarithm base were used.</p>
 </section>
-<section id="functional-profiles" class="level2">
-<h2 class="anchored" data-anchor-id="functional-profiles">Functional profiles</h2>
-<p>Feature abundance, pathway abundance, and pathway coverage have different meanings. Confirm the source units and feature definitions before deciding whether within-sample normalization is appropriate. This starter requires an abundance-like matrix with positive sample totals.</p>
+<section id="verified-synthetic-example-s01" class="level2">
+<h2 class="anchored" data-anchor-id="verified-synthetic-example-s01">Verified synthetic example: S01</h2>
+<p>The learner’s independent calculation for the current synthetic dataset agreed with the saved workflow values:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th style="text-align: right;">Checked value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Total taxonomic abundance</td>
+<td style="text-align: right;">546</td>
+</tr>
+<tr class="even">
+<td>Detected taxa</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td>Natural-log Shannon diversity</td>
+<td style="text-align: right;">2.012363</td>
+</tr>
+<tr class="even">
+<td>Largest taxon</td>
+<td style="text-align: right;">Taxon_06</td>
+</tr>
+<tr class="odd">
+<td>Taxon_06 proportion</td>
+<td style="text-align: right;">0.170330, approximately 17.03%</td>
+</tr>
+</tbody>
+</table>
+<p>These values are reference answers for that input version, not universal answers for every dataset. If you change the inputs, recalculate them. An agreement check supports the quantities checked for that sample; it does not validate an entire study or establish a group difference.</p>
+</section>
+<section id="functional-profiles-and-their-limits" class="level2">
+<h2 class="anchored" data-anchor-id="functional-profiles-and-their-limits">Functional profiles and their limits</h2>
+<p>The script divides each supplied functional value by that sample’s supplied functional total. Before interpreting the result, confirm what the original values measure and whether summing them is meaningful.</p>
+<ul>
+<li>Feature abundance, pathway abundance and pathway coverage are different measurements.</li>
+<li>Overlapping categories can share underlying information; they are not necessarily independent parts of a biological whole.</li>
+<li>A selected set of features gives proportions within that set, not necessarily proportions of every function in the sample.</li>
+<li>A larger proportion can reflect an increase in one feature, decreases in others or both.</li>
+<li>Relative profiles do not directly measure pathway activity or absolute quantities.</li>
+</ul>
+<p>The synthetic functional labels are invented identifiers, not named biological pathways. The hypertension functional data still require verified source, definitions and units. For your study, record those details before making biological claims.</p>
+</section>
+<section id="read-plots-alongside-tables" class="level2">
+<h2 class="anchored" data-anchor-id="read-plots-alongside-tables">Read plots alongside tables</h2>
+<p>Stacked bars display up to ten features selected by highest mean within-sample proportions across all samples. Remaining features are combined as <strong>Other</strong>. That selection is for display, not a test of which features differ between groups. Shannon uses all supplied taxa.</p>
+<p>Diversity dots show individual values; black lines show group medians. Horizontal offsets separate dots only. Examine spread, sample counts, detected-taxon counts and overlap alongside medians.</p>
+<p>Saved tables are the numerical evidence for observations. A visual difference alone does not establish significance, causation or an appropriate statistical model.</p>
+</section>
+<section id="what-an-agreement-check-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-an-agreement-check-means">What an agreement check means</h2>
+<p>Independent Python code reads the input, recalculates values and compares them with saved results. <code>math.isclose</code> allows tiny numerical differences due to floating-point representation. A <code>True</code> result indicates agreement within the stated tolerance.</p>
+<p>If values disagree, check sample selection, input versions, output folder, method and whether results were regenerated. Do not edit a saved result to make it match. Correct the cause and repeat the analysis.</p>
+<p>For instructions on running long Python blocks in different terminals, see <a href="./00-setup.html#copy-code-into-the-right-place">Copy code into the right place</a>.</p>
+</section>
+<section id="keep-the-work-reproducible" class="level2">
+<h2 class="anchored" data-anchor-id="keep-the-work-reproducible">Keep the work reproducible</h2>
+<p>Retain the exact inputs, source/preparation notes, scripts, outputs and report. Record the analysis date and input or Git version. The workflow’s <code>run-record.json</code> records Python/package versions and the input directory, but does not record input checksums or every preprocessing decision.</p>
+<p>The starter’s dependencies are not pinned to exact versions. A run record describes the environment used; it does not recreate it by itself. For a research release, record and manage the environment and input versions explicitly.</p>
+</section>
+<section id="use-ai-with-checked-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="use-ai-with-checked-evidence">Use AI with checked evidence</h2>
+<p>AI can help explain a line of Python, clarify an error or draft a result paragraph. Supply the exact command or checked numerical values and relevant units. Then check the explanation against the source tables and study design. Do not treat plausible wording as verification.</p>
+</section>
+<section id="official-software-references" class="level2">
+<h2 class="anchored" data-anchor-id="official-software-references">Official software references</h2>
+<ul>
+<li><a href="https://docs.python.org/3/library/venv.html">Python virtual environments</a></li>
+<li><a href="https://quarto.org/docs/get-started/">Quarto installation and getting started</a></li>
+</ul>
+<p><a href="./index.html">Return to the guide overview</a></p>
 
 
 </section>

@@ -1,3 +1,240 @@
 # Required setup
 
-Follow steps 1–2 in [the project README](README.md). Run all commands in a terminal from the main project folder. Quarto is only needed to preview or render the guide and report.
+This page takes you from the downloaded project to your first successful input check. You do not need to read the README or clone a Git repository to get started.
+
+::: {.callout-note icon=false}
+## What you will accomplish
+
+Open the correct project folder, prepare a Python environment, install the analysis packages and confirm that the synthetic inputs can be read. Then continue to the guided synthetic lesson.
+:::
+
+## 1. Gather the software and project files
+
+| Item | What you need it for |
+|---|---|
+| Project download | Contains the data, scripts, lessons and report template |
+| Python 3.10 or later | Runs the input checks, analysis and verification |
+| VS Code or another text editor | Opens the project and lets you edit reports |
+| Quarto | Previews or renders the guide and reports; separate from Python |
+
+Use the official [Python download page](https://www.python.org/downloads/), [VS Code website](https://code.visualstudio.com/) and [Quarto installation page](https://quarto.org/docs/get-started/). Choose installers for your operating system and follow their instructions. Close and reopen your terminal after installation so new commands can be found.
+
+**You can run the Python analysis before installing Quarto.** You need Quarto when you want to preview or render QMD pages or the HTML report. The terminal-based steps here do not require a Jupyter notebook.
+
+## 2. Open the main project folder
+
+1. Download the complete project ZIP and extract it. Do not work inside the compressed ZIP.
+2. In VS Code, choose **File → Open Folder** and select `ai-assisted-metagenomics-analysis`.
+3. Check the file list: you should see `_quarto.yml`, `requirements.txt`, `data/`, `scripts/` and `examples/` directly inside the selected folder.
+4. Choose **Terminal → New Terminal**.
+
+This is the **main project folder**. Run all guide commands here. If your download created an extra outer folder, open the inner folder that actually contains those files.
+
+To see your current location and files:
+
+### macOS or Linux terminal
+
+```bash
+pwd
+ls
+```
+
+### Windows PowerShell
+
+```powershell
+Get-Location
+Get-ChildItem
+```
+
+If the expected files are missing, reopen the correct folder and a new terminal before continuing.
+
+## 3. Create a Python environment
+
+A virtual environment is a project-specific place for Python packages. We will name it `.venv`, keeping the analysis packages separate from other projects.
+
+Follow **only the instructions for your operating system**. Run each line in order.
+
+### macOS or Linux
+
+```bash
+python3 --version
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+The version must be Python 3.10 or later. If `python3` is missing or older, install a supported Python version first. If Linux reports that `venv` is unavailable, use your distribution's instructions to install the matching Python venv support, then repeat environment creation.
+
+### Windows PowerShell
+
+```powershell
+py --version
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+If `py` is unavailable but `python --version` reports Python 3.10 or later, use `python -m venv .venv` to create the environment instead.
+
+If PowerShell blocks the activation script, you can use **Command Prompt** without changing PowerShell's policy. In VS Code's terminal dropdown, open a Command Prompt terminal in the same project folder, then run:
+
+```bat
+.venv\Scripts\activate.bat
+```
+
+### Check that activation worked
+
+Your prompt will usually start with `(.venv)`. The exact computer name and folder text will differ from examples in this guide.
+
+Run:
+
+```bash
+python --version
+python -c "import sys; print(sys.executable); print('Virtual environment active:', sys.prefix != sys.base_prefix)"
+```
+
+The interpreter path should point inside this project's `.venv` folder, and the last line should say `Virtual environment active: True`. After activation, use `python` for the remaining commands on all platforms.
+
+**If `.venv` already exists:** activate it and check the interpreter; you do not need to recreate it for every session. If you moved the project or changed the Python installation, the old environment may need recreating.
+
+## 4. Install and check the analysis packages
+
+With the environment active, run:
+
+```bash
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+`requirements.txt` is the project's package list. `python -m pip` installs into the Python environment you just checked. Installation needs an internet connection and may take a few minutes. Wait until the terminal prompt returns before entering the next command.
+
+Now check the packages used by the workflow:
+
+```bash
+python -c "import numpy, pandas, matplotlib; print('Analysis packages loaded successfully.')"
+```
+
+Expected message:
+
+```text
+Analysis packages loaded successfully.
+```
+
+If an import fails, check activation and repeat the requirements installation. Keep any installation error message; do not continue as though installation succeeded.
+
+## 5. Check the synthetic inputs
+
+Keep the bundled synthetic files unchanged for your first run. This command validates them without generating new analysis results:
+
+```bash
+python scripts/python/run_workflow.py --data-dir data/synthetic --output-dir results/synthetic --check-only
+```
+
+For the bundled dataset described in this project, expect:
+
+```text
+Input checks passed: 12 samples; 2 groups.
+```
+
+If your input version has been intentionally changed, compare the reported counts with its metadata. If they differ unexpectedly, check that you downloaded the intended project version and are using `data/synthetic/`.
+
+The check confirms technical compatibility: headers, sample IDs and numerical values meet the script's requirements. It does not establish biological validity or statistical significance. `--check-only` does not refresh existing figures.
+
+::: {.callout-tip}
+## Setup checkpoint
+
+Continue when the environment check says `True`, the package imports succeed and the synthetic input check passes. You are ready to run the analysis in [Synthetic practice](examples/synthetic/00-start-here.qmd).
+:::
+
+## 6. Understand where things live
+
+| Location | Purpose |
+|---|---|
+| `data/` | Input tables, separated by dataset |
+| `scripts/python/` | Reusable checking, analysis and verification code |
+| `examples/` | Seven lesson pages per dataset |
+| `results/` | Generated figures, tables and run records |
+| `reports/` | Your QMD reports |
+| `docs/` | Rendered guide produced by the project build |
+| `.venv/` | Local Python environment |
+
+Commands use paths such as `data/synthetic/` relative to the main project folder. Opening a terminal inside `examples/synthetic/` changes what those paths refer to and can cause file-not-found errors.
+
+## 7. Preview and render with Quarto
+
+If Quarto is installed, check that the command is available:
+
+```bash
+quarto --version
+```
+
+To preview the guide from the main project folder:
+
+```bash
+quarto preview
+```
+
+Open the local address printed in the terminal if a browser does not open automatically. Preview keeps running while you work. To stop it and get your terminal prompt back, press **Ctrl+C**. You can also open a second terminal, but activate `.venv` there before running Python commands.
+
+To build the complete guide:
+
+```bash
+quarto render
+```
+
+The project is configured to write the guide to `docs/`. To render a completed synthetic report separately:
+
+```bash
+quarto render reports/synthetic-report.qmd --to html
+```
+
+Follow the lesson before completing the report. Quarto prints the rendered report's location. The QMD pages display commands and existing figures; rendering does **not** run the Python analysis. Regenerate results in the terminal after changing inputs, then render again.
+
+## 8. Copy code into the right place
+
+Copy code from a displayed block without the surrounding Markdown backticks. Do not copy terminal prompts such as `$`, `>` or `(.venv)`.
+
+| What you see in the guide | What to do |
+|---|---|
+| `python scripts/python/...` | Paste the command into your terminal |
+| `python -c "..."` | Paste the whole line into your terminal |
+| A block starting `python - <<'PY'` | In macOS/Linux Bash or Zsh, paste the whole block through its final `PY` line |
+| A report template starting with `---` | Paste into the named `.qmd` file in your editor |
+
+**Windows PowerShell and Command Prompt do not support the Bash `<<'PY'` wrapper.** For those longer Python examples, copy only the Python lines between the opening wrapper and closing `PY` into a file named `check_values.py` in the main project folder. Save it, then run:
+
+```bash
+python check_values.py
+```
+
+Do not include `python - <<'PY'` or the final `PY` in that file. You can use this saved-script approach on macOS or Linux too. The calculations are the same.
+
+If your prompt is `>>>`, you are inside interactive Python. Enter `exit()` to return to the terminal before running shell commands. If a Bash terminal shows continuation prompts `>` after an incomplete paste, finish with the closing `PY` on its own line or press Ctrl+C and paste the complete block again.
+
+## 9. Return for another session
+
+Open the project and a terminal, then activate the existing environment:
+
+- macOS/Linux: `source .venv/bin/activate`
+- PowerShell: `.\.venv\Scripts\Activate.ps1`
+- Command Prompt: `.venv\Scripts\activate.bat`
+
+You do not need to reinstall packages each time. To leave the environment:
+
+```bash
+deactivate
+```
+
+## If something goes wrong
+
+| Symptom | First thing to try |
+|---|---|
+| Python or `py` not found | Check installation and reopen the terminal |
+| `requirements.txt` or a script not found | Confirm the main project folder is open |
+| `ModuleNotFoundError` | Activate `.venv`, check the interpreter and install requirements |
+| PowerShell activation blocked | Use the Command Prompt activation option above |
+| Input check failed | Read the named file/error and follow [input troubleshooting](examples/synthetic/03-check-the-inputs.qmd) |
+| `quarto` not found | Install Quarto separately and reopen the terminal; Python analysis can proceed |
+| Figure missing after rendering | Run the analysis first, then check output paths and render again |
+
+If you need help, share the exact command, full error message, operating system and whether `.venv` is active. Those details make the problem easier to reproduce.
+
+[Next: Start synthetic practice](examples/synthetic/00-start-here.qmd)

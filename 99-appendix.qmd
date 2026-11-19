@@ -1,9 +1,105 @@
 # Appendix
 
+Use this page as a reference while working through the examples. Begin with [Required setup](00-setup.qmd) if you have not prepared your environment.
+
+## A small vocabulary
+
+| Term | Meaning in this guide |
+|---|---|
+| Sample | One column of values in an abundance table, linked to one metadata row |
+| Taxon | A taxonomic feature represented by one row; its rank/resolution must be documented |
+| Functional feature | A supplied numerical feature whose definition and units must be understood |
+| Abundance | The original numerical value supplied for a feature and sample |
+| Proportion | A feature value divided by the corresponding within-sample total |
+| Detected taxa | Number of taxon values greater than zero in the supplied table |
+| Metadata | Information describing the samples, including the required group label |
+| Independent sampling unit | The participant, animal, site or other unit that provides independent information |
+| TSV | Plain-text table with tabs separating columns |
+
+A sample ID is an identifier, not evidence that the sample is independent of every other sample.
+
+## Taxonomic proportions and detected taxa
+
+For one sample with taxon values $x_1,\ldots,x_k$, the total is $T=\sum_i x_i$ and the proportion of taxon $i$ is $p_i=x_i/T$. Values must be finite and nonnegative, with $T>0$.
+
+The proportions sum to 1. Multiply by 100 to express them as percentages. Total abundance is the sum of the supplied units; it is not necessarily sequencing depth or cell count.
+
+Detected taxa count rows with values greater than zero. Zero-valued rows remain in the table but do not contribute to observed richness. Resolution, filtering and profiling method affect what this count represents.
+
 ## Shannon diversity
 
-For positive taxon proportions $p_i$, $H=-\sum_i p_i\ln(p_i)$. Zero proportions contribute zero. Detected taxa count features with abundance greater than zero. Total abundance is the sum of the supplied units, not necessarily read depth.
+Using natural logarithms:
 
-## Functional profiles
+$$
+H=-\sum_{i:p_i>0}p_i\ln(p_i).
+$$
 
-Feature abundance, pathway abundance, and pathway coverage have different meanings. Confirm the source units and feature definitions before deciding whether within-sample normalization is appropriate. This starter requires an abundance-like matrix with positive sample totals.
+Zero proportions contribute zero and are excluded from the logarithm calculation. Richness and evenness both affect Shannon diversity.
+
+| Proportions | Detected taxa | Shannon, approximately |
+|---|---:|---:|
+| 0.5, 0.5 | 2 | 0.6931 |
+| 0.9, 0.1 | 2 | 0.3251 |
+
+Both examples have two detected taxa, but the more even distribution has higher Shannon diversity. If richness differs between samples, both richness and evenness may contribute to a difference. With $S$ detected taxa, equal proportions give the maximum $H=\ln(S)$ for that $S$. With only one detected taxon, $H=0$.
+
+Shannon computed from a filtered or placeholder table need not match a source study's reported value. Compare values only after checking the same profiles, filtering, taxonomic resolution and logarithm base were used.
+
+## Verified synthetic example: S01
+
+The learner's independent calculation for the current synthetic dataset agreed with the saved workflow values:
+
+| Quantity | Checked value |
+|---|---:|
+| Total taxonomic abundance | 546 |
+| Detected taxa | 8 |
+| Natural-log Shannon diversity | 2.012363 |
+| Largest taxon | Taxon_06 |
+| Taxon_06 proportion | 0.170330, approximately 17.03% |
+
+These values are reference answers for that input version, not universal answers for every dataset. If you change the inputs, recalculate them. An agreement check supports the quantities checked for that sample; it does not validate an entire study or establish a group difference.
+
+## Functional profiles and their limits
+
+The script divides each supplied functional value by that sample's supplied functional total. Before interpreting the result, confirm what the original values measure and whether summing them is meaningful.
+
+- Feature abundance, pathway abundance and pathway coverage are different measurements.
+- Overlapping categories can share underlying information; they are not necessarily independent parts of a biological whole.
+- A selected set of features gives proportions within that set, not necessarily proportions of every function in the sample.
+- A larger proportion can reflect an increase in one feature, decreases in others or both.
+- Relative profiles do not directly measure pathway activity or absolute quantities.
+
+The synthetic functional labels are invented identifiers, not named biological pathways. The hypertension functional data still require verified source, definitions and units. For your study, record those details before making biological claims.
+
+## Read plots alongside tables
+
+Stacked bars display up to ten features selected by highest mean within-sample proportions across all samples. Remaining features are combined as **Other**. That selection is for display, not a test of which features differ between groups. Shannon uses all supplied taxa.
+
+Diversity dots show individual values; black lines show group medians. Horizontal offsets separate dots only. Examine spread, sample counts, detected-taxon counts and overlap alongside medians.
+
+Saved tables are the numerical evidence for observations. A visual difference alone does not establish significance, causation or an appropriate statistical model.
+
+## What an agreement check means
+
+Independent Python code reads the input, recalculates values and compares them with saved results. `math.isclose` allows tiny numerical differences due to floating-point representation. A `True` result indicates agreement within the stated tolerance.
+
+If values disagree, check sample selection, input versions, output folder, method and whether results were regenerated. Do not edit a saved result to make it match. Correct the cause and repeat the analysis.
+
+For instructions on running long Python blocks in different terminals, see [Copy code into the right place](00-setup.qmd#copy-code-into-the-right-place).
+
+## Keep the work reproducible
+
+Retain the exact inputs, source/preparation notes, scripts, outputs and report. Record the analysis date and input or Git version. The workflow's `run-record.json` records Python/package versions and the input directory, but does not record input checksums or every preprocessing decision.
+
+The starter's dependencies are not pinned to exact versions. A run record describes the environment used; it does not recreate it by itself. For a research release, record and manage the environment and input versions explicitly.
+
+## Use AI with checked evidence
+
+AI can help explain a line of Python, clarify an error or draft a result paragraph. Supply the exact command or checked numerical values and relevant units. Then check the explanation against the source tables and study design. Do not treat plausible wording as verification.
+
+## Official software references
+
+- [Python virtual environments](https://docs.python.org/3/library/venv.html)
+- [Quarto installation and getting started](https://quarto.org/docs/get-started/)
+
+[Return to the guide overview](index.qmd)
