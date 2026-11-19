@@ -330,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#gather-the-software-and-project-files" id="toc-gather-the-software-and-project-files" class="nav-link active" data-scroll-target="#gather-the-software-and-project-files">1. Gather the software and project files</a></li>
-  <li><a href="#open-the-main-project-folder" id="toc-open-the-main-project-folder" class="nav-link" data-scroll-target="#open-the-main-project-folder">2. Open the main project folder</a>
+  <li><a href="#download-and-open-the-project" id="toc-download-and-open-the-project" class="nav-link" data-scroll-target="#download-and-open-the-project">2. Download and open the project</a>
   <ul class="collapse">
   <li><a href="#macos-or-linux-terminal" id="toc-macos-or-linux-terminal" class="nav-link" data-scroll-target="#macos-or-linux-terminal">macOS or Linux terminal</a></li>
   <li><a href="#windows-powershell" id="toc-windows-powershell" class="nav-link" data-scroll-target="#windows-powershell">Windows PowerShell</a></li>
@@ -422,15 +422,18 @@ What you will accomplish
 <p>Use the official <a href="https://www.python.org/downloads/">Python download page</a>, <a href="https://code.visualstudio.com/">VS Code website</a> and <a href="https://quarto.org/docs/get-started/">Quarto installation page</a>. Choose installers for your operating system and follow their instructions. Close and reopen your terminal after installation so new commands can be found.</p>
 <p><strong>You can run the Python analysis before installing Quarto.</strong> You need Quarto when you want to preview or render QMD pages or the HTML report. The terminal-based steps here do not require a Jupyter notebook.</p>
 </section>
-<section id="open-the-main-project-folder" class="level2">
-<h2 class="anchored" data-anchor-id="open-the-main-project-folder">2. Open the main project folder</h2>
+<section id="download-and-open-the-project" class="level2">
+<h2 class="anchored" data-anchor-id="download-and-open-the-project">2. Download and open the project</h2>
 <ol type="1">
-<li>Download the complete project ZIP and extract it. Do not work inside the compressed ZIP.</li>
-<li>In VS Code, choose <strong>File → Open Folder</strong> and select <code>ai-assisted-metagenomics-analysis</code>.</li>
-<li>Check the file list: you should see <code>_quarto.yml</code>, <code>requirements.txt</code>, <code>data/</code>, <code>scripts/</code> and <code>examples/</code> directly inside the selected folder.</li>
+<li>Open the <a href="https://github.com/tmbuza/ai-assisted-metagenomics-analysis">AI-Assisted Metagenomics Analysis repository</a>.</li>
+<li>Click the green <strong>Code</strong> button, then choose <strong>Download ZIP</strong>.</li>
+<li>Extract the downloaded ZIP. The extracted folder will usually be named <code>ai-assisted-metagenomics-analysis-main</code>. Do not work inside the compressed ZIP.</li>
+<li>In VS Code, choose <strong>File → Open Folder</strong> and select the extracted folder.</li>
+<li>Check the file list: you should see <code>_quarto.yml</code>, <code>requirements.txt</code>, <code>data/</code>, <code>scripts/</code> and <code>examples/</code> directly inside it.</li>
 <li>Choose <strong>Terminal → New Terminal</strong>.</li>
 </ol>
-<p>This is the <strong>main project folder</strong>. Run all guide commands here. If your download created an extra outer folder, open the inner folder that actually contains those files.</p>
+<p>This is the <strong>main project folder</strong>. Run all guide commands here. You can keep the folder’s downloaded name; renaming it is not required.</p>
+<p>If extraction created an extra outer folder, open the inner folder containing <code>_quarto.yml</code> and <code>requirements.txt</code>.</p>
 <p>To see your current location and files:</p>
 <section id="macos-or-linux-terminal" class="level3">
 <h3 class="anchored" data-anchor-id="macos-or-linux-terminal">macOS or Linux terminal</h3>
