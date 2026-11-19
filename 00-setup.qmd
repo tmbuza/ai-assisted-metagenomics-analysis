@@ -21,14 +21,18 @@ Use the official [Python download page](https://www.python.org/downloads/), [VS 
 
 **You can run the Python analysis before installing Quarto.** You need Quarto when you want to preview or render QMD pages or the HTML report. The terminal-based steps here do not require a Jupyter notebook.
 
-## 2. Open the main project folder
+## 2. Download and open the project
 
-1. Download the complete project ZIP and extract it. Do not work inside the compressed ZIP.
-2. In VS Code, choose **File → Open Folder** and select `ai-assisted-metagenomics-analysis`.
-3. Check the file list: you should see `_quarto.yml`, `requirements.txt`, `data/`, `scripts/` and `examples/` directly inside the selected folder.
-4. Choose **Terminal → New Terminal**.
+1. Open the [AI-Assisted Metagenomics Analysis repository](https://github.com/tmbuza/ai-assisted-metagenomics-analysis).
+2. Click the green **Code** button, then choose **Download ZIP**.
+3. Extract the downloaded ZIP. The extracted folder will usually be named `ai-assisted-metagenomics-analysis-main`. Do not work inside the compressed ZIP.
+4. In VS Code, choose **File → Open Folder** and select the extracted folder.
+5. Check the file list: you should see `_quarto.yml`, `requirements.txt`, `data/`, `scripts/` and `examples/` directly inside it.
+6. Choose **Terminal → New Terminal**.
 
-This is the **main project folder**. Run all guide commands here. If your download created an extra outer folder, open the inner folder that actually contains those files.
+This is the **main project folder**. Run all guide commands here. You can keep the folder's downloaded name; renaming it is not required.
+
+If extraction created an extra outer folder, open the inner folder containing `_quarto.yml` and `requirements.txt`.
 
 To see your current location and files:
 
