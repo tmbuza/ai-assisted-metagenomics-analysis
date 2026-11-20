@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Required setup – AI-Assisted Metagenomics Analysis with Python</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./examples/synthetic/00-start-here.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="assets/css/cdi.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00-setup.html">Required setup</a></li><li class="breadcrumb-item"><a href="./00-setup.html"><span class="chapter-title">Required setup</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AI-Assisted Metagenomics Analysis with Python</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AI-Assisted Metagenomics Analysis with Python</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Required setup</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-setup.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Required setup</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Synthetic practice</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/synthetic/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Synthetic practice: learn the workflow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/synthetic/01-see-the-result.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">See the result</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/synthetic/02-meet-the-data.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Meet the data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/synthetic/03-check-the-inputs.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Check the inputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/synthetic/04-run-the-analysis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Run the analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/synthetic/05-verify-and-explain.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Verify and explain</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/synthetic/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Export the report</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hypertension case study — preparation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension example: apply the workflow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/hypertension/01-see-the-result.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">See the result</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/hypertension/02-meet-the-data.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Meet the data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/hypertension/03-check-the-inputs.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Check the inputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/hypertension/04-run-the-analysis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Run the analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/hypertension/05-verify-and-explain.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Verify and explain</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Export the report</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Your own study</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/my-study/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Your study: analyse your own data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/my-study/01-see-the-result.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">See the result</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/my-study/02-meet-the-data.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Meet the data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/my-study/03-check-the-inputs.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Check the inputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/my-study/04-run-the-analysis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Run the analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/my-study/05-verify-and-explain.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Verify and explain</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples/my-study/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Export the report</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99-appendix.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Appendix</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#gather-the-software-and-project-files" id="toc-gather-the-software-and-project-files" class="nav-link active" data-scroll-target="#gather-the-software-and-project-files">1. Gather the software and project files</a></li>
+  <li><a href="#download-and-open-the-project" id="toc-download-and-open-the-project" class="nav-link" data-scroll-target="#download-and-open-the-project">2. Download and open the project</a>
+  <ul class="collapse">
+  <li><a href="#macos-or-linux-terminal" id="toc-macos-or-linux-terminal" class="nav-link" data-scroll-target="#macos-or-linux-terminal">macOS or Linux terminal</a></li>
+  <li><a href="#windows-powershell" id="toc-windows-powershell" class="nav-link" data-scroll-target="#windows-powershell">Windows PowerShell</a></li>
+  </ul></li>
+  <li><a href="#create-a-python-environment" id="toc-create-a-python-environment" class="nav-link" data-scroll-target="#create-a-python-environment">3. Create a Python environment</a>
+  <ul class="collapse">
+  <li><a href="#macos-or-linux" id="toc-macos-or-linux" class="nav-link" data-scroll-target="#macos-or-linux">macOS or Linux</a></li>
+  <li><a href="#windows-powershell-1" id="toc-windows-powershell-1" class="nav-link" data-scroll-target="#windows-powershell-1">Windows PowerShell</a></li>
+  <li><a href="#check-that-activation-worked" id="toc-check-that-activation-worked" class="nav-link" data-scroll-target="#check-that-activation-worked">Check that activation worked</a></li>
+  </ul></li>
+  <li><a href="#install-and-check-the-analysis-packages" id="toc-install-and-check-the-analysis-packages" class="nav-link" data-scroll-target="#install-and-check-the-analysis-packages">4. Install and check the analysis packages</a></li>
+  <li><a href="#check-the-synthetic-inputs" id="toc-check-the-synthetic-inputs" class="nav-link" data-scroll-target="#check-the-synthetic-inputs">5. Check the synthetic inputs</a></li>
+  <li><a href="#understand-where-things-live" id="toc-understand-where-things-live" class="nav-link" data-scroll-target="#understand-where-things-live">6. Understand where things live</a></li>
+  <li><a href="#preview-and-render-with-quarto" id="toc-preview-and-render-with-quarto" class="nav-link" data-scroll-target="#preview-and-render-with-quarto">7. Preview and render with Quarto</a></li>
+  <li><a href="#copy-code-into-the-right-place" id="toc-copy-code-into-the-right-place" class="nav-link" data-scroll-target="#copy-code-into-the-right-place">8. Copy code into the right place</a></li>
+  <li><a href="#return-for-another-session" id="toc-return-for-another-session" class="nav-link" data-scroll-target="#return-for-another-session">9. Return for another session</a></li>
+  <li><a href="#if-something-goes-wrong" id="toc-if-something-goes-wrong" class="nav-link" data-scroll-target="#if-something-goes-wrong">If something goes wrong</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00-setup.html">Required setup</a></li><li class="breadcrumb-item"><a href="./00-setup.html"><span class="chapter-title">Required setup</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Required setup</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This page takes you from the downloaded project to your first successful input check. You do not need to read the README or clone a Git repository to get started.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What you will accomplish
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Open the correct project folder, prepare a Python environment, install the analysis packages and confirm that the synthetic inputs can be read. Then continue to the guided synthetic lesson.</p>
+</div>
+</div>
+<section id="gather-the-software-and-project-files" class="level2">
+<h2 class="anchored" data-anchor-id="gather-the-software-and-project-files">1. Gather the software and project files</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>What you need it for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Project download</td>
+<td>Contains the data, scripts, lessons and report template</td>
+</tr>
+<tr class="even">
+<td>Python 3.10 or later</td>
+<td>Runs the input checks, analysis and verification</td>
+</tr>
+<tr class="odd">
+<td>VS Code or another text editor</td>
+<td>Opens the project and lets you edit reports</td>
+</tr>
+<tr class="even">
+<td>Quarto</td>
+<td>Previews or renders the guide and reports; separate from Python</td>
+</tr>
+</tbody>
+</table>
+<p>Use the official <a href="https://www.python.org/downloads/">Python download page</a>, <a href="https://code.visualstudio.com/">VS Code website</a> and <a href="https://quarto.org/docs/get-started/">Quarto installation page</a>. Choose installers for your operating system and follow their instructions. Close and reopen your terminal after installation so new commands can be found.</p>
+<p><strong>You can run the Python analysis before installing Quarto.</strong> You need Quarto when you want to preview or render QMD pages or the HTML report. The terminal-based steps here do not require a Jupyter notebook.</p>
+</section>
+<section id="download-and-open-the-project" class="level2">
+<h2 class="anchored" data-anchor-id="download-and-open-the-project">2. Download and open the project</h2>
+<ol type="1">
+<li>Open the <a href="https://github.com/tmbuza/ai-assisted-metagenomics-analysis">AI-Assisted Metagenomics Analysis repository</a>.</li>
+<li>Click the green <strong>Code</strong> button, then choose <strong>Download ZIP</strong>.</li>
+<li>Extract the downloaded ZIP. The extracted folder will usually be named <code>ai-assisted-metagenomics-analysis-main</code>. Do not work inside the compressed ZIP.</li>
+<li>In VS Code, choose <strong>File → Open Folder</strong> and select the extracted folder.</li>
+<li>Check the file list: you should see <code>_quarto.yml</code>, <code>requirements.txt</code>, <code>data/</code>, <code>scripts/</code> and <code>examples/</code> directly inside it.</li>
+<li>Choose <strong>Terminal → New Terminal</strong>.</li>
+</ol>
+<p>This is the <strong>main project folder</strong>. Run all guide commands here. You can keep the folder’s downloaded name; renaming it is not required.</p>
+<p>If extraction created an extra outer folder, open the inner folder containing <code>_quarto.yml</code> and <code>requirements.txt</code>.</p>
+<p>To see your current location and files:</p>
+<section id="macos-or-linux-terminal" class="level3">
+<h3 class="anchored" data-anchor-id="macos-or-linux-terminal">macOS or Linux terminal</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="windows-powershell" class="level3">
+<h3 class="anchored" data-anchor-id="windows-powershell">Windows PowerShell</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Location</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-ChildItem</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the expected files are missing, reopen the correct folder and a new terminal before continuing.</p>
+</section>
+</section>
+<section id="create-a-python-environment" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-python-environment">3. Create a Python environment</h2>
+<p>A virtual environment is a project-specific place for Python packages. We will name it <code>.venv</code>, keeping the analysis packages separate from other projects.</p>
+<p>Follow <strong>only the instructions for your operating system</strong>. Run each line in order.</p>
+<section id="macos-or-linux" class="level3">
+<h3 class="anchored" data-anchor-id="macos-or-linux">macOS or Linux</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">--version</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv .venv</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The version must be Python 3.10 or later. If <code>python3</code> is missing or older, install a supported Python version first. If Linux reports that <code>venv</code> is unavailable, use your distribution’s instructions to install the matching Python venv support, then repeat environment creation.</p>
+</section>
+<section id="windows-powershell-1" class="level3">
+<h3 class="anchored" data-anchor-id="windows-powershell-1">Windows PowerShell</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>py <span class="op">--</span>version</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>py <span class="op">-</span>m venv <span class="op">.</span><span class="fu">venv</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\<span class="op">.</span><span class="fu">venv</span>\Scripts\Activate<span class="op">.</span><span class="fu">ps1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If <code>py</code> is unavailable but <code>python --version</code> reports Python 3.10 or later, use <code>python -m venv .venv</code> to create the environment instead.</p>
+<p>If PowerShell blocks the activation script, you can use <strong>Command Prompt</strong> without changing PowerShell’s policy. In VS Code’s terminal dropdown, open a Command Prompt terminal in the same project folder, then run:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bat code-with-copy"><code class="sourceCode dosbat"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>.venv\Scripts\activate.bat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="check-that-activation-worked" class="level3">
+<h3 class="anchored" data-anchor-id="check-that-activation-worked">Check that activation worked</h3>
+<p>Your prompt will usually start with <code>(.venv)</code>. The exact computer name and folder text will differ from examples in this guide.</p>
+<p>Run:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import sys; print(sys.executable); print('Virtual environment active:', sys.prefix != sys.base_prefix)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The interpreter path should point inside this project’s <code>.venv</code> folder, and the last line should say <code>Virtual environment active: True</code>. After activation, use <code>python</code> for the remaining commands on all platforms.</p>
+<p><strong>If <code>.venv</code> already exists:</strong> activate it and check the interpreter; you do not need to recreate it for every session. If you moved the project or changed the Python installation, the old environment may need recreating.</p>
+</section>
+</section>
+<section id="install-and-check-the-analysis-packages" class="level2">
+<h2 class="anchored" data-anchor-id="install-and-check-the-analysis-packages">4. Install and check the analysis packages</h2>
+<p>With the environment active, run:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">--upgrade</span> pip</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>requirements.txt</code> is the project’s package list. <code>python -m pip</code> installs into the Python environment you just checked. Installation needs an internet connection and may take a few minutes. Wait until the terminal prompt returns before entering the next command.</p>
+<p>Now check the packages used by the workflow:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import numpy, pandas, matplotlib; print('Analysis packages loaded successfully.')"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Expected message:</p>
+<pre class="text"><code>Analysis packages loaded successfully.</code></pre>
+<p>If an import fails, check activation and repeat the requirements installation. Keep any installation error message; do not continue as though installation succeeded.</p>
+</section>
+<section id="check-the-synthetic-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="check-the-synthetic-inputs">5. Check the synthetic inputs</h2>
+<p>Keep the bundled synthetic files unchanged for your first run. This command validates them without generating new analysis results:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="at">--data-dir</span> data/synthetic <span class="at">--output-dir</span> results/synthetic <span class="at">--check-only</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For the bundled dataset described in this project, expect:</p>
+<pre class="text"><code>Input checks passed: 12 samples; 2 groups.</code></pre>
+<p>If your input version has been intentionally changed, compare the reported counts with its metadata. If they differ unexpectedly, check that you downloaded the intended project version and are using <code>data/synthetic/</code>.</p>
+<p>The check confirms technical compatibility: headers, sample IDs and numerical values meet the script’s requirements. It does not establish biological validity or statistical significance. <code>--check-only</code> does not refresh existing figures.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Setup checkpoint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Continue when the environment check says <code>True</code>, the package imports succeed and the synthetic input check passes. You are ready to run the analysis in <a href="./examples/synthetic/00-start-here.html">Synthetic practice</a>.</p>
+</div>
+</div>
+</section>
+<section id="understand-where-things-live" class="level2">
+<h2 class="anchored" data-anchor-id="understand-where-things-live">6. Understand where things live</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Location</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>data/</code></td>
+<td>Input tables, separated by dataset</td>
+</tr>
+<tr class="even">
+<td><code>scripts/python/</code></td>
+<td>Reusable checking, analysis and verification code</td>
+</tr>
+<tr class="odd">
+<td><code>examples/</code></td>
+<td>Seven lesson pages per dataset</td>
+</tr>
+<tr class="even">
+<td><code>results/</code></td>
+<td>Generated figures, tables and run records</td>
+</tr>
+<tr class="odd">
+<td><code>reports/</code></td>
+<td>Your QMD reports</td>
+</tr>
+<tr class="even">
+<td><code>docs/</code></td>
+<td>Rendered guide produced by the project build</td>
+</tr>
+<tr class="odd">
+<td><code>.venv/</code></td>
+<td>Local Python environment</td>
+</tr>
+</tbody>
+</table>
+<p>Commands use paths such as <code>data/synthetic/</code> relative to the main project folder. Opening a terminal inside <code>examples/synthetic/</code> changes what those paths refer to and can cause file-not-found errors.</p>
+</section>
+<section id="preview-and-render-with-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="preview-and-render-with-quarto">7. Preview and render with Quarto</h2>
+<p>If Quarto is installed, check that the command is available:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To preview the guide from the main project folder:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Open the local address printed in the terminal if a browser does not open automatically. Preview keeps running while you work. To stop it and get your terminal prompt back, press <strong>Ctrl+C</strong>. You can also open a second terminal, but activate <code>.venv</code> there before running Python commands.</p>
+<p>To build the complete guide:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The project is configured to write the guide to <code>docs/</code>. To render a completed synthetic report separately:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render reports/synthetic-report.qmd <span class="at">--to</span> html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Follow the lesson before completing the report. Quarto prints the rendered report’s location. The QMD pages display commands and existing figures; rendering does <strong>not</strong> run the Python analysis. Regenerate results in the terminal after changing inputs, then render again.</p>
+</section>
+<section id="copy-code-into-the-right-place" class="level2">
+<h2 class="anchored" data-anchor-id="copy-code-into-the-right-place">8. Copy code into the right place</h2>
+<p>Copy code from a displayed block without the surrounding Markdown backticks. Do not copy terminal prompts such as <code>$</code>, <code>&gt;</code> or <code>(.venv)</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What you see in the guide</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>python scripts/python/...</code></td>
+<td>Paste the command into your terminal</td>
+</tr>
+<tr class="even">
+<td><code>python -c "..."</code></td>
+<td>Paste the whole line into your terminal</td>
+</tr>
+<tr class="odd">
+<td>A block starting <code>python - &lt;&lt;'PY'</code></td>
+<td>In macOS/Linux Bash or Zsh, paste the whole block through its final <code>PY</code> line</td>
+</tr>
+<tr class="even">
+<td>A report template starting with <code>---</code></td>
+<td>Paste into the named <code>.qmd</code> file in your editor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Windows PowerShell and Command Prompt do not support the Bash <code>&lt;&lt;'PY'</code> wrapper.</strong> For those longer Python examples, copy only the Python lines between the opening wrapper and closing <code>PY</code> into a file named <code>check_values.py</code> in the main project folder. Save it, then run:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> check_values.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Do not include <code>python - &lt;&lt;'PY'</code> or the final <code>PY</code> in that file. You can use this saved-script approach on macOS or Linux too. The calculations are the same.</p>
+<p>If your prompt is <code>&gt;&gt;&gt;</code>, you are inside interactive Python. Enter <code>exit()</code> to return to the terminal before running shell commands. If a Bash terminal shows continuation prompts <code>&gt;</code> after an incomplete paste, finish with the closing <code>PY</code> on its own line or press Ctrl+C and paste the complete block again.</p>
+</section>
+<section id="return-for-another-session" class="level2">
+<h2 class="anchored" data-anchor-id="return-for-another-session">9. Return for another session</h2>
+<p>Open the project and a terminal, then activate the existing environment:</p>
+<ul>
+<li>macOS/Linux: <code>source .venv/bin/activate</code></li>
+<li>PowerShell: <code>.\.venv\Scripts\Activate.ps1</code></li>
+<li>Command Prompt: <code>.venv\Scripts\activate.bat</code></li>
+</ul>
+<p>You do not need to reinstall packages each time. To leave the environment:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">deactivate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="if-something-goes-wrong" class="level2">
+<h2 class="anchored" data-anchor-id="if-something-goes-wrong">If something goes wrong</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symptom</th>
+<th>First thing to try</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Python or <code>py</code> not found</td>
+<td>Check installation and reopen the terminal</td>
+</tr>
+<tr class="even">
+<td><code>requirements.txt</code> or a script not found</td>
+<td>Confirm the main project folder is open</td>
+</tr>
+<tr class="odd">
+<td><code>ModuleNotFoundError</code></td>
+<td>Activate <code>.venv</code>, check the interpreter and install requirements</td>
+</tr>
+<tr class="even">
+<td>PowerShell activation blocked</td>
+<td>Use the Command Prompt activation option above</td>
+</tr>
+<tr class="odd">
+<td>Input check failed</td>
+<td>Read the named file/error and follow <a href="./examples/synthetic/03-check-the-inputs.html">input troubleshooting</a></td>
+</tr>
+<tr class="even">
+<td><code>quarto</code> not found</td>
+<td>Install Quarto separately and reopen the terminal; Python analysis can proceed</td>
+</tr>
+<tr class="odd">
+<td>Figure missing after rendering</td>
+<td>Run the analysis first, then check output paths and render again</td>
+</tr>
+</tbody>
+</table>
+<p>If you need help, share the exact command, full error message, operating system and whether <code>.venv</code> is active. Those details make the problem easier to reproduce.</p>
+<p><a href="./examples/synthetic/00-start-here.html">Next: Start synthetic practice</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="AI-Assisted Metagenomics Analysis with Python">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">AI-Assisted Metagenomics Analysis with Python</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./examples/synthetic/00-start-here.html" class="pagination-link" aria-label="Synthetic practice: learn the workflow">
+        <span class="nav-page-text"><span class="chapter-title">Synthetic practice: learn the workflow</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
