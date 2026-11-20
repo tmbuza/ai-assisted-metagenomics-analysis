@@ -4,7 +4,7 @@ project:
   resources:
   - results/synthetic/figures/*.png
 book:
-  title: AI-Assisted Metagenomics Analysis
+  title: AI-Assisted Metagenomics Analysis with Python
   subtitle: From metagenomics profiles to an output you understand and can defend
   author: Teresia Mrema Buza | Complex Data Insights
   chapters:

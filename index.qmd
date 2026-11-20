@@ -1,5 +1,5 @@
 ---
-title: "AI-Assisted Metagenomics Analysis"
+title: "AI-Assisted Metagenomics Analysis with Python"
 toc: false
 format:
   html:

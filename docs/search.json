@@ -2,41 +2,41 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "AI-Assisted Metagenomics Analysis",
+    "title": "AI-Assisted Metagenomics Analysis with Python",
     "section": "",
     "text": "The datasets\nExplore processed taxonomic and functional profiles with Python. Learn one workflow with synthetic practice, repeat it with the hypertension example, then apply it to your own study. Check the inputs, verify the outputs, and explain what the results support.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis with Python</span>"
     ]
   },
   {
     "objectID": "index.html#the-datasets",
     "href": "index.html#the-datasets",
-    "title": "AI-Assisted Metagenomics Analysis",
+    "title": "AI-Assisted Metagenomics Analysis with Python",
     "section": "",
     "text": "Dataset\nWhat it contains\nWhat you will learn\n\n\n\n\nSynthetic practice\nFictional taxonomic and functional abundances with sample groups\nLearn the complete workflow with guided commands, figure explanations, an independent check of S01 and a short report\n\n\nHypertension example\nMetadata for 195 samples: 98 HTN, 56 pHTN and 41 Control; placeholder taxonomic abundances and supplied functional features\nRepeat the workflow with a larger dataset and distinguish working outputs from biologically interpretable results\n\n\nYour own study\nYour processed taxonomic profiles, functional features and sample metadata\nPrepare compatible TSV files, run the same commands with your study paths, and write a report supported by your results\n\n\n\n\n\n\n\n\n\nHypertension example: current data status\n\n\n\nThe taxonomic abundances are synthetic placeholders. Their composition and calculated Shannon diversity do not represent the hypertension study. The functional features still require confirmation of their source, definitions and measurement units before biological interpretation. Use this example to practise the workflow while those checks are completed.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis with Python</span>"
     ]
   },
   {
     "objectID": "index.html#start-with-a-guided-lesson",
     "href": "index.html#start-with-a-guided-lesson",
-    "title": "AI-Assisted Metagenomics Analysis",
+    "title": "AI-Assisted Metagenomics Analysis with Python",
     "section": "Start with a guided lesson",
     "text": "Start with a guided lesson\nComplete Required setup, then work through Synthetic practice in order. Each page explains the task, gives the command to run and shows how to check your work. You will inspect the inputs, generate the figures, verify S01 and write a short report. The functional labels in synthetic practice are fictional identifiers, not real pathway names.\nRun commands in your terminal from the main project folder. The guide displays the commands; rendering its pages does not execute the analysis.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis with Python</span>"
     ]
   },
   {
     "objectID": "index.html#what-you-will-produce",
     "href": "index.html#what-you-will-produce",
-    "title": "AI-Assisted Metagenomics Analysis",
+    "title": "AI-Assisted Metagenomics Analysis with Python",
     "section": "What you will produce",
     "text": "What you will produce\n\nTaxonomic composition: a stacked bar plot showing within-sample proportions.\nShannon diversity: a plot showing each sample’s calculated diversity and group medians.\nFunctional profile: a stacked bar plot showing within-sample proportions of the supplied functional features.\nTables and a short report: numerical results you can check and use to support your observations.\n\n\n\n\n\n\n\nNote\n\n\n\nSetup is required before running the workflow. Each dataset follows the same page structure, with commands using its own input and output folders. Start with synthetic practice, then repeat the steps with another dataset.\n\n\nThe guide starts from prepared abundance tables. It does not process raw sequencing reads. The outputs are descriptive: visual differences alone do not establish statistical significance or causation, and functional profiles describe the supplied annotations rather than directly measured biological activity.\nNext: Set up your workspace",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis with Python</span>"
     ]
   },
   {
