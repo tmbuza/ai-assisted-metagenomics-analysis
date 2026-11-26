@@ -1,0 +1,43 @@
+{
+  "hypertension": {
+    "samples": 140,
+    "unique_subject_ids": 140,
+    "groups": {
+      "HTN": 99,
+      "Control": 41
+    },
+    "species": 440,
+    "named_pathways": 483,
+    "all_zero_species_rows": 31,
+    "all_zero_pathway_rows": 5,
+    "taxon_percentage_totals_range": [
+      99.99994,
+      100.00009
+    ],
+    "named_pathway_totals_range": [
+      0.035920830846,
+      0.105339304298
+    ]
+  },
+  "hypertension-all-groups": {
+    "samples": 196,
+    "unique_subject_ids": 196,
+    "groups": {
+      "HTN": 99,
+      "pHTN": 56,
+      "Control": 41
+    },
+    "species": 440,
+    "named_pathways": 483,
+    "all_zero_species_rows": 0,
+    "all_zero_pathway_rows": 0,
+    "taxon_percentage_totals_range": [
+      99.99994,
+      100.00009
+    ],
+    "named_pathway_totals_range": [
+      0.035920830846,
+      0.105339304298
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+[
+  {
+    "filename": "2021-10-14.LiJ_2017.pathway_abundance.rda",
+    "url": "https://mghp.osn.xsede.org/bir190004-bucket01/ExperimentHub/curatedMetagenomicData/2021-10-14/LiJ_2017/2021-10-14.LiJ_2017.pathway_abundance.rda",
+    "resource_id": "EH7179",
+    "resource_title": "2021-10-14.LiJ_2017.pathway_abundance",
+    "sha256": "a3012f93025bfe2502f1f6c18ed199f0adf76c75820487e0c7ae49ff610e70a5"
+  },
+  {
+    "filename": "2021-10-14.LiJ_2017.relative_abundance.rda",
+    "url": "https://mghp.osn.xsede.org/bir190004-bucket01/ExperimentHub/curatedMetagenomicData/2021-10-14/LiJ_2017/2021-10-14.LiJ_2017.relative_abundance.rda",
+    "resource_id": "EH7181",
+    "resource_title": "2021-10-14.LiJ_2017.relative_abundance",
+    "sha256": "8ca847eef6ee516bfb122ad0f90abbd9cbc18132208824886506f522050e04b0"
+  },
+  {
+    "filename": "sampleMetadata.rda",
+    "url": "https://raw.githubusercontent.com/waldronlab/curatedMetagenomicData/8de4b6cf987e022edc67943043ec7e0b23495796/data/sampleMetadata.rda",
+    "sha256": "168c8650d2893dcb49930b9b85a4187637775c9aae0a8023efb4cca52dc73444"
+  }
+]

@@ -41,16 +41,19 @@ All paths below are inside `results/my-study/`.
 | `tables/alpha-diversity.tsv` | Totals, detected taxa, calculated Shannon and metadata |
 | `tables/taxon-relative-abundance.tsv` | Proportions for all supplied taxa |
 | `tables/functional-relative-abundance.tsv` | Proportions for all supplied functional features |
-| `tables/run-record.json` | Python/package versions, input directory and method description |
+| `tables/group-summary.tsv` | Group counts, diversity medians and ranges |
+| `tables/composition-display.tsv` | Stacked taxonomic plot values |
+| `tables/functional-features-display.tsv` | Stacked functional plot values |
+| `tables/run-record.json` | Python/package versions, input checksums, dimensions and method description |
 
-Stacked plots show up to ten features selected by highest mean proportions across samples. Any remaining features are combined as **Other**. Tables retain all features and Shannon uses all supplied taxa.
+Stacked plots show up to 15 features selected by highest mean proportions across samples. Any remaining features are combined as **Other**. Tables retain all features and Shannon uses all supplied taxa.
 
 ## Inspect your first run
 
 1. Open `alpha-diversity.tsv` and check that sample IDs and groups are yours.
 2. Locate the three figures and inspect their axes and legends.
 3. Return to [See the result](01-see-the-result.qmd) to display your figures in the guide if desired.
-4. Keep the exact inputs and provenance notes with your analysis. The run record does not include input checksums or every preparation decision.
+4. Keep the exact inputs and provenance notes with your analysis. The run record includes input checksums; keep source notes for preparation decisions.
 
 With many samples, labels may overlap. That is a presentation problem rather than evidence of an incorrect calculation. Use saved tables for sample-specific checks and adapt plotting labels separately if needed.
 

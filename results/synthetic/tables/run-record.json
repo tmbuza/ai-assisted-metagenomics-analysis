@@ -1,8 +1,22 @@
 {
-  "python": "3.12.6",
-  "numpy": "2.5.5",
-  "pandas": "3.1.1",
-  "matplotlib": "3.11.2",
+  "input_sha256": {
+    "sample-metadata.tsv": "1fd338b172cfd90c22191747abfc1f33cabfb2d44e52c9be30b59776e31678ca",
+    "taxon-abundance.tsv": "03e08df10f6f79583b0726b0641368b39c65d09800c4ecec53bc6c809ff17a16",
+    "functional-features.tsv": "9c99dd7ddc2d636913f90d6fd6719b65728e8830b03f925a4b6ae0754de77b9d"
+  },
+  "samples": 12,
+  "groups": {
+    "A": 6,
+    "B": 6
+  },
+  "taxa": 8,
+  "functional_features": 5,
+  "display_top_n": 15,
+  "measurement_info": null,
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "pandas": "2.2.3",
+  "matplotlib": "3.10.8",
   "data_dir": "data/synthetic",
   "analysis": "descriptive; natural-log Shannon; within-sample normalization"
 }

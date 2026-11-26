@@ -1,47 +1,40 @@
 # See the result
 
-Start by learning how to read the outputs. The figures below come from `results/hypertension/figures/`. If they have not been generated yet, continue through the input checks and analysis, then return here.
+These figures use the verified **140-sample Control versus HTN subset**. Their numerical evidence is saved in `results/hypertension/tables/`.
 
-::: {.callout-warning}
-Taxonomic composition and Shannon diversity use synthetic placeholder taxa. Functional profiles use supplied features whose source and units still require confirmation. Read these as workflow outputs, not established hypertension findings.
-:::
+## Species composition
 
-## Taxonomic composition: how is abundance distributed?
+![Top 15 species by mean sample proportion; remaining species are light grey Other. Each bar is one sample, grouped as Control or HTN.](../../results/hypertension/figures/composition.png){#fig-htn-preview-composition width=100%}
 
-![Within-sample proportions of synthetic placeholder taxa. Each bar is one sample.](../../results/hypertension/figures/composition.png){#fig-htn-preview-composition width=100%}
+Each bar sums to 1. A segment is a species' share of that sample's profiled taxonomic abundance. The same 15 species are displayed in both groups; selection uses mean proportions across all 140 samples, not a test of group differences. **Other** combines the remaining species and is not an organism.
 
-Each bar sums to 1, or 100%. A coloured segment shows one taxon's share of that sample's total abundance. The workflow displays the ten taxa with the highest mean within-sample proportions across all samples; remaining taxa are combined as **Other**.
+Profiles vary substantially within groups. A large segment indicates relative dominance, not an absolute bacterial count. Group widths reflect different sample counts. Individual sample labels are omitted for readability; use `composition-display.tsv` and the complete relative-abundance table to check a sample.
 
-A taller segment means a larger proportion, not necessarily a larger absolute abundance. The samples follow metadata order; the plot does not explicitly label group boundaries. Use the metadata and saved table before assigning a pattern to a group.
+## Shannon diversity
 
-**Look for:** samples dominated by a few taxa and samples with more evenly sized segments. Describe variation without treating fictional taxon names as biological organisms.
+![Species Shannon diversity using natural logarithms. Each dot is a sample; black lines mark group medians.](../../results/hypertension/figures/shannon-diversity.png){#fig-htn-preview-shannon width=100%}
 
-## Shannon diversity: richness and evenness together
+Control has a higher median Shannon value (**2.249602**) than HTN (**2.009787**), with substantial overlap. These are descriptive summaries of the curated species profiles, not a hypothesis test or a replication of the paper's diversity values.
 
-![Calculated Shannon diversity by metadata group. Each dot is one sample; black lines show group medians.](../../results/hypertension/figures/shannon-diversity.png){#fig-htn-preview-shannon width=100%}
+Shannon combines detected richness and evenness. Controls have 40–118 detected species per sample; HTN samples have 24–119. Consequently, a Shannon difference cannot be attributed to evenness alone.
 
-- **Richness** here means the number of taxa with abundance greater than zero.
-- **Evenness** describes how evenly abundance is distributed among those taxa.
-- **Shannon diversity** combines both properties. A higher value can reflect more detected taxa, more even abundances, or both.
+## Functional proportions within the named pathway set
 
-The vertical position of each dot is its calculated Shannon value. Horizontal offsets only separate samples visually. Read the median lines together with the spread and overlap of the dots; the plot contains no hypothesis test.
+![Top 15 pathways by mean proportion within the retained named-pathway set. Other pathways are combined in light grey.](../../results/hypertension/figures/functional-features.png){#fig-htn-preview-functions width=100%}
 
-**Think about:** could two samples with 12 detected taxa have different Shannon values? Yes: their abundances can be distributed differently.
+The workflow divides each source value by that sample's total over the **483 named pathways**. The bars therefore show proportions within this retained set. A share of 0.02 means 2% of the named-pathway total, not 2% of all microbial functions, genes or reads. Pathways can overlap and do not form exclusive biological categories.
 
-## Functional profile: proportions within the supplied feature set
+## Pathway abundances on the source scale
 
-![Within-sample proportions of the supplied functional features. Each bar is one sample; remaining features are combined as Other.](../../results/hypertension/figures/functional-features.png){#fig-htn-preview-functions width=100%}
+![Group medians of source HUMAnN pathway relative abundances for 15 pathways selected by mean source abundance.](../../results/hypertension/figures/pathway-source-heatmap.png){#fig-htn-preview-source width=100%}
 
-The script divides each functional value by the sum of the supplied functional values for that sample. It displays the ten features with the highest mean proportions and combines the remainder as **Other**.
+This heatmap uses the original source values, without renormalizing over the 483 named pathways. The colour scale is shared across cells; it shows abundance level, not a standardized effect size. The table `pathway-source-group-medians.tsv` provides exact values. Selection is descriptive and does not identify differentially abundant pathways.
 
-A value of 0.20 therefore means 20% of this supplied feature total. It is not automatically 20% of all microbial functions, genes or sequencing reads. Feature definitions, units and possible overlap must be understood before interpreting these proportions biologically. The plot does not directly measure biological activity.
+`UNMAPPED` and `UNINTEGRATED` are excluded from both pathway plots and recorded separately in `functional-denominators.tsv`. Neither plot measures pathway activity or metabolite production.
 
-## Check your understanding
 
-1. Why do all stacked bars have the same height even when original totals differ?
-2. Why can a group median hide substantial variation among samples?
-3. What information is missing before a functional pattern can support a study conclusion?
+Pathway names are database annotations. A label containing “plant”, “mammalian” or “engineered” does not establish that the sample contains that organism or an engineered community; shared genes can contribute to related pathway annotations. Treat such labels as a prompt to check gene-level support and pathway definitions.
 
-**Ready to continue:** you can explain what a bar, a coloured segment, a dot and a median line represent.
+**Check your understanding:** why can changing the retained pathway set alter a normalized bar proportion while leaving the corresponding source abundance unchanged?
 
 [Next: Meet the data](02-meet-the-data.qmd)

@@ -1,0 +1,17 @@
+{
+  "2021-10-14.LiJ_2017.pathway_abundance.rda": "a3012f93025bfe2502f1f6c18ed199f0adf76c75820487e0c7ae49ff610e70a5",
+  "2021-10-14.LiJ_2017.relative_abundance.rda": "8ca847eef6ee516bfb122ad0f90abbd9cbc18132208824886506f522050e04b0",
+  "LiJ_2017-curated-metadata.tsv": "896159f33cf5e99ad0159c1625c260e3acf3d97a8b3288ef36e520d3156357a9",
+  "download-manifest.json": "a41f0ccc19190731192bf5d7c28db6b87523a50941baa34ea1c462f5d6c4da47",
+  "pipeline-read_dir.R": "b4fac6c0fb16bb9f19e7d0ccd097cbea3ef539b5542bda33b6304dd8156ed8b4",
+  "previous-metadata-comparison.tsv": "8d5c7f599101616b17a7f86e0bb3d797e80d6e722ef8987cb97d9b6548e3a14b",
+  "repository-commit.txt": "b12ab639c3a75693ec42bf15b724221d7d3f9b6fe32d37dc6faf90fa00477225",
+  "resource-records.json": "6e2e75166326f6cdce1ef1a8521c803f50e12935f348c422ebdff808610df685",
+  "validation/hypertension-all-groups-group-summary.tsv": "8324a5bd0f9176259f945bbe9e87a0c9a3d2049e9f9b0b8f43ac53573ca42a50",
+  "validation/hypertension-all-groups-sample-checks.tsv": "08862996e68e49761b7c26fef40e6da5112738c022cd9d8487f9c7ec952bb63d",
+  "validation/hypertension-group-summary.tsv": "add5e81fb1346d747c715e4b00657a4109e6dabe07e17c2c408177d6591dfcd5",
+  "validation/hypertension-sample-checks.tsv": "cdf032df5eec756a0398d06d7daa70db8eefa129b194485a7f9d7767f8447c7d",
+  "validation/input-audit.json": "db983a84eb5d38eda328294fc93ced968381e7f0b9e5e20d441ac4fb12dea701",
+  "validation/original-study-group-check.tsv": "140ab184747b4967f927c4f220203056e516ded4647dba50066ad3e5d04f70d6",
+  "validation/reproduction-check.json": "4be6870a4afc95ec8bd012677cfe9c32738aa73e682c9f49977892e849c7b560"
+}

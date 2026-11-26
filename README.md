@@ -23,7 +23,7 @@ The QMD links in this README point to lesson source files in the repository. Use
 | Example | Purpose | Current data status |
 |---|---|---|
 | [Synthetic practice](examples/synthetic/00-start-here.qmd) | Learn the complete workflow, inspect Python calculations and verify S01 | Fictional data; functional labels are invented identifiers, not real pathways |
-| [Hypertension example](examples/hypertension/00-start-here.qmd) | Repeat the workflow with 195 samples: 98 HTN, 56 pHTN and 41 Control | Taxonomic abundances are synthetic placeholders; functional source, definitions and units still require verification |
+| [Hypertension example](examples/hypertension/00-start-here.qmd) | Compare 41 Control and 99 HTN samples; optional full cohort of 196 | Verified LiJ_2017 profiles: 440 species and 483 named pathways |
 | [Your own study](examples/my-study/00-start-here.qmd) | Prepare your tables, verify a sample and write your own report | Learner-supplied data, with documented provenance and units |
 
 Each example follows the same sequence: define the question, preview results, meet the inputs, validate, analyse, verify and explain, then write the report. Exact commands appear in the corresponding lesson pages.
@@ -83,7 +83,7 @@ All inputs are TSV files with unique headers and row identifiers. Metadata has s
 
 Sample IDs must match exactly across the three files; order may differ. Tables must have no blank cells. Abundances must be finite, numeric and nonnegative, with a positive total per sample in each abundance table. One descriptive group is supported. The current workflow requires both abundance tables; do not invent functional values to fill a missing file.
 
-Each run writes three figures to `results/<dataset>/figures/`: composition, Shannon diversity and functional profile. It also writes diversity and relative-abundance tables plus `run-record.json` to `results/<dataset>/tables/`.
+Each run writes three standard figures to `results/<dataset>/figures/`: composition, Shannon diversity and functional profile. It also writes diversity and relative-abundance tables plus display/group summaries and `run-record.json` to `results/<dataset>/tables/`.
 
 ## Reports and rendering
 
@@ -105,9 +105,9 @@ The guide build writes to `docs/`. Quarto displays existing results; it does not
 
 This workflow begins with processed profiles, not raw sequencing reads. It is descriptive: it does not test group differences, account for repeated samples, adjust for confounders or establish causation.
 
-Taxonomic and functional values are normalized separately within samples. Confirm the units and feature definitions before deciding whether this is biologically appropriate. Relative profiles do not directly establish absolute abundance or functional activity. Hypertension placeholder composition and Shannon values cannot support conclusions about the source study.
+Taxonomic and functional values are normalized separately within samples. Confirm the units and feature definitions before deciding whether this is biologically appropriate. Relative profiles do not directly establish absolute abundance or functional activity. The hypertension example uses curated relative profiles; it is a descriptive human comparison, without covariate adjustment or causal inference.
 
-Keep original inputs, preparation/source notes, scripts, outputs and the report together. Record the input version and analysis date. Dependencies are unpinned in this starter; the run record captures installed package versions but does not recreate the environment or record input checksums by itself.
+Keep original inputs, preparation/source notes, scripts, outputs and the report together. Record the input version and analysis date. Dependencies are unpinned in this starter; the run record captures installed package versions and input SHA-256 checksums but does not recreate the environment by itself.
 
 ## Folder guide
 
@@ -130,3 +130,23 @@ Keep original inputs, preparation/source notes, scripts, outputs and the report 
 - **Results disagree:** check the sample ID, input version, output folder and whether the analysis was rerun.
 
 For a detailed walkthrough, use [Required setup](00-setup.qmd). For definitions, formulas and interpretation guidance, use the [Appendix](99-appendix.qmd). To finish a Python session, run `deactivate` in the terminal.
+
+## Verified hypertension case study
+
+The main lesson uses 140 unique subjects (41 Control, 99 HTN). The optional
+`data/hypertension-all-groups/` retains all 196 (including 56 pHTN).
+Both have 440 species and 483 named MetaCyc pathways. Species inputs are
+percentages, not counts. Pathways retain HUMAnN source relative abundances;
+stacked functional plots renormalize within the named-pathway set. A fourth
+figure, `pathway-source-heatmap.png`, shows source-scale group medians.
+
+```bash
+python scripts/python/run_workflow.py --data-dir data/hypertension --output-dir results/hypertension
+python scripts/python/verify_sample.py data/hypertension results/hypertension ERR1398068
+```
+
+Source records and validation are in `data/provenance/hypertension/`.
+Maintainers can reproduce the TSV export using `Rscript scripts/R/prepare_hypertension.R`;
+learners need only Python for analysis. See the case-study lessons for units,
+checked values and interpretation. Cite Li et al. (2017),
+https://doi.org/10.1186/s40168-016-0222-x, and curatedMetagenomicData.

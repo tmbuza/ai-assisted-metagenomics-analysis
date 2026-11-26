@@ -14,13 +14,13 @@ All three files will be written to `results/my-study/figures/`.
 
 ## How to read the figures
 
-**Stacked bars:** each bar is a sample and each segment is a feature's share of that sample's supplied total. A bar sums to 1, even when original sample totals differ. A larger proportion does not necessarily mean a larger absolute abundance. The workflow displays up to ten features with the highest mean proportions and combines remaining features as **Other**.
+**Stacked bars:** each bar is a sample and each segment is a feature's share of that sample's supplied total. A bar sums to 1, even when original sample totals differ. A larger proportion does not necessarily mean a larger absolute abundance. The workflow displays up to 15 features with the highest mean proportions and combines remaining features as **Other**.
 
 **Diversity dots:** each dot is a sample and its vertical position is its Shannon diversity. Horizontal offsets separate dots visually. Black lines mark group medians. Read these together with the individual values, detected-taxon counts and overlap. With one group, describe sample variation rather than a group comparison.
 
 **Functional profiles:** proportions use only the supplied feature total as their denominator. Confirm that the features are comparable and understand whether categories overlap. A functional label or abundance estimate is not direct evidence of activity.
 
-Samples in stacked bars follow metadata order. Group boundaries are not explicitly labelled, so check the metadata before assigning a section of bars to a group.
+Samples in stacked bars are grouped by metadata label, retaining metadata order within each group. Group labels and counts appear above the bars. Remaining features are light grey Other.
 
 ## Display your figures here after analysis
 

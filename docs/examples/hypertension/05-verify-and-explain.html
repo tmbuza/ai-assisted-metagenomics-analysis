@@ -106,35 +106,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../assets/css/cdi.css">
 </head>
@@ -148,7 +119,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../examples/hypertension/00-start-here.html">Hypertension case study — preparation</a></li><li class="breadcrumb-item"><a href="../../examples/hypertension/05-verify-and-explain.html"><span class="chapter-title">Verify and explain</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../examples/hypertension/00-start-here.html">Hypertension case study</a></li><li class="breadcrumb-item"><a href="../../examples/hypertension/05-verify-and-explain.html"><span class="chapter-title">Verify and explain</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -243,7 +214,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Hypertension case study — preparation</span></a>
+ <span class="menu-text">Hypertension case study</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -251,7 +222,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension example: apply the workflow</span></a>
+  <a href="../../examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension: a real metagenomics case study</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -281,7 +252,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Export the report</span></a>
+  <a href="../../examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Write the report</span></a>
   </div>
 </li>
       </ul>
@@ -366,6 +337,7 @@ window.Quarto = {
   <li><a href="#explain-taxonomic-composition" id="toc-explain-taxonomic-composition" class="nav-link" data-scroll-target="#explain-taxonomic-composition">3. Explain taxonomic composition</a></li>
   <li><a href="#explain-shannon-diversity" id="toc-explain-shannon-diversity" class="nav-link" data-scroll-target="#explain-shannon-diversity">4. Explain Shannon diversity</a></li>
   <li><a href="#explain-the-functional-profile" id="toc-explain-the-functional-profile" class="nav-link" data-scroll-target="#explain-the-functional-profile">5. Explain the functional profile</a></li>
+  <li><a href="#check-the-source-scale-pathway-heatmap" id="toc-check-the-source-scale-pathway-heatmap" class="nav-link" data-scroll-target="#check-the-source-scale-pathway-heatmap">6. Check the source-scale pathway heatmap</a></li>
   <li><a href="#your-evidence-check" id="toc-your-evidence-check" class="nav-link" data-scroll-target="#your-evidence-check">Your evidence check</a></li>
   </ul>
 </nav>
@@ -373,7 +345,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../examples/hypertension/00-start-here.html">Hypertension case study — preparation</a></li><li class="breadcrumb-item"><a href="../../examples/hypertension/05-verify-and-explain.html"><span class="chapter-title">Verify and explain</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../examples/hypertension/00-start-here.html">Hypertension case study</a></li><li class="breadcrumb-item"><a href="../../examples/hypertension/05-verify-and-explain.html"><span class="chapter-title">Verify and explain</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-title">Verify and explain</span></h1>
 </div>
@@ -393,22 +365,10 @@ window.Quarto = {
 
 
 <p>A saved result is more useful when you can trace it back to the input. Verify one sample, check a functional proportion and use numerical summaries to support what you see.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Taxonomic composition and calculated Shannon values use synthetic placeholder taxa and do not describe the hypertension study. Functional interpretations remain provisional until source, definitions and units are confirmed.</p>
-</div>
-</div>
+<p>All values on this page refer to the verified 140-sample dataset. Inspect the saved tables alongside the figures.</p>
 <section id="verify-a-named-sample" class="level2">
 <h2 class="anchored" data-anchor-id="verify-a-named-sample">1. Verify a named sample</h2>
-<p>Use <strong>ERR1398068</strong>. For the current placeholder table, expect:</p>
+<p>Use <strong>ERR1398068</strong>. For the verified species table, expect:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -418,16 +378,16 @@ Warning
 </thead>
 <tbody>
 <tr class="odd">
-<td>Total taxonomic abundance</td>
-<td style="text-align: right;">4,761</td>
+<td>Total species abundance (source percentage total)</td>
+<td style="text-align: right;">100.000000</td>
 </tr>
 <tr class="even">
-<td>Detected taxa</td>
-<td style="text-align: right;">12</td>
+<td>Detected species</td>
+<td style="text-align: right;">75</td>
 </tr>
 <tr class="odd">
 <td>Shannon diversity, natural logarithm</td>
-<td style="text-align: right;">2.202635</td>
+<td style="text-align: right;">1.394365</td>
 </tr>
 </tbody>
 </table>
@@ -463,18 +423,18 @@ Warning
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="st">    print(f"{name}: manual={manual:.6f}; saved={recorded:.6f}; agrees={agrees}")</span></span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="op">PY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>All three comparisons should print <code>agrees=True</code>. A tiny difference in the last decimal places can be rounding. A larger difference calls for checking the input version, selected sample, normalization and logarithm base. Do not change a saved result merely to make it agree.</p>
-<p><code>source_shannon_index</code> is a separate supplied metadata field. It is not the reference value for this calculation from placeholder taxa.</p>
+<p>The calculated Shannon value uses the curated species table and is not a reference reproduction of the original paper’s reported diversity.</p>
 </section>
 </section>
 <section id="check-a-functional-proportion" class="level2">
 <h2 class="anchored" data-anchor-id="check-a-functional-proportion">2. Check a functional proportion</h2>
-<p>For ERR1398068, the supplied functional values sum to <strong>45,300</strong> and <code>LPS_biosynthesis</code> is <strong>436</strong>. The saved proportion should therefore be approximately <span class="math inline">\(436/45300 = 0.009625\)</span>, or <strong>0.9625% of the supplied functional total</strong>.</p>
+<p>For ERR1398068, named pathway values sum to <strong>0.045588663834</strong> on the source scale. <code>DTDPRHAMSYN-PWY</code> has source abundance <strong>0.00110242</strong>. Its normalized share is <strong>0.024181889</strong>, or <strong>2.4182% of the named-pathway total</strong>. Use <code>functional-annotations.tsv</code> to look up its label.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-</span> <span class="op">&lt;&lt;'PY'</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">import math</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">import pandas as pd</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">sample = "ERR1398068"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">feature = "LPS_biosynthesis"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">feature = "DTDPRHAMSYN-PWY"</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">raw = pd.read_csv("data/hypertension/functional-features.tsv", sep="\t", index_col=0)</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">saved = pd.read_csv("results/hypertension/tables/functional-relative-abundance.tsv", sep="\t", index_col=0)</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">manual = raw.loc[feature, sample] / raw[sample].sum()</span></span>
@@ -483,7 +443,7 @@ Warning
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">print(f"Saved proportion:      {recorded:.6f}")</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">print("Agrees:", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="op">PY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This checks arithmetic. It does not establish what the original feature values measure or whether their sum is a biologically appropriate denominator.</p>
+<p>This checks arithmetic within the retained named-pathway set. The denominator excludes UNMAPPED and UNINTEGRATED. Overlapping pathways are not exclusive parts of a biological whole; this calculation does not measure activity.</p>
 </section>
 <section id="explain-taxonomic-composition" class="level2">
 <h2 class="anchored" data-anchor-id="explain-taxonomic-composition">3. Explain taxonomic composition</h2>
@@ -493,12 +453,12 @@ Warning
 <img src="../../results/hypertension/figures/composition.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hypertension-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.1: Composition calculated from synthetic placeholder taxa. Each bar represents one sample.
+Figure&nbsp;15.1: Species composition in the verified Control and HTN samples; remaining species are light grey Other.
 </figcaption>
 </figure>
 </div>
 <p>Choose one sample with an uneven profile. Use <code>taxon-relative-abundance.tsv</code> to identify its largest taxon proportion, then write a sentence containing the sample ID, taxon ID and value. <strong>Other</strong> combines taxa rather than naming an organism.</p>
-<p><strong>Sentence starter:</strong> “In sample …, placeholder taxon … accounts for …% of the supplied taxonomic abundance.” This describes the exercise without implying a hypertension association.</p>
+<p><strong>Sentence starter:</strong> “In sample ERR1398068, s__Prevotella_copri accounts for 60.81291% of the profiled species abundance.” Check this value in the full table. A dominant species in one sample does not establish a group association.</p>
 </section>
 <section id="explain-shannon-diversity" class="level2">
 <h2 class="anchored" data-anchor-id="explain-shannon-diversity">4. Explain Shannon diversity</h2>
@@ -508,7 +468,7 @@ Figure&nbsp;15.1: Composition calculated from synthetic placeholder taxa. Each b
 <img src="../../results/hypertension/figures/shannon-diversity.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hypertension-shannon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.2: Shannon diversity calculated from placeholder taxa. Each dot is a sample; black lines indicate group medians.
+Figure&nbsp;15.2: Species Shannon diversity in the verified human samples. Each dot is a sample; black lines indicate group medians.
 </figcaption>
 </figure>
 </div>
@@ -527,8 +487,43 @@ Figure&nbsp;15.2: Shannon diversity calculated from placeholder taxa. Each dot i
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">)</span></span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">print(summary.round(6).to_string())</span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="op">PY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In the current placeholder table, samples have <strong>11 or 12 detected taxa</strong>. Do not assume richness is identical throughout. For two samples with the same detected-taxon count, a Shannon difference reflects evenness; across samples with different counts, both richness and evenness may contribute.</p>
-<p><strong>Your task:</strong> identify the group with the highest calculated median, quote the value and describe overlap with the other groups. Add: “These values were calculated from synthetic placeholder taxa and do not establish a study finding or statistical significance.”</p>
+<p>The saved group summary gives:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Group</th>
+<th style="text-align: right;">Samples</th>
+<th style="text-align: right;">Median Shannon</th>
+<th>Shannon range</th>
+<th>Detected species range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Control</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">2.249602</td>
+<td>0.449661–2.936477</td>
+<td>40–118</td>
+</tr>
+<tr class="even">
+<td>HTN</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">2.009787</td>
+<td>0.209700–3.517295</td>
+<td>24–119</td>
+</tr>
+</tbody>
+</table>
+<p>Control has a higher median, but the distributions overlap substantially. Richness differs, so evenness alone cannot explain Shannon variation. This descriptive plot does not establish statistical significance, adjustment for confounders or causation.</p>
+<p><strong>Your task:</strong> write a two-sentence interpretation containing both medians, overlap and one limitation.</p>
 </section>
 <section id="explain-the-functional-profile" class="level2">
 <h2 class="anchored" data-anchor-id="explain-the-functional-profile">5. Explain the functional profile</h2>
@@ -542,12 +537,27 @@ Figure&nbsp;15.3: Within-sample proportions of supplied functional features; rem
 </figcaption>
 </figure>
 </div>
-<p>Choose a visible feature and confirm one sample’s proportion in the saved table. Use “larger proportion of the supplied functional total” rather than “more active pathway.” Features may be selected, overlapping or differently normalized; resolve those details before biological interpretation.</p>
+<p>Choose a visible feature and confirm one sample’s proportion in the saved table. Use “larger proportion of the supplied functional total” rather than “more active pathway.” The 483 named pathways overlap, and this normalization excludes source UNMAPPED and UNINTEGRATED categories.</p>
+</section>
+<section id="check-the-source-scale-pathway-heatmap" class="level2">
+<h2 class="anchored" data-anchor-id="check-the-source-scale-pathway-heatmap">6. Check the source-scale pathway heatmap</h2>
+<div id="fig-hypertension-source" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hypertension-source-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../results/hypertension/figures/pathway-source-heatmap.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hypertension-source-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.4: Median source pathway relative abundances by group.
+</figcaption>
+</figure>
+</div>
+<p>Choose a pathway in <code>pathway-source-group-medians.tsv</code>. Quote both group medians and look up its readable label in <code>functional-annotations.tsv</code>. The colour scale shows abundance levels on the source relative-abundance scale, not a standardized group effect or significance. These are group summaries; inspect sample-level source values before describing consistency across individuals.</p>
+<p>Pathway names are database annotations. A label containing “plant”, “mammalian” or “engineered” does not establish that the sample contains that organism or an engineered community; shared genes can contribute to related pathway annotations. Treat such labels as a prompt to check gene-level support and pathway definitions.</p>
 </section>
 <section id="your-evidence-check" class="level2">
 <h2 class="anchored" data-anchor-id="your-evidence-check">Your evidence check</h2>
-<p>Write three short observations, one per figure. For each, include a numerical value, its source table, a limitation and a useful next check. A useful next check might be replacing placeholder taxa, confirming functional units or checking sample independence.</p>
-<p><strong>Ready to report:</strong> you can reproduce the named sample’s values and distinguish a correct calculation from an interpretable biological conclusion.</p>
+<p>Write one observation for each figure. Include a checked number, its source table, a limitation and a next check. Appropriate next checks include inspecting source-level distributions, obtaining verified covariates or planning a model suitable for relative abundance data. Never manufacture integer counts from these percentages to satisfy a count-based method.</p>
+<p><strong>Ready to report:</strong> you can reproduce the named sample and explain the two different functional denominators.</p>
 <p><a href="../../examples/hypertension/06-export-the-report.html">Next: Write the report</a></p>
 
 
@@ -962,8 +972,8 @@ Figure&nbsp;15.3: Within-sample proportions of supplied functional features; rem
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../examples/hypertension/06-export-the-report.html" class="pagination-link" aria-label="Export the report">
-        <span class="nav-page-text"><span class="chapter-title">Export the report</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../examples/hypertension/06-export-the-report.html" class="pagination-link" aria-label="Write the report">
+        <span class="nav-page-text"><span class="chapter-title">Write the report</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

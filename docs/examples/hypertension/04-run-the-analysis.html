@@ -148,7 +148,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../examples/hypertension/00-start-here.html">Hypertension case study — preparation</a></li><li class="breadcrumb-item"><a href="../../examples/hypertension/04-run-the-analysis.html"><span class="chapter-title">Run the analysis</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../examples/hypertension/00-start-here.html">Hypertension case study</a></li><li class="breadcrumb-item"><a href="../../examples/hypertension/04-run-the-analysis.html"><span class="chapter-title">Run the analysis</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -243,7 +243,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Hypertension case study — preparation</span></a>
+ <span class="menu-text">Hypertension case study</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -251,7 +251,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension example: apply the workflow</span></a>
+  <a href="../../examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension: a real metagenomics case study</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -281,7 +281,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Export the report</span></a>
+  <a href="../../examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Write the report</span></a>
   </div>
 </li>
       </ul>
@@ -358,17 +358,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#run-the-workflow" id="toc-run-the-workflow" class="nav-link active" data-scroll-target="#run-the-workflow">Run the workflow</a></li>
-  <li><a href="#understand-the-calculations" id="toc-understand-the-calculations" class="nav-link" data-scroll-target="#understand-the-calculations">Understand the calculations</a></li>
+  <li><a href="#understand-the-calculations" id="toc-understand-the-calculations" class="nav-link active" data-scroll-target="#understand-the-calculations">Understand the calculations</a></li>
   <li><a href="#find-the-outputs" id="toc-find-the-outputs" class="nav-link" data-scroll-target="#find-the-outputs">Find the outputs</a></li>
-  <li><a href="#inspect-before-interpreting" id="toc-inspect-before-interpreting" class="nav-link" data-scroll-target="#inspect-before-interpreting">Inspect before interpreting</a></li>
+  <li><a href="#optional-three-group-extension" id="toc-optional-three-group-extension" class="nav-link" data-scroll-target="#optional-three-group-extension">Optional three-group extension</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../examples/hypertension/00-start-here.html">Hypertension case study — preparation</a></li><li class="breadcrumb-item"><a href="../../examples/hypertension/04-run-the-analysis.html"><span class="chapter-title">Run the analysis</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../examples/hypertension/00-start-here.html">Hypertension case study</a></li><li class="breadcrumb-item"><a href="../../examples/hypertension/04-run-the-analysis.html"><span class="chapter-title">Run the analysis</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-title">Run the analysis</span></h1>
 </div>
@@ -387,25 +386,51 @@ window.Quarto = {
 </header>
 
 
-<p>The input check has confirmed that the files can be processed. Now generate descriptive outputs in a folder dedicated to this example.</p>
-<section id="run-the-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="run-the-workflow">Run the workflow</h2>
-<p>From the main project folder:</p>
+<p>Generate new outputs from the verified inputs:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="dt">\</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--data-dir</span> data/hypertension <span class="dt">\</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-dir</span> results/hypertension</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Expect:</p>
-<pre class="text"><code>Input checks passed: 195 samples; 3 groups.
+<pre class="text"><code>Input checks passed: 140 samples; 2 groups.
 Results saved to results/hypertension</code></pre>
-<p>The script creates the output folders if necessary. Rerunning writes over the same named outputs, so retain a copy elsewhere if you need to compare runs using different inputs.</p>
-</section>
+<p>A rerun replaces outputs with the same names. Preserve a separate copy if comparing input versions. Do not combine earlier placeholder figures with these new tables.</p>
 <section id="understand-the-calculations" class="level2">
 <h2 class="anchored" data-anchor-id="understand-the-calculations">Understand the calculations</h2>
-<p><strong>Taxonomic composition:</strong> divide each taxon’s abundance by that sample’s total taxonomic abundance. The resulting proportions sum to 1.</p>
-<p><strong>Detected taxa:</strong> count taxon values greater than zero. This is richness within the supplied table, not an estimate of all organisms present.</p>
-<p><strong>Shannon diversity:</strong> calculate <span class="math inline">\(H = -\sum_{i:p_i&gt;0}p_i\ln(p_i)\)</span>, where <span class="math inline">\(p_i\)</span> is a taxon’s within-sample proportion. Zero values do not contribute. The script uses the natural logarithm.</p>
-<p><strong>Functional profile:</strong> separately divide each functional value by that sample’s supplied functional-feature total. Taxonomic and functional totals are different denominators and should not be compared as if they were the same quantity.</p>
-<p>Both stacked bar plots display the ten features with the highest mean proportions across samples and combine remaining features into <strong>Other</strong>. This selection is for display, not a statistical test. Shannon uses all supplied taxa, including those combined as Other in the figure.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Calculation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Species proportion</td>
+<td>Source species percentage divided by the sample’s species total</td>
+</tr>
+<tr class="even">
+<td>Detected species</td>
+<td>Number of positive species values</td>
+</tr>
+<tr class="odd">
+<td>Shannon</td>
+<td><span class="math inline">\(H=-\sum_{i:p_i&gt;0}p_i\ln(p_i)\)</span>, using all species and natural logarithms</td>
+</tr>
+<tr class="even">
+<td>Functional proportion</td>
+<td>Source pathway value divided by the sample’s named-pathway total</td>
+</tr>
+<tr class="odd">
+<td>Source pathway group median</td>
+<td>Median original pathway relative abundance within each group</td>
+</tr>
+</tbody>
+</table>
+<p>Each stacked plot shows 15 features selected by mean sample proportion, with remaining features combined as light grey <strong>Other</strong>. Shannon uses every species. The heatmap selects pathways by mean source abundance, which can give a different ranking. Samples are grouped by metadata label, retaining metadata order within each group.</p>
 </section>
 <section id="find-the-outputs" class="level2">
 <h2 class="anchored" data-anchor-id="find-the-outputs">Find the outputs</h2>
@@ -418,59 +443,69 @@ Results saved to results/hypertension</code></pre>
 <thead>
 <tr class="header">
 <th>Output</th>
-<th>What it contains</th>
+<th>Contents</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><code>figures/composition.png</code></td>
-<td>Relative composition of placeholder taxa</td>
+<td>Top species and Other, with group boundaries</td>
 </tr>
 <tr class="even">
 <td><code>figures/shannon-diversity.png</code></td>
-<td>Calculated Shannon values grouped by metadata labels</td>
+<td>Sample Shannon values and group medians</td>
 </tr>
 <tr class="odd">
 <td><code>figures/functional-features.png</code></td>
-<td>Relative profile of supplied functional features</td>
+<td>Proportions within the named pathway set</td>
 </tr>
 <tr class="even">
+<td><code>figures/pathway-source-heatmap.png</code></td>
+<td>Group medians on the source pathway scale</td>
+</tr>
+<tr class="odd">
 <td><code>tables/alpha-diversity.tsv</code></td>
-<td>Sample totals, detected taxa, calculated Shannon and joined metadata</td>
+<td>Sample totals, detected species, Shannon and metadata</td>
+</tr>
+<tr class="even">
+<td><code>tables/group-summary.tsv</code></td>
+<td>Counts, medians and ranges</td>
 </tr>
 <tr class="odd">
 <td><code>tables/taxon-relative-abundance.tsv</code></td>
-<td>Proportions for every supplied taxon and sample</td>
+<td>All species proportions</td>
 </tr>
 <tr class="even">
 <td><code>tables/functional-relative-abundance.tsv</code></td>
-<td>Proportions for every supplied functional feature and sample</td>
+<td>All normalized named-pathway proportions</td>
 </tr>
 <tr class="odd">
+<td><code>tables/composition-display.tsv</code></td>
+<td>Values stacked in the composition plot</td>
+</tr>
+<tr class="even">
+<td><code>tables/functional-features-display.tsv</code></td>
+<td>Values stacked in the functional plot</td>
+</tr>
+<tr class="odd">
+<td><code>tables/pathway-source-group-medians.tsv</code></td>
+<td>Heatmap values</td>
+</tr>
+<tr class="even">
 <td><code>tables/run-record.json</code></td>
-<td>Python and package versions, input directory and analysis description</td>
+<td>Package versions, input checksums, dimensions and measurement notes</td>
 </tr>
 </tbody>
 </table>
-<p>The run record does not identify the original study or record input checksums. Keep provenance notes and exact input versions alongside your work.</p>
 </section>
-<section id="inspect-before-interpreting" class="level2">
-<h2 class="anchored" data-anchor-id="inspect-before-interpreting">Inspect before interpreting</h2>
-<p>Open <code>tables/alpha-diversity.tsv</code>. Find <code>ERR1398068</code> and identify <code>total_abundance</code>, <code>detected_taxa</code>, <code>shannon</code> and <code>source_shannon_index</code>. Which columns were calculated from the placeholder taxa, and which came from metadata?</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The script does not test group differences, adjust for confounding variables or demonstrate functional activity. Successful execution is the start of verification, not the end of interpretation.</p>
-</div>
-</div>
-<p><strong>Checkpoint:</strong> confirm that all three figures and four table/record files exist, then return to <a href="../../examples/hypertension/01-see-the-result.html">the preview</a> to inspect the figures.</p>
+<section id="optional-three-group-extension" class="level2">
+<h2 class="anchored" data-anchor-id="optional-three-group-extension">Optional three-group extension</h2>
+<p>After completing the main example, run:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/python/run_workflow.py <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--data-dir</span> data/hypertension-all-groups <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-dir</span> results/hypertension-all-groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Expect <strong>196 samples; 3 groups</strong>. Keep outputs separate. Adding pHTN changes the sample set and can change the top 15 features. These analyses are descriptive: no hypothesis tests, covariate adjustment or causal analysis are performed.</p>
+<p><strong>Checkpoint:</strong> open all four figures. Confirm the main diversity plot shows Control n=41 and HTN n=99.</p>
 <p><a href="../../examples/hypertension/05-verify-and-explain.html">Next: Verify and explain</a></p>
 
 

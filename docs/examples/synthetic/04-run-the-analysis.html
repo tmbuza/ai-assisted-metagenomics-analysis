@@ -243,7 +243,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Hypertension case study — preparation</span></a>
+ <span class="menu-text">Hypertension case study</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -251,7 +251,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension example: apply the workflow</span></a>
+  <a href="../../examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension: a real metagenomics case study</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -281,7 +281,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Export the report</span></a>
+  <a href="../../examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Write the report</span></a>
   </div>
 </li>
       </ul>
@@ -442,7 +442,7 @@ window.Quarto = {
 </tbody>
 </table>
 <p>Multiplying a proportion by 100 gives a percentage. Taxon proportions and functional proportions each sum to 1 separately for every sample. Shannon uses all supplied taxa, not only those displayed individually in a plot.</p>
-<p>For stacked bars, the script displays up to ten features with the highest mean proportions across samples and combines the remainder as <strong>Other</strong>. This is a display choice, not a test of which features differ between groups.</p>
+<p>For stacked bars, the script displays up to 15 features with the highest mean proportions across samples and combines the remainder as <strong>Other</strong>. This is a display choice, not a test of which features differ between groups.</p>
 </section>
 <section id="find-your-outputs" class="level2">
 <h2 class="anchored" data-anchor-id="find-your-outputs">Find your outputs</h2>
@@ -484,8 +484,20 @@ window.Quarto = {
 <td>All functional proportions, with samples in columns</td>
 </tr>
 <tr class="odd">
+<td><code>tables/group-summary.tsv</code></td>
+<td>Group counts, diversity medians and ranges</td>
+</tr>
+<tr class="even">
+<td><code>tables/composition-display.tsv</code></td>
+<td>Stacked taxonomic plot values</td>
+</tr>
+<tr class="odd">
+<td><code>tables/functional-features-display.tsv</code></td>
+<td>Stacked functional plot values</td>
+</tr>
+<tr class="even">
 <td><code>tables/run-record.json</code></td>
-<td>Python/package versions, input directory and method description</td>
+<td>Python/package versions, input checksums, dimensions and method description</td>
 </tr>
 </tbody>
 </table>
@@ -495,7 +507,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="inspect-before-explaining">Inspect before explaining</h2>
 <p>Open <code>alpha-diversity.tsv</code>, find S01 and record its three calculated values. Then open the figures and return to <a href="../../examples/synthetic/01-see-the-result.html">the preview</a>. Do they show the patterns described there?</p>
 <p>The current workflow is descriptive: it performs no hypothesis tests or adjustment for other variables. Functional feature names remain fictional identifiers, not measured biological activities.</p>
-<p><strong>Checkpoint:</strong> find all three figures and four table/record files, and explain the difference between an original abundance and its proportion.</p>
+<p><strong>Checkpoint:</strong> find all three figures and the listed table/record files, and explain the difference between an original abundance and its proportion.</p>
 <p><a href="../../examples/synthetic/05-verify-and-explain.html">Next: Verify and explain</a></p>
 
 

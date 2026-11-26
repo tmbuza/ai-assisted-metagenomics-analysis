@@ -1,0 +1,3 @@
+group	samples	median_shannon	minimum_shannon	maximum_shannon	median_detected_taxa	minimum_detected_taxa	maximum_detected_taxa
+Control	41	2.2496015267599025	0.4496614242342373	2.936477040421517	72.0	40	118
+HTN	99	2.0097872841774658	0.20969957915944618	3.5172952287339614	71.0	24	119

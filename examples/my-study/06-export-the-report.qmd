@@ -34,7 +34,7 @@ I validated the three TSV inputs and ran the supplied Python workflow.
 Taxon and functional values were separately divided by their respective
 within-sample totals. Detected taxa had positive abundance. Shannon diversity
 used all supplied taxa and the natural logarithm. Stacked bars display up to
-ten features with the highest mean proportions and combine others as Other.
+15 features with the highest mean proportions and combine others as Other.
 The analysis was descriptive and did not test group differences or adjust
 for repeated sampling or other variables.
 

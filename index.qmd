@@ -27,13 +27,13 @@ Learn these seven steps once, then repeat them with each worked example and your
 | Dataset | What it contains | What you will learn |
 |---|---|---|
 | [Synthetic practice](examples/synthetic/00-start-here.qmd) | Fictional taxonomic and functional abundances with sample groups | Learn the complete workflow with guided commands, figure explanations, an independent check of S01 and a short report |
-| [Hypertension example](examples/hypertension/00-start-here.qmd) | Metadata for 195 samples: 98 HTN, 56 pHTN and 41 Control; placeholder taxonomic abundances and supplied functional features | Repeat the workflow with a larger dataset and distinguish working outputs from biologically interpretable results |
+| [Hypertension example](examples/hypertension/00-start-here.qmd) | Verified LiJ_2017 profiles: 41 Control and 99 HTN, 440 species and 483 named pathways; optional 196-sample cohort | Compare real species and pathway profiles, verify numerical results and explain the limits of an observational comparison |
 | [Your own study](examples/my-study/00-start-here.qmd) | Your processed taxonomic profiles, functional features and sample metadata | Prepare compatible TSV files, run the same commands with your study paths, and write a report supported by your results |
 
-::: {.callout-warning}
-## Hypertension example: current data status
+::: {.callout-note}
+## Real-data example
 
-The taxonomic abundances are **synthetic placeholders**. Their composition and calculated Shannon diversity do not represent the hypertension study. The functional features still require confirmation of their source, definitions and measurement units before biological interpretation. Use this example to practise the workflow while those checks are completed.
+The hypertension case study now uses verified curatedMetagenomicData inputs. The main comparison has 140 unique subjects; the optional extension includes 56 pre-hypertension samples. Species percentages are not read counts, and annotated pathways describe functional potential rather than measured activity.
 :::
 
 ## Start with a guided lesson
@@ -47,6 +47,7 @@ Run commands in your terminal from the main project folder. The guide displays t
 - **Taxonomic composition:** a stacked bar plot showing within-sample proportions.
 - **Shannon diversity:** a plot showing each sample's calculated diversity and group medians.
 - **Functional profile:** a stacked bar plot showing within-sample proportions of the supplied functional features.
+- **Source pathway heatmap (hypertension):** group medians before normalization within the named pathway set.
 - **Tables and a short report:** numerical results you can check and use to support your observations.
 
 ::: {.callout-note}

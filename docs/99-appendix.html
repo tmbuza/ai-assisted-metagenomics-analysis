@@ -207,7 +207,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Hypertension case study — preparation</span></a>
+ <span class="menu-text">Hypertension case study</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -215,7 +215,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension example: apply the workflow</span></a>
+  <a href="./examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension: a real metagenomics case study</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -245,7 +245,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Export the report</span></a>
+  <a href="./examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Write the report</span></a>
   </div>
 </li>
       </ul>
@@ -332,6 +332,7 @@ window.Quarto = {
   <li><a href="#keep-the-work-reproducible" id="toc-keep-the-work-reproducible" class="nav-link" data-scroll-target="#keep-the-work-reproducible">Keep the work reproducible</a></li>
   <li><a href="#use-ai-with-checked-evidence" id="toc-use-ai-with-checked-evidence" class="nav-link" data-scroll-target="#use-ai-with-checked-evidence">Use AI with checked evidence</a></li>
   <li><a href="#official-software-references" id="toc-official-software-references" class="nav-link" data-scroll-target="#official-software-references">Official software references</a></li>
+  <li><a href="#verified-hypertension-reference-values" id="toc-verified-hypertension-reference-values" class="nav-link" data-scroll-target="#verified-hypertension-reference-values">Verified hypertension reference values</a></li>
   </ul>
 </nav>
     </div>
@@ -494,11 +495,11 @@ H=-\sum_{i:p_i&gt;0}p_i\ln(p_i).
 <li>A larger proportion can reflect an increase in one feature, decreases in others or both.</li>
 <li>Relative profiles do not directly measure pathway activity or absolute quantities.</li>
 </ul>
-<p>The synthetic functional labels are invented identifiers, not named biological pathways. The hypertension functional data still require verified source, definitions and units. For your study, record those details before making biological claims.</p>
+<p>The synthetic functional labels are invented identifiers, not named biological pathways. The hypertension inputs contain 483 named unstratified MetaCyc pathways from HUMAnN. Their source scale includes bookkeeping categories that are excluded from the named-pathway table; normalized bar plots describe only the retained named set. The source heatmap retains the original values. For your study, record those details before making biological claims.</p>
 </section>
 <section id="read-plots-alongside-tables" class="level2">
 <h2 class="anchored" data-anchor-id="read-plots-alongside-tables">Read plots alongside tables</h2>
-<p>Stacked bars display up to ten features selected by highest mean within-sample proportions across all samples. Remaining features are combined as <strong>Other</strong>. That selection is for display, not a test of which features differ between groups. Shannon uses all supplied taxa.</p>
+<p>Stacked bars display up to 15 features selected by highest mean within-sample proportions across all samples. Remaining features are combined as <strong>Other</strong>. That selection is for display, not a test of which features differ between groups. Shannon uses all supplied taxa.</p>
 <p>Diversity dots show individual values; black lines show group medians. Horizontal offsets separate dots only. Examine spread, sample counts, detected-taxon counts and overlap alongside medians.</p>
 <p>Saved tables are the numerical evidence for observations. A visual difference alone does not establish significance, causation or an appropriate statistical model.</p>
 </section>
@@ -510,7 +511,7 @@ H=-\sum_{i:p_i&gt;0}p_i\ln(p_i).
 </section>
 <section id="keep-the-work-reproducible" class="level2">
 <h2 class="anchored" data-anchor-id="keep-the-work-reproducible">Keep the work reproducible</h2>
-<p>Retain the exact inputs, source/preparation notes, scripts, outputs and report. Record the analysis date and input or Git version. The workflow’s <code>run-record.json</code> records Python/package versions and the input directory, but does not record input checksums or every preprocessing decision.</p>
+<p>Retain the exact inputs, source/preparation notes, scripts, outputs and report. Record the analysis date and input or Git version. The workflow’s <code>run-record.json</code> records Python/package versions and the input directory, and SHA-256 input checksums, but does not record every preprocessing decision.</p>
 <p>The starter’s dependencies are not pinned to exact versions. A run record describes the environment used; it does not recreate it by itself. For a research release, record and manage the environment and input versions explicitly.</p>
 </section>
 <section id="use-ai-with-checked-evidence" class="level2">
@@ -524,6 +525,15 @@ H=-\sum_{i:p_i&gt;0}p_i\ln(p_i).
 <li><a href="https://quarto.org/docs/get-started/">Quarto installation and getting started</a></li>
 </ul>
 <p><a href="./index.html">Return to the guide overview</a></p>
+</section>
+<section id="verified-hypertension-reference-values" class="level2">
+<h2 class="anchored" data-anchor-id="verified-hypertension-reference-values">Verified hypertension reference values</h2>
+<p>The main dataset has 140 unique subjects (41 Control, 99 HTN), 440 species and 483 named pathways. ERR1398068 has species total 100.000000, 75 detected species and natural-log Shannon 1.394365. Control median Shannon is 2.249602; HTN median is 2.009787. These are descriptive results from curated profiles.</p>
+<p>The optional full cohort contains 196 subjects, including 56 pHTN. Source records are in <code>data/provenance/hypertension/</code>. These tables are relative abundances, not integer read counts; a count-based analysis needs appropriate original measurements, not fabricated counts.</p>
+<ul>
+<li><a href="https://doi.org/10.1186/s40168-016-0222-x">Original study: Li et al.&nbsp;(2017)</a></li>
+<li><a href="https://waldronlab.io/curatedMetagenomicData/">curatedMetagenomicData documentation</a></li>
+</ul>
 
 
 </section>

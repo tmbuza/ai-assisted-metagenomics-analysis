@@ -33,7 +33,7 @@ I validated the files and ran the supplied Python workflow.
 Taxon and functional values were normalized separately by their respective
 within-sample totals. Detected taxa had values greater than zero.
 Shannon diversity used all supplied taxa and the natural logarithm.
-Plots display up to ten features with the highest mean proportions,
+Plots display up to 15 features with the highest mean proportions,
 combining any remaining features as Other. This was a descriptive analysis.
 
 ## Verification
@@ -107,7 +107,7 @@ If a figure is missing, check that it exists in `results/synthetic/figures/` and
 ::: {.callout-tip}
 ## Ready for another dataset
 
-You have learned the workflow once: inspect, check, run, verify and explain. Repeat the same steps with the [hypertension example](../hypertension/00-start-here.qmd), paying attention to its placeholder taxa and unresolved functional-data details.
+You have learned the workflow once: inspect, check, run, verify and explain. Repeat the same steps with the [hypertension example](../hypertension/00-start-here.qmd), using verified species and pathway profiles with documented units.
 :::
 
 [Return to the synthetic overview](00-start-here.qmd)

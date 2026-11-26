@@ -1,73 +1,64 @@
 # Meet the data
 
-Before running an analysis, identify what each row, column and value represents. All three input files belong in `data/hypertension/` and must be tab-separated text files (TSV).
+The main lesson reads `data/hypertension/`. The inputs have the same orientation used in synthetic practice.
 
-## The three-file contract
+| File | Rows | Sample columns / required metadata |
+|---|---|---|
+| `sample-metadata.tsv` | 140 samples | `sample_id`, `group`, subject and source identifiers |
+| `taxon-abundance.tsv` | 440 species | 140 sample accessions; first header `taxon_id` |
+| `functional-features.tsv` | 483 named pathways | 140 sample accessions; first header `feature_id` |
 
-| File | One row represents | First column | Remaining columns |
-|---|---|---|---|
-| `sample-metadata.tsv` | One sample | `sample_id` | `group` and other metadata |
-| `taxon-abundance.tsv` | One taxon | `taxon_id` | Sample IDs containing numeric abundance values |
-| `functional-features.tsv` | One functional feature | `feature_id` | Sample IDs containing numeric feature values |
-
-Notice the orientation: **metadata has samples in rows; abundance tables have samples in columns**. Renaming `sample_id` to `taxon_id` will not fix an abundance table that is the wrong way round; it must be transposed.
-
-For this version, expect 195 metadata rows, 12 taxon rows and 14 functional-feature rows. Each abundance table has 195 sample columns in addition to its identifier column.
+Metadata has **samples in rows**; abundance tables have **samples in columns**.
 
 ## Inspect the inputs
 
-Run this block in the terminal from the main project folder:
+Copy this block into Bash/Zsh. For Windows alternatives, see [setup](../../00-setup.qmd#copy-code-into-the-right-place).
 
 ```bash
 python - <<'PY'
 from pathlib import Path
 import pandas as pd
-
 folder = Path("data/hypertension")
-metadata = pd.read_csv(folder / "sample-metadata.tsv", sep="\t")
+meta = pd.read_csv(folder / "sample-metadata.tsv", sep="\t")
 taxa = pd.read_csv(folder / "taxon-abundance.tsv", sep="\t", index_col=0)
 functions = pd.read_csv(folder / "functional-features.tsv", sep="\t", index_col=0)
-
-print("Metadata rows:", len(metadata))
-print("Taxon table (taxa, samples):", taxa.shape)
-print("Functional table (features, samples):", functions.shape)
-print("\nSamples per group:")
-print(metadata["group"].value_counts().to_string())
-print("\nFirst three metadata rows:")
-print(metadata.head(3).to_string(index=False))
-print("\nFirst three taxa and samples:")
-print(taxa.iloc[:3, :3].to_string())
-print("\nFunctional feature names:")
-print(functions.index.tolist())
+print("Metadata rows:", len(meta))
+print("Taxon table:", taxa.shape)
+print("Functional table:", functions.shape)
+print(meta.groupby("group").size())
+print("Distinct subjects:", meta.subject_id.nunique())
+print(meta.head(3).to_string(index=False))
 PY
 ```
 
-Expected dimensions are `195`, `(12, 195)` and `(14, 195)`. Group counts should be HTN 98, pHTN 56 and Control 41. These expectations apply to the current practice files; update them if you replace the inputs.
+Expect **140**, **(440, 140)**, **(483, 140)**, **41 Control**, **99 HTN**, and **140 distinct subjects**.
 
-## Understand the metadata
+## Metadata and units
 
-| Column | How to use it |
+`sample_id` is the ENA run accession matching abundance columns. `subject_id` identifies the participant; `source_sample_id` preserves the original identifier. `number_reads` records source read depth, not the sum of either abundance table.
+
+Groups come from curated `study_condition`. The broader source `disease` field combines pre-hypertension and hypertension and cannot recover the three groups. These are source labels, not diagnostic rules for new patients. Age, sex and BMI are absent from the pinned metadata snapshot; no covariates were inferred from sample names.
+
+Only species-level rows were retained. Mixing species with higher ranks would count the same taxonomic profiles repeatedly. Species values are percentages, approximately summing to 100.
+
+Pathway values are HUMAnN relative abundances. Only unstratified named pathways were retained. Taxon-stratified contributions would double count pathway totals. `UNMAPPED` and `UNINTEGRATED` are excluded from the pathway table and recorded separately. The retained named pathways do not sum to one on the source scale.
+
+| Supporting file | Purpose |
 |---|---|
-| `sample_id` | Exact key connecting a metadata row to abundance columns |
-| `group` | Label used to group dots in the diversity figure |
-| `enterotype` | Supplied annotation; the current workflow does not adjust for it |
-| `source_shannon_index` | Supplied source value, separate from Shannon calculated from the placeholder taxa |
+| `taxon-annotations.tsv` | Species IDs, labels and full source lineages |
+| `functional-annotations.tsv` | MetaCyc IDs, labels and full source feature names |
+| `functional-denominators.tsv` | Unmapped, unintegrated and named-pathway source totals |
+| `measurement-info.json` | Units and interpretation restrictions |
+| `../provenance/hypertension/` | Source matrices, pinned metadata, checksums and validation |
 
-Do not use `source_shannon_index` as a reference answer for the placeholder calculation. The underlying profiles and preprocessing may differ, and the placeholder taxa are not the source study profiles.
+No abundance filtering was applied during export. In this subset, 31 species and five pathways are all zero. They do not affect Shannon or positive-total normalization; downstream statistical methods may require an explicit filtering rule.
 
-## Record what the files cannot tell you
+## Optional full cohort
 
-In `data/hypertension/README.md`, document what is known and mark unresolved items as **not yet verified**:
+`data/hypertension-all-groups/` contains **196 unique subjects**, including **56 pHTN**. Both subsets use the same feature definitions. The complete cohort includes hypertension sample **ERR1398137**, source ID **H2M413924**. See provenance records for the reconciliation against earlier input versions.
 
-- Original study citation, source location, access date and preprocessing steps.
-- Meaning of HTN, pHTN and Control, including the study's classification criteria.
-- Whether multiple samples come from the same participant and when they were collected.
-- Taxonomic resolution, abundance units and how the placeholders were generated.
-- Functional definitions, measurement units, normalization and whether features overlap.
-- Availability of medication, age, diet, sampling site and batch information.
+Learners analyse the supplied TSVs with Python. Maintainers can reproduce their export with `scripts/R/prepare_hypertension.R`; R is not required for the learner workflow.
 
-The script uses `group` for descriptive grouping. It does not adjust for other variables or account for repeated sampling.
-
-**Your task:** choose one sample ID and locate it in all three files. Then state one technical fact you have confirmed and one study detail that remains unresolved.
+**Your task:** locate ERR1398068 in all three inputs and explain why a taxonomic total near 100 is not sequencing depth.
 
 [Next: Check the inputs](03-check-the-inputs.qmd)

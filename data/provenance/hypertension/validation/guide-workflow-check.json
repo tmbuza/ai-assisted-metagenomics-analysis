@@ -1,0 +1,23 @@
+{
+  "synthetic": {
+    "samples": 12,
+    "groups": 2,
+    "all_sample_shannon_checked": true,
+    "relative_and_display_totals_checked": true,
+    "input_checksums_checked": true
+  },
+  "hypertension": {
+    "samples": 140,
+    "groups": 2,
+    "all_sample_shannon_checked": true,
+    "relative_and_display_totals_checked": true,
+    "input_checksums_checked": true
+  },
+  "hypertension-all-groups": {
+    "samples": 196,
+    "groups": 3,
+    "all_sample_shannon_checked": true,
+    "relative_and_display_totals_checked": true,
+    "input_checksums_checked": true
+  }
+}

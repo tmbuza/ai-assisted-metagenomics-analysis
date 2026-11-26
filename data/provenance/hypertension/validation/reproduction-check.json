@@ -1,0 +1,32 @@
+{
+  "reproduced_from_original_metadata_snapshot": true,
+  "scoped_metadata_byte_identical": true,
+  "exported_tsv_byte_comparisons": {
+    "hypertension/functional-annotations.tsv": true,
+    "hypertension/taxon-abundance.tsv": true,
+    "hypertension/taxon-annotations.tsv": true,
+    "hypertension/functional-features.tsv": true,
+    "hypertension/functional-denominators.tsv": true,
+    "hypertension/sample-metadata.tsv": true,
+    "hypertension-all-groups/functional-annotations.tsv": true,
+    "hypertension-all-groups/taxon-abundance.tsv": true,
+    "hypertension-all-groups/taxon-annotations.tsv": true,
+    "hypertension-all-groups/functional-features.tsv": true,
+    "hypertension-all-groups/functional-denominators.tsv": true,
+    "hypertension-all-groups/sample-metadata.tsv": true
+  },
+  "existing_python_workflow": "passed for both datasets",
+  "independent_shannon_absolute_tolerance": 1e-12,
+  "verified_samples": {
+    "ERR1398068": {
+      "total": 100.0,
+      "detected_taxa": 75,
+      "shannon": 1.394365028
+    },
+    "ERR1398137": {
+      "total": 100.00003,
+      "detected_taxa": 53,
+      "shannon": 1.1276022
+    }
+  }
+}

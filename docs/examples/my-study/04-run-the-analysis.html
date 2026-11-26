@@ -243,7 +243,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Hypertension case study — preparation</span></a>
+ <span class="menu-text">Hypertension case study</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -251,7 +251,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension example: apply the workflow</span></a>
+  <a href="../../examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension: a real metagenomics case study</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -281,7 +281,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Export the report</span></a>
+  <a href="../../examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Write the report</span></a>
   </div>
 </li>
       </ul>
@@ -448,12 +448,24 @@ window.Quarto = {
 <td>Proportions for all supplied functional features</td>
 </tr>
 <tr class="odd">
+<td><code>tables/group-summary.tsv</code></td>
+<td>Group counts, diversity medians and ranges</td>
+</tr>
+<tr class="even">
+<td><code>tables/composition-display.tsv</code></td>
+<td>Stacked taxonomic plot values</td>
+</tr>
+<tr class="odd">
+<td><code>tables/functional-features-display.tsv</code></td>
+<td>Stacked functional plot values</td>
+</tr>
+<tr class="even">
 <td><code>tables/run-record.json</code></td>
-<td>Python/package versions, input directory and method description</td>
+<td>Python/package versions, input checksums, dimensions and method description</td>
 </tr>
 </tbody>
 </table>
-<p>Stacked plots show up to ten features selected by highest mean proportions across samples. Any remaining features are combined as <strong>Other</strong>. Tables retain all features and Shannon uses all supplied taxa.</p>
+<p>Stacked plots show up to 15 features selected by highest mean proportions across samples. Any remaining features are combined as <strong>Other</strong>. Tables retain all features and Shannon uses all supplied taxa.</p>
 </section>
 <section id="inspect-your-first-run" class="level2">
 <h2 class="anchored" data-anchor-id="inspect-your-first-run">Inspect your first run</h2>
@@ -461,7 +473,7 @@ window.Quarto = {
 <li>Open <code>alpha-diversity.tsv</code> and check that sample IDs and groups are yours.</li>
 <li>Locate the three figures and inspect their axes and legends.</li>
 <li>Return to <a href="../../examples/my-study/01-see-the-result.html">See the result</a> to display your figures in the guide if desired.</li>
-<li>Keep the exact inputs and provenance notes with your analysis. The run record does not include input checksums or every preparation decision.</li>
+<li>Keep the exact inputs and provenance notes with your analysis. The run record includes input checksums; keep source notes for preparation decisions.</li>
 </ol>
 <p>With many samples, labels may overlap. That is a presentation problem rather than evidence of an incorrect calculation. Use saved tables for sample-specific checks and adapt plotting labels separately if needed.</p>
 <p>The workflow is descriptive. It does not account for repeated samples, adjust for confounding variables or test group differences. A functional profile does not directly measure activity.</p>

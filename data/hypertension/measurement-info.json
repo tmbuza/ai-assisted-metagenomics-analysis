@@ -1,0 +1,25 @@
+{
+  "study": "LiJ_2017",
+  "source_profile_version": "2021-10-14",
+  "taxon_abundance": {
+    "resource": "EH7181",
+    "unit": "MetaPhlAn species-level relative-abundance percentage",
+    "approximately_expected_total_per_sample": 100,
+    "original_read_counts": false,
+    "row_selection": "All 440 species-level rows; source taxonomic hierarchy is retained in annotations."
+  },
+  "functional_features": {
+    "resource": "EH7179",
+    "unit": "HUMAnN pathway relative abundance (pathabundance_relab source scale)",
+    "selection": "483 unstratified named pathways; taxon contributions and UNMAPPED/UNINTEGRATED excluded from this matrix.",
+    "original_read_counts": false,
+    "column_total": "Less than one because special categories were excluded; see functional-denominators.tsv.",
+    "meaning": "DNA-based functional potential, not measured activity.",
+    "normalization_in_legacy_workflow": "Dividing by the named-pathway total produces a proportion within the supplied named pathway set, not a fraction of all microbial genes or functions."
+  },
+  "inference_limits": [
+    "Relative abundances must not be treated as original read counts.",
+    "Age, gender and BMI are not available in this pinned curated metadata.",
+    "Pathways can overlap; stacked proportions are not mutually exclusive biological allocations."
+  ]
+}

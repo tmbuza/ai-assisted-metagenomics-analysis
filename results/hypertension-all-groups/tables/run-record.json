@@ -1,0 +1,51 @@
+{
+  "input_sha256": {
+    "sample-metadata.tsv": "286e359f901d0a67ecfcf1e5d96057339e1b16f5d7a3bd7d9e59bc56682bfe8c",
+    "taxon-abundance.tsv": "bd50664fae08197bc3ed2baf0c35e4b8c8a9492d2d8c6934c72c24297ad45c50",
+    "functional-features.tsv": "c6cf4048607b0427d81a2b6675d34e1f9b0bee407960aa82a99b671527cc298b",
+    "taxon-annotations.tsv": "99a0140b90915e89080f88abc0c1d0707f65d43349ebe965c08634135f57f886",
+    "functional-annotations.tsv": "08480c61c54d0244a2c92446e9b331c5a8c782f43f4e96c5302f623da5cc6ba2",
+    "measurement-info.json": "6b54e0cc8891176a244863edf4488436cfe3869f0b91c08d9a831d9de90c22a3",
+    "functional-denominators.tsv": "c6aeb66b43512b9fd7cedf099eb676c96435314c6f1b063f190bcbe8c7760bda"
+  },
+  "samples": 196,
+  "groups": {
+    "HTN": 99,
+    "pHTN": 56,
+    "Control": 41
+  },
+  "taxa": 440,
+  "functional_features": 483,
+  "display_top_n": 15,
+  "measurement_info": {
+    "study": "LiJ_2017",
+    "source_profile_version": "2021-10-14",
+    "taxon_abundance": {
+      "resource": "EH7181",
+      "unit": "MetaPhlAn species-level relative-abundance percentage",
+      "approximately_expected_total_per_sample": 100,
+      "original_read_counts": false,
+      "row_selection": "All 440 species-level rows; source taxonomic hierarchy is retained in annotations."
+    },
+    "functional_features": {
+      "resource": "EH7179",
+      "unit": "HUMAnN pathway relative abundance (pathabundance_relab source scale)",
+      "selection": "483 unstratified named pathways; taxon contributions and UNMAPPED/UNINTEGRATED excluded from this matrix.",
+      "original_read_counts": false,
+      "column_total": "Less than one because special categories were excluded; see functional-denominators.tsv.",
+      "meaning": "DNA-based functional potential, not measured activity.",
+      "normalization_in_legacy_workflow": "Dividing by the named-pathway total produces a proportion within the supplied named pathway set, not a fraction of all microbial genes or functions."
+    },
+    "inference_limits": [
+      "Relative abundances must not be treated as original read counts.",
+      "Age, gender and BMI are not available in this pinned curated metadata.",
+      "Pathways can overlap; stacked proportions are not mutually exclusive biological allocations."
+    ]
+  },
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "pandas": "2.2.3",
+  "matplotlib": "3.10.8",
+  "data_dir": "data/hypertension-all-groups",
+  "analysis": "descriptive; natural-log Shannon; within-sample normalization"
+}

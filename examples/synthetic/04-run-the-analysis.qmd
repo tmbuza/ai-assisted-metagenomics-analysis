@@ -32,7 +32,7 @@ It creates output folders when needed. Rerunning replaces the same named outputs
 
 Multiplying a proportion by 100 gives a percentage. Taxon proportions and functional proportions each sum to 1 separately for every sample. Shannon uses all supplied taxa, not only those displayed individually in a plot.
 
-For stacked bars, the script displays up to ten features with the highest mean proportions across samples and combines the remainder as **Other**. This is a display choice, not a test of which features differ between groups.
+For stacked bars, the script displays up to 15 features with the highest mean proportions across samples and combines the remainder as **Other**. This is a display choice, not a test of which features differ between groups.
 
 ## Find your outputs
 
@@ -46,7 +46,10 @@ All paths below are inside `results/synthetic/`.
 | `tables/alpha-diversity.tsv` | One row per sample: total, detected taxa, Shannon and metadata |
 | `tables/taxon-relative-abundance.tsv` | All taxon proportions, with samples in columns |
 | `tables/functional-relative-abundance.tsv` | All functional proportions, with samples in columns |
-| `tables/run-record.json` | Python/package versions, input directory and method description |
+| `tables/group-summary.tsv` | Group counts, diversity medians and ranges |
+| `tables/composition-display.tsv` | Stacked taxonomic plot values |
+| `tables/functional-features-display.tsv` | Stacked functional plot values |
+| `tables/run-record.json` | Python/package versions, input checksums, dimensions and method description |
 
 The run record supports reproducibility but does not record every input detail. Keep the exact inputs or their Git version with your work.
 
@@ -56,6 +59,6 @@ Open `alpha-diversity.tsv`, find S01 and record its three calculated values. The
 
 The current workflow is descriptive: it performs no hypothesis tests or adjustment for other variables. Functional feature names remain fictional identifiers, not measured biological activities.
 
-**Checkpoint:** find all three figures and four table/record files, and explain the difference between an original abundance and its proportion.
+**Checkpoint:** find all three figures and the listed table/record files, and explain the difference between an original abundance and its proportion.
 
 [Next: Verify and explain](05-verify-and-explain.qmd)

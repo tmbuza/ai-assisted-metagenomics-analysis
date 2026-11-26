@@ -1,10 +1,6 @@
 # Run the analysis
 
-The input check has confirmed that the files can be processed. Now generate descriptive outputs in a folder dedicated to this example.
-
-## Run the workflow
-
-From the main project folder:
+Generate new outputs from the verified inputs:
 
 ```bash
 python scripts/python/run_workflow.py \
@@ -15,48 +11,55 @@ python scripts/python/run_workflow.py \
 Expect:
 
 ```text
-Input checks passed: 195 samples; 3 groups.
+Input checks passed: 140 samples; 2 groups.
 Results saved to results/hypertension
 ```
 
-The script creates the output folders if necessary. Rerunning writes over the same named outputs, so retain a copy elsewhere if you need to compare runs using different inputs.
+A rerun replaces outputs with the same names. Preserve a separate copy if comparing input versions. Do not combine earlier placeholder figures with these new tables.
 
 ## Understand the calculations
 
-**Taxonomic composition:** divide each taxon's abundance by that sample's total taxonomic abundance. The resulting proportions sum to 1.
+| Calculation | Meaning |
+|---|---|
+| Species proportion | Source species percentage divided by the sample's species total |
+| Detected species | Number of positive species values |
+| Shannon | $H=-\sum_{i:p_i>0}p_i\ln(p_i)$, using all species and natural logarithms |
+| Functional proportion | Source pathway value divided by the sample's named-pathway total |
+| Source pathway group median | Median original pathway relative abundance within each group |
 
-**Detected taxa:** count taxon values greater than zero. This is richness within the supplied table, not an estimate of all organisms present.
-
-**Shannon diversity:** calculate $H = -\sum_{i:p_i>0}p_i\ln(p_i)$, where $p_i$ is a taxon's within-sample proportion. Zero values do not contribute. The script uses the natural logarithm.
-
-**Functional profile:** separately divide each functional value by that sample's supplied functional-feature total. Taxonomic and functional totals are different denominators and should not be compared as if they were the same quantity.
-
-Both stacked bar plots display the ten features with the highest mean proportions across samples and combine remaining features into **Other**. This selection is for display, not a statistical test. Shannon uses all supplied taxa, including those combined as Other in the figure.
+Each stacked plot shows 15 features selected by mean sample proportion, with remaining features combined as light grey **Other**. Shannon uses every species. The heatmap selects pathways by mean source abundance, which can give a different ranking. Samples are grouped by metadata label, retaining metadata order within each group.
 
 ## Find the outputs
 
 All paths below are inside `results/hypertension/`.
 
-| Output | What it contains |
+| Output | Contents |
 |---|---|
-| `figures/composition.png` | Relative composition of placeholder taxa |
-| `figures/shannon-diversity.png` | Calculated Shannon values grouped by metadata labels |
-| `figures/functional-features.png` | Relative profile of supplied functional features |
-| `tables/alpha-diversity.tsv` | Sample totals, detected taxa, calculated Shannon and joined metadata |
-| `tables/taxon-relative-abundance.tsv` | Proportions for every supplied taxon and sample |
-| `tables/functional-relative-abundance.tsv` | Proportions for every supplied functional feature and sample |
-| `tables/run-record.json` | Python and package versions, input directory and analysis description |
+| `figures/composition.png` | Top species and Other, with group boundaries |
+| `figures/shannon-diversity.png` | Sample Shannon values and group medians |
+| `figures/functional-features.png` | Proportions within the named pathway set |
+| `figures/pathway-source-heatmap.png` | Group medians on the source pathway scale |
+| `tables/alpha-diversity.tsv` | Sample totals, detected species, Shannon and metadata |
+| `tables/group-summary.tsv` | Counts, medians and ranges |
+| `tables/taxon-relative-abundance.tsv` | All species proportions |
+| `tables/functional-relative-abundance.tsv` | All normalized named-pathway proportions |
+| `tables/composition-display.tsv` | Values stacked in the composition plot |
+| `tables/functional-features-display.tsv` | Values stacked in the functional plot |
+| `tables/pathway-source-group-medians.tsv` | Heatmap values |
+| `tables/run-record.json` | Package versions, input checksums, dimensions and measurement notes |
 
-The run record does not identify the original study or record input checksums. Keep provenance notes and exact input versions alongside your work.
+## Optional three-group extension
 
-## Inspect before interpreting
+After completing the main example, run:
 
-Open `tables/alpha-diversity.tsv`. Find `ERR1398068` and identify `total_abundance`, `detected_taxa`, `shannon` and `source_shannon_index`. Which columns were calculated from the placeholder taxa, and which came from metadata?
+```bash
+python scripts/python/run_workflow.py \
+  --data-dir data/hypertension-all-groups \
+  --output-dir results/hypertension-all-groups
+```
 
-::: {.callout-note}
-The script does not test group differences, adjust for confounding variables or demonstrate functional activity. Successful execution is the start of verification, not the end of interpretation.
-:::
+Expect **196 samples; 3 groups**. Keep outputs separate. Adding pHTN changes the sample set and can change the top 15 features. These analyses are descriptive: no hypothesis tests, covariate adjustment or causal analysis are performed.
 
-**Checkpoint:** confirm that all three figures and four table/record files exist, then return to [the preview](01-see-the-result.qmd) to inspect the figures.
+**Checkpoint:** open all four figures. Confirm the main diversity plot shows Control n=41 and HTN n=99.
 
 [Next: Verify and explain](05-verify-and-explain.qmd)

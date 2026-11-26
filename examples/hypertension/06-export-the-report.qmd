@@ -1,14 +1,10 @@
-# Export the report
+# Write the report
 
-Turn your checked outputs into a short account that another learner can understand and reproduce. Report this version as a **workflow demonstration**, with the current input limitations visible.
-
-## Create your report
-
-In VS Code or another text editor, create `reports/hypertension-report.qmd`. Copy the template below into it. The figure paths are relative to the `reports/` folder. Replace every square-bracketed prompt with your own checked observation.
+Describe the verified real-data comparison with figures, checked numbers and clear limits. Create the `reports/` folder if needed, then save `reports/hypertension-report.qmd`. Replace all square-bracketed prompts.
 
 ````markdown
 ---
-title: "Hypertension example: descriptive workflow demonstration"
+title: "LiJ_2017: descriptive metagenomics comparison"
 format:
   html:
     toc: true
@@ -16,102 +12,107 @@ format:
 
 ## Question and data
 
-How do taxonomic composition, calculated Shannon diversity and supplied
-functional profiles vary across samples labelled HTN, pHTN and Control?
+How do species composition, Shannon diversity and annotated pathway profiles
+vary between Control and HTN samples?
 
-The input metadata contains 195 samples: 98 HTN, 56 pHTN and 41 Control.
-The taxonomic table contains 12 synthetic placeholder taxa. The functional
-table contains 14 supplied features whose source, definitions and units
-still need confirmation. These outputs demonstrate the workflow and are
-not verified biological findings from the hypertension study.
+I analysed 140 human stool samples with distinct subject IDs: 41 Control and
+99 HTN. The inputs contain 440 species-level features and 483 named pathways,
+from the 2021-10-14 curatedMetagenomicData LiJ_2017 abundance resources.
+The original study is Li et al. (2017), doi:10.1186/s40168-016-0222-x.
+The optional 56 pre-hypertension samples were excluded from this comparison.
 
 ## Methods
 
-I checked the three TSV files and ran the supplied Python workflow.
-Taxonomic and functional values were separately divided by their respective
-within-sample totals. Detected taxa had values greater than zero.
-Shannon diversity used all supplied taxa and the natural logarithm.
-Stacked bar plots display the ten features with the highest mean
-proportions, with the remainder combined as Other. The analysis was descriptive.
+I validated sample matching and finite nonnegative values, then ran the
+supplied Python workflow. Species source percentages were divided by each
+sample's species total. Detected species had positive abundance. Shannon
+used all species and natural logarithms. Functional stacked bars use
+proportions within the 483 named pathways. The source heatmap uses group
+medians of original HUMAnN relative abundances without that renormalization.
+UNMAPPED, UNINTEGRATED and taxon-stratified pathway rows were excluded from
+the named-pathway table. Stacked plots show the top 15 features by mean
+sample proportion, with remaining features light grey Other. No hypothesis
+test or covariate adjustment was performed.
 
 ## Verification
 
-For ERR1398068, independent calculation gave total taxonomic abundance
-4,761, 12 detected taxa and Shannon diversity 2.202635.
-[State whether these values agreed with the saved results.]
+For ERR1398068, the source species total was 100.000000, 75 species had
+positive values, and natural-log Shannon was 1.394365.
+[Record whether independent calculations agreed with the saved row.]
 
-For this sample, LPS_biosynthesis was 436 out of a supplied functional
-total of 45,300: a proportion of approximately 0.009625.
-[State whether this agreed with the saved functional table.]
+DTDPRHAMSYN-PWY had source abundance 0.00110242 out of a named-pathway total
+of 0.045588663834, giving a normalized share of 0.024181889 (2.4182%).
+[Record whether this agreed with the saved functional table.]
 
 ## Results
 
-### Taxonomic composition
+### Species composition
 
-![Composition of synthetic placeholder taxa.](../results/hypertension/figures/composition.png)
+![Top species and remaining species grouped as Other.](../results/hypertension/figures/composition.png)
 
-[Describe one sample using a taxon ID and a checked proportion from
- taxon-relative-abundance.tsv.]
+[Describe one sample using a checked species ID, label and proportion from
+taxon-relative-abundance.tsv. Explain within-group variation.]
 
 ### Shannon diversity
 
-![Shannon diversity calculated from placeholder taxa; black lines show group medians.](../results/hypertension/figures/shannon-diversity.png)
+![Species Shannon diversity; black lines show medians.](../results/hypertension/figures/shannon-diversity.png)
 
-[Quote group medians from alpha-diversity.tsv. Describe spread and overlap,
- and discuss detected-taxon counts before attributing differences to evenness.]
+Control median Shannon was 2.249602 and HTN median was 2.009787.
+The distributions overlapped substantially. Detected species ranged from
+40 to 118 in Control and 24 to 119 in HTN, so richness and evenness may both
+contribute to variation. These summaries do not establish significance.
 
-### Functional profile
+### Pathway profiles
 
-![Relative proportions of supplied functional features.](../results/hypertension/figures/functional-features.png)
+![Proportions within the named-pathway set.](../results/hypertension/figures/functional-features.png)
 
-[Describe a checked proportion from functional-relative-abundance.tsv.
- Avoid interpreting it as directly measured pathway activity.]
+[Describe a checked named-pathway proportion. Do not call it pathway activity.]
+
+![Group median pathway abundances on their source scale.](../results/hypertension/figures/pathway-source-heatmap.png)
+
+[Quote a pathway ID and both medians from pathway-source-group-medians.tsv.
+Explain how this denominator differs from the normalized stacked plot.]
 
 ## Limitations and next steps
 
-Synthetic taxonomic profiles cannot support conclusions about hypertension.
-The supplied source_shannon_index is separate from diversity calculated from
-these placeholders. Functional interpretations require verified provenance,
-definitions and units. Sample independence and potential confounding
-variables have not been established. Visual differences alone do not establish
-statistical significance or causation.
+This is a descriptive observational comparison. Age, sex and BMI are absent
+from the pinned curated metadata, and confounding was not adjusted for.
+Relative abundance cannot establish absolute microbial quantities. Pathways
+can overlap, and annotated functional potential is not measured activity.
+The curated species profiles and calculations need not reproduce the paper's
+original diversity analysis. This human analysis does not reproduce the
+paper's separate animal experiments or establish causation.
 
-[State one practical next step needed before making a biological claim.]
+[Propose one next check that follows from these limitations.]
 
-## Reproducibility
+## Reproducibility and references
 
 Inputs: data/hypertension/.
 Outputs: results/hypertension/.
-Environment details: results/hypertension/tables/run-record.json.
-Provenance notes: data/hypertension/README.md.
+Input SHA-256 checksums and package versions: tables/run-record.json
+inside the output folder.
+Source records: data/provenance/hypertension/.
 
-[Record the analysis date and input version or Git commit used.]
+- [Li et al. (2017)](https://doi.org/10.1186/s40168-016-0222-x)
+- [curatedMetagenomicData](https://waldronlab.io/curatedMetagenomicData/)
+
+[Record the analysis date and input or Git version.]
 ````
 
-## Render the report
-
-Save the file, then run from the main project folder:
+Render from the main project folder:
 
 ```bash
 quarto render reports/hypertension-report.qmd --to html
 ```
 
-Quarto prints the output location. Open that HTML file and check that all three figures display, captions are readable and no template prompts remain. This renders existing results; it does not rerun the analysis.
-
-If an image is missing, confirm that the analysis generated it in `results/hypertension/figures/` and that the report is saved in `reports/` as instructed.
+Open the generated HTML. Confirm all four figures display and no prompts remain. Rendering displays saved results; it does not rerun Python.
 
 ## Review before sharing
 
-- Does each observation include a checked number and name its source table?
-- Are the synthetic taxon status and unresolved functional-data details clear?
-- Have you kept source Shannon separate from calculated values?
-- Have you avoided unsupported claims about significance, causation or activity?
-- Can another learner find the inputs, commands, outputs and provenance notes?
-
-::: {.callout-tip}
-## What you have learned
-
-You have checked the inputs, generated descriptive outputs, verified calculations and written a transparent report. The next step toward a biological case study is to replace the placeholder taxa and resolve the functional-data provenance and study-design questions.
-:::
+- Do counts agree with the main 140-sample input and saved group summary?
+- Does each observation name a checked number and table?
+- Are species percentages and both pathway denominators explained?
+- Are confounding, relative abundance and the descriptive scope clear?
+- Can another learner find the exact inputs, commands and source records?
 
 [Return to the example overview](00-start-here.qmd)

@@ -69,11 +69,11 @@ The script divides each supplied functional value by that sample's supplied func
 - A larger proportion can reflect an increase in one feature, decreases in others or both.
 - Relative profiles do not directly measure pathway activity or absolute quantities.
 
-The synthetic functional labels are invented identifiers, not named biological pathways. The hypertension functional data still require verified source, definitions and units. For your study, record those details before making biological claims.
+The synthetic functional labels are invented identifiers, not named biological pathways. The hypertension inputs contain 483 named unstratified MetaCyc pathways from HUMAnN. Their source scale includes bookkeeping categories that are excluded from the named-pathway table; normalized bar plots describe only the retained named set. The source heatmap retains the original values. For your study, record those details before making biological claims.
 
 ## Read plots alongside tables
 
-Stacked bars display up to ten features selected by highest mean within-sample proportions across all samples. Remaining features are combined as **Other**. That selection is for display, not a test of which features differ between groups. Shannon uses all supplied taxa.
+Stacked bars display up to 15 features selected by highest mean within-sample proportions across all samples. Remaining features are combined as **Other**. That selection is for display, not a test of which features differ between groups. Shannon uses all supplied taxa.
 
 Diversity dots show individual values; black lines show group medians. Horizontal offsets separate dots only. Examine spread, sample counts, detected-taxon counts and overlap alongside medians.
 
@@ -89,7 +89,7 @@ For instructions on running long Python blocks in different terminals, see [Copy
 
 ## Keep the work reproducible
 
-Retain the exact inputs, source/preparation notes, scripts, outputs and report. Record the analysis date and input or Git version. The workflow's `run-record.json` records Python/package versions and the input directory, but does not record input checksums or every preprocessing decision.
+Retain the exact inputs, source/preparation notes, scripts, outputs and report. Record the analysis date and input or Git version. The workflow's `run-record.json` records Python/package versions and the input directory, and SHA-256 input checksums, but does not record every preprocessing decision.
 
 The starter's dependencies are not pinned to exact versions. A run record describes the environment used; it does not recreate it by itself. For a research release, record and manage the environment and input versions explicitly.
 
@@ -103,3 +103,18 @@ AI can help explain a line of Python, clarify an error or draft a result paragra
 - [Quarto installation and getting started](https://quarto.org/docs/get-started/)
 
 [Return to the guide overview](index.qmd)
+
+## Verified hypertension reference values
+
+The main dataset has 140 unique subjects (41 Control, 99 HTN), 440 species
+and 483 named pathways. ERR1398068 has species total 100.000000, 75 detected
+species and natural-log Shannon 1.394365. Control median Shannon is 2.249602;
+HTN median is 2.009787. These are descriptive results from curated profiles.
+
+The optional full cohort contains 196 subjects, including 56 pHTN. Source
+records are in `data/provenance/hypertension/`. These tables are relative
+abundances, not integer read counts; a count-based analysis needs appropriate
+original measurements, not fabricated counts.
+
+- [Original study: Li et al. (2017)](https://doi.org/10.1186/s40168-016-0222-x)
+- [curatedMetagenomicData documentation](https://waldronlab.io/curatedMetagenomicData/)

@@ -10,7 +10,7 @@ Each colour represents a taxon. Its segment height is the taxon's abundance divi
 
 Compare samples with one large segment against samples with more similarly sized segments. Similar segment sizes indicate more even abundance distributions. Sample order follows the metadata; check group labels before assigning a pattern to A or B.
 
-The script displays up to ten taxa with the highest mean proportions. If more taxa are present, it combines the remainder as **Other**. The full relative-abundance table retains every taxon.
+The script displays up to 15 taxa with the highest mean proportions. If more taxa are present, it combines the remainder as **Other**. The full relative-abundance table retains every taxon.
 
 **Try this:** pick one bar and identify its largest segment. You will check its numerical proportion later.
 

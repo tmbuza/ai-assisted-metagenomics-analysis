@@ -1,0 +1,18 @@
+[
+  {
+    "ah_id": "EH7179",
+    "title": "2021-10-14.LiJ_2017.pathway_abundance",
+    "rdatadateadded": "2021-10-15",
+    "rdatapath": "curatedMetagenomicData/2021-10-14/LiJ_2017/2021-10-14.LiJ_2017.pathway_abundance.rda",
+    "location_prefix": "https://mghp.osn.xsede.org/bir190004-bucket01/ExperimentHub/",
+    "url": "https://mghp.osn.xsede.org/bir190004-bucket01/ExperimentHub/curatedMetagenomicData/2021-10-14/LiJ_2017/2021-10-14.LiJ_2017.pathway_abundance.rda"
+  },
+  {
+    "ah_id": "EH7181",
+    "title": "2021-10-14.LiJ_2017.relative_abundance",
+    "rdatadateadded": "2021-10-15",
+    "rdatapath": "curatedMetagenomicData/2021-10-14/LiJ_2017/2021-10-14.LiJ_2017.relative_abundance.rda",
+    "location_prefix": "https://mghp.osn.xsede.org/bir190004-bucket01/ExperimentHub/",
+    "url": "https://mghp.osn.xsede.org/bir190004-bucket01/ExperimentHub/curatedMetagenomicData/2021-10-14/LiJ_2017/2021-10-14.LiJ_2017.relative_abundance.rda"
+  }
+]

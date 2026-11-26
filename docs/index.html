@@ -179,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Hypertension case study — preparation</span></a>
+ <span class="menu-text">Hypertension case study</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -187,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension example: apply the workflow</span></a>
+  <a href="./examples/hypertension/00-start-here.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Hypertension: a real metagenomics case study</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -217,7 +217,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Export the report</span></a>
+  <a href="./examples/hypertension/06-export-the-report.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Write the report</span></a>
   </div>
 </li>
       </ul>
@@ -360,8 +360,8 @@ One workflow for every dataset
 </tr>
 <tr class="even">
 <td><a href="./examples/hypertension/00-start-here.html">Hypertension example</a></td>
-<td>Metadata for 195 samples: 98 HTN, 56 pHTN and 41 Control; placeholder taxonomic abundances and supplied functional features</td>
-<td>Repeat the workflow with a larger dataset and distinguish working outputs from biologically interpretable results</td>
+<td>Verified LiJ_2017 profiles: 41 Control and 99 HTN, 440 species and 483 named pathways; optional 196-sample cohort</td>
+<td>Compare real species and pathway profiles, verify numerical results and explain the limits of an observational comparison</td>
 </tr>
 <tr class="odd">
 <td><a href="./examples/my-study/00-start-here.html">Your own study</a></td>
@@ -370,17 +370,17 @@ One workflow for every dataset
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Hypertension example: current data status
+Real-data example
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The taxonomic abundances are <strong>synthetic placeholders</strong>. Their composition and calculated Shannon diversity do not represent the hypertension study. The functional features still require confirmation of their source, definitions and measurement units before biological interpretation. Use this example to practise the workflow while those checks are completed.</p>
+<p>The hypertension case study now uses verified curatedMetagenomicData inputs. The main comparison has 140 unique subjects; the optional extension includes 56 pre-hypertension samples. Species percentages are not read counts, and annotated pathways describe functional potential rather than measured activity.</p>
 </div>
 </div>
 </section>
@@ -395,6 +395,7 @@ Hypertension example: current data status
 <li><strong>Taxonomic composition:</strong> a stacked bar plot showing within-sample proportions.</li>
 <li><strong>Shannon diversity:</strong> a plot showing each sample’s calculated diversity and group medians.</li>
 <li><strong>Functional profile:</strong> a stacked bar plot showing within-sample proportions of the supplied functional features.</li>
+<li><strong>Source pathway heatmap (hypertension):</strong> group medians before normalization within the named pathway set.</li>
 <li><strong>Tables and a short report:</strong> numerical results you can check and use to support your observations.</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">

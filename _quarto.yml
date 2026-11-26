@@ -3,6 +3,8 @@ project:
   output-dir: docs
   resources:
   - results/synthetic/figures/*.png
+  - results/hypertension/figures/*.png
+  - results/hypertension-all-groups/figures/*.png
 book:
   title: AI-Assisted Metagenomics Analysis with Python
   subtitle: From metagenomics profiles to an output you understand and can defend
@@ -21,7 +23,7 @@ book:
     - examples/synthetic/04-run-the-analysis.qmd
     - examples/synthetic/05-verify-and-explain.qmd
     - examples/synthetic/06-export-the-report.qmd
-  - part: "Hypertension case study \u2014 preparation"
+  - part: "Hypertension case study"
     chapters:
     - examples/hypertension/00-start-here.qmd
     - examples/hypertension/01-see-the-result.qmd

@@ -1,50 +1,44 @@
-# Hypertension example: apply the workflow
+# Hypertension: a real metagenomics case study
 
-This example takes you from three prepared tables to figures, checked numerical results and a short report. Complete [Required setup](../../00-setup.qmd) and synthetic practice first, then repeat the workflow here with a larger dataset.
+Apply the workflow to **LiJ_2017**, a human stool shotgun metagenomics study available through curatedMetagenomicData. Complete [Required setup](../../00-setup.qmd) and synthetic practice first.
 
 ::: {.callout-note icon=false}
 ## Our question
 
-How do taxonomic composition, calculated Shannon diversity and the supplied functional profiles vary across samples labelled HTN, pHTN and Control?
+How do species composition, Shannon diversity and annotated pathway profiles vary between Control and hypertension (HTN) samples in these processed profiles?
 :::
 
 ## What you are working with
 
-The metadata contains **195 sample IDs**: 98 HTN, 56 pHTN and 41 Control. These are sample counts; do not assume they represent 195 independent participants until participant and sampling information has been checked.
+The main example includes **140 samples from 140 distinct subject IDs: 41 Control and 99 HTN**. Both abundance tables contain the same sample accessions.
 
-| Input | Current status | What you can use it for |
+| Input | Verified contents | Measurement |
 |---|---|---|
-| Sample metadata | Sample IDs and group labels, with `enterotype` and `source_shannon_index` | Match samples and organize descriptive comparisons |
-| Taxonomic abundance | 12 synthetic placeholder taxa | Practise composition, diversity calculation and verification |
-| Functional features | 14 supplied numerical features; source and units still need confirmation | Practise processing and inspect provisional relative profiles |
+| Sample metadata | 140 samples with group, subject ID and source identifiers | One row per sample |
+| Taxonomic abundance | 440 species-level features | Source percentages; approximately 100 per sample |
+| Functional features | 483 named, unstratified MetaCyc pathways | HUMAnN source relative abundances |
 
-::: {.callout-warning}
-## A workflow exercise with incomplete study inputs
+The full curated cohort has **196 samples: 41 Control, 56 pre-hypertension (pHTN), 99 HTN**. The main lesson excludes pHTN to keep the first real-data comparison focused. All 196 samples remain available in `data/hypertension-all-groups/` for an optional extension.
 
-The taxonomic abundances are synthetic placeholders. Composition and Shannon results calculated from them **do not describe the hypertension study**. Functional interpretations remain provisional until the source, feature definitions and units are documented. A successful script run confirms technical compatibility; it does not establish biological validity.
+::: {.callout-important}
+## What this analysis can support
+
+These are real processed profiles, not raw reads. This descriptive human comparison does not establish statistical significance or causation. Age, sex and BMI are unavailable in the pinned curated metadata; this workflow does not adjust for confounding. Pathway abundance describes annotated functional potential, not directly measured activity.
 :::
 
-## By the end, you should be able to
+## Your route
 
-- Explain how the metadata connects to the two abundance tables.
-- Validate the inputs and run the supplied Python workflow.
-- Read stacked bar plots and distinguish richness from evenness.
-- Recalculate one sample's results and compare them with saved values.
-- Write a descriptive observation supported by numbers, with a clear limitation.
+1. [Preview the results](01-see-the-result.qmd).
+2. [Meet the data](02-meet-the-data.qmd), including units and provenance.
+3. [Check the inputs](03-check-the-inputs.qmd).
+4. [Run the analysis](04-run-the-analysis.qmd).
+5. [Verify and explain](05-verify-and-explain.qmd) using saved numbers.
+6. [Write the report](06-export-the-report.qmd).
 
-## Your route through the example
+Run commands from the main project folder with your Python environment active. Rendering these pages displays existing results; it does not execute the analysis.
 
-| Step | What you will do |
-|---|---|
-| [Preview the results](01-see-the-result.qmd) | Learn what each figure shows |
-| [Meet the data](02-meet-the-data.qmd) | Inspect the files and their orientation |
-| [Check the inputs](03-check-the-inputs.qmd) | Resolve formatting and value problems |
-| [Run the analysis](04-run-the-analysis.qmd) | Generate the figures and tables |
-| [Verify and explain](05-verify-and-explain.qmd) | Check one sample and support your observations |
-| [Write the report](06-export-the-report.qmd) | Produce a short, transparent account of the exercise |
+## Study and data sources
 
-Run all terminal commands from the **main project folder**, with your Python environment active. Commands shown in this guide are copied into the terminal; rendering the guide does not execute them.
-
-**Before you continue:** explain why the question can guide a practice exercise even though the current files cannot answer the biological study question.
+The original human cohort and additional experimental work are described by [Li et al. (2017)](https://doi.org/10.1186/s40168-016-0222-x). This lesson analyses the human profiles reprocessed by [curatedMetagenomicData](https://waldronlab.io/curatedMetagenomicData/), using the 2021-10-14 abundance resources. It does not reproduce the original paper's entire analysis or its animal experiments.
 
 [Next: Preview the results](01-see-the-result.qmd)

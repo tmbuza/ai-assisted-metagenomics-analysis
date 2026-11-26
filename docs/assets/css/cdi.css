@@ -172,3 +172,8 @@ pre{
                     alpha=0.85,
                     pad=1,
                 ),
+
+                /* Guide-specific styling */
+.callout { margin-block: 1.4rem; }
+.quarto-figure img { max-width: 100%; height: auto; }
+table { font-size: .95rem; }

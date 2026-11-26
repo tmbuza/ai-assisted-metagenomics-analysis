@@ -16,7 +16,7 @@ python scripts/python/run_workflow.py \
 For the supplied files, expect:
 
 ```text
-Input checks passed: 195 samples; 3 groups.
+Input checks passed: 140 samples; 2 groups.
 ```
 
 `--check-only` stops after validation. It does not create new analysis outputs or refresh existing figures. Any figures already on disk may come from an earlier run.
@@ -51,7 +51,7 @@ A file can be correctly formatted while containing synthetic values, unsuitable 
 ::: {.callout-tip}
 ## Checkpoint
 
-Continue when the command passes and you can explain both what was checked and what remains unresolved. Keep the placeholder taxon status and functional-data questions in your provenance notes.
+Continue when the command passes and you can explain both what was checked and what remains unresolved. Also confirm 41 Control and 99 HTN, distinct subject IDs, and the documented measurement scales.
 :::
 
 [Next: Run the analysis](04-run-the-analysis.qmd)
