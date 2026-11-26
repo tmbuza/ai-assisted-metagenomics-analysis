@@ -1,0 +1,1373 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "AI-Assisted Metagenomics Analysis with Python",
+    "section": "",
+    "text": "The datasets\nExplore processed taxonomic and functional profiles with Python. Learn one workflow with synthetic practice, repeat it with the hypertension example, then apply it to your own study. Check the inputs, verify the outputs, and explain what the results support.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis with Python</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#the-datasets",
+    "href": "index.html#the-datasets",
+    "title": "AI-Assisted Metagenomics Analysis with Python",
+    "section": "",
+    "text": "Dataset\nWhat it contains\nWhat you will learn\n\n\n\n\nSynthetic practice\nFictional taxonomic and functional abundances with sample groups\nLearn the complete workflow with guided commands, figure explanations, an independent check of S01 and a short report\n\n\nHypertension example\nVerified LiJ_2017 profiles: 41 Control and 99 HTN, 440 species and 483 named pathways; optional 196-sample cohort\nCompare real species and pathway profiles, verify numerical results and explain the limits of an observational comparison\n\n\nYour own study\nYour processed taxonomic profiles, functional features and sample metadata\nPrepare compatible TSV files, run the same commands with your study paths, and write a report supported by your results\n\n\n\n\n\n\n\n\n\nReal-data example\n\n\n\nThe hypertension case study now uses verified curatedMetagenomicData inputs. The main comparison has 140 unique subjects; the optional extension includes 56 pre-hypertension samples. Species percentages are not read counts, and annotated pathways describe functional potential rather than measured activity.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis with Python</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#start-with-a-guided-lesson",
+    "href": "index.html#start-with-a-guided-lesson",
+    "title": "AI-Assisted Metagenomics Analysis with Python",
+    "section": "Start with a guided lesson",
+    "text": "Start with a guided lesson\nComplete Required setup, then work through Synthetic practice in order. Each page explains the task, gives the command to run and shows how to check your work. You will inspect the inputs, generate the figures, verify S01 and write a short report. The functional labels in synthetic practice are fictional identifiers, not real pathway names.\nRun commands in your terminal from the main project folder. The guide displays the commands; rendering its pages does not execute the analysis.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis with Python</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#what-you-will-produce",
+    "href": "index.html#what-you-will-produce",
+    "title": "AI-Assisted Metagenomics Analysis with Python",
+    "section": "What you will produce",
+    "text": "What you will produce\n\nTaxonomic composition: a stacked bar plot showing within-sample proportions.\nShannon diversity: a plot showing each sample’s calculated diversity and group medians.\nFunctional profile: a stacked bar plot showing within-sample proportions of the supplied functional features.\nSource pathway heatmap (hypertension): group medians before normalization within the named pathway set.\nTables and a short report: numerical results you can check and use to support your observations.\n\n\n\n\n\n\n\nNote\n\n\n\nSetup is required before running the workflow. Each dataset follows the same page structure, with commands using its own input and output folders. Start with synthetic practice, then repeat the steps with another dataset.\n\n\nThe guide starts from prepared abundance tables. It does not process raw sequencing reads. The outputs are descriptive: visual differences alone do not establish statistical significance or causation, and functional profiles describe the supplied annotations rather than directly measured biological activity.\nNext: Set up your workspace",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>AI-Assisted Metagenomics Analysis with Python</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html",
+    "href": "00-setup.html",
+    "title": "Required setup",
+    "section": "",
+    "text": "1. Gather the software and project files\nThis page takes you from the downloaded project to your first successful input check. You do not need to read the README or clone a Git repository to get started.\nUse the official Python download page, VS Code website and Quarto installation page. Choose installers for your operating system and follow their instructions. Close and reopen your terminal after installation so new commands can be found.\nYou can run the Python analysis before installing Quarto. You need Quarto when you want to preview or render QMD pages or the HTML report. The terminal-based steps here do not require a Jupyter notebook.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#gather-the-software-and-project-files",
+    "href": "00-setup.html#gather-the-software-and-project-files",
+    "title": "Required setup",
+    "section": "",
+    "text": "Item\nWhat you need it for\n\n\n\n\nProject download\nContains the data, scripts, lessons and report template\n\n\nPython 3.10 or later\nRuns the input checks, analysis and verification\n\n\nVS Code or another text editor\nOpens the project and lets you edit reports\n\n\nQuarto\nPreviews or renders the guide and reports; separate from Python",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#download-and-open-the-project",
+    "href": "00-setup.html#download-and-open-the-project",
+    "title": "Required setup",
+    "section": "2. Download and open the project",
+    "text": "2. Download and open the project\n\nOpen the AI-Assisted Metagenomics Analysis repository.\nClick the green Code button, then choose Download ZIP.\nExtract the downloaded ZIP. The extracted folder will usually be named ai-assisted-metagenomics-analysis-main. Do not work inside the compressed ZIP.\nIn VS Code, choose File → Open Folder and select the extracted folder.\nCheck the file list: you should see _quarto.yml, requirements.txt, data/, scripts/ and examples/ directly inside it.\nChoose Terminal → New Terminal.\n\nThis is the main project folder. Run all guide commands here. You can keep the folder’s downloaded name; renaming it is not required.\nIf extraction created an extra outer folder, open the inner folder containing _quarto.yml and requirements.txt.\nTo see your current location and files:\n\nmacOS or Linux terminal\npwd\nls\n\n\nWindows PowerShell\nGet-Location\nGet-ChildItem\nIf the expected files are missing, reopen the correct folder and a new terminal before continuing.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#create-a-python-environment",
+    "href": "00-setup.html#create-a-python-environment",
+    "title": "Required setup",
+    "section": "3. Create a Python environment",
+    "text": "3. Create a Python environment\nA virtual environment is a project-specific place for Python packages. We will name it .venv, keeping the analysis packages separate from other projects.\nFollow only the instructions for your operating system. Run each line in order.\n\nmacOS or Linux\npython3 --version\npython3 -m venv .venv\nsource .venv/bin/activate\nThe version must be Python 3.10 or later. If python3 is missing or older, install a supported Python version first. If Linux reports that venv is unavailable, use your distribution’s instructions to install the matching Python venv support, then repeat environment creation.\n\n\nWindows PowerShell\npy --version\npy -m venv .venv\n.\\.venv\\Scripts\\Activate.ps1\nIf py is unavailable but python --version reports Python 3.10 or later, use python -m venv .venv to create the environment instead.\nIf PowerShell blocks the activation script, you can use Command Prompt without changing PowerShell’s policy. In VS Code’s terminal dropdown, open a Command Prompt terminal in the same project folder, then run:\n.venv\\Scripts\\activate.bat\n\n\nCheck that activation worked\nYour prompt will usually start with (.venv). The exact computer name and folder text will differ from examples in this guide.\nRun:\npython --version\npython -c \"import sys; print(sys.executable); print('Virtual environment active:', sys.prefix != sys.base_prefix)\"\nThe interpreter path should point inside this project’s .venv folder, and the last line should say Virtual environment active: True. After activation, use python for the remaining commands on all platforms.\nIf .venv already exists: activate it and check the interpreter; you do not need to recreate it for every session. If you moved the project or changed the Python installation, the old environment may need recreating.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#install-and-check-the-analysis-packages",
+    "href": "00-setup.html#install-and-check-the-analysis-packages",
+    "title": "Required setup",
+    "section": "4. Install and check the analysis packages",
+    "text": "4. Install and check the analysis packages\nWith the environment active, run:\npython -m pip install --upgrade pip\npython -m pip install -r requirements.txt\nrequirements.txt is the project’s package list. python -m pip installs into the Python environment you just checked. Installation needs an internet connection and may take a few minutes. Wait until the terminal prompt returns before entering the next command.\nNow check the packages used by the workflow:\npython -c \"import numpy, pandas, matplotlib; print('Analysis packages loaded successfully.')\"\nExpected message:\nAnalysis packages loaded successfully.\nIf an import fails, check activation and repeat the requirements installation. Keep any installation error message; do not continue as though installation succeeded.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#check-the-synthetic-inputs",
+    "href": "00-setup.html#check-the-synthetic-inputs",
+    "title": "Required setup",
+    "section": "5. Check the synthetic inputs",
+    "text": "5. Check the synthetic inputs\nKeep the bundled synthetic files unchanged for your first run. This command validates them without generating new analysis results:\npython scripts/python/run_workflow.py --data-dir data/synthetic --output-dir results/synthetic --check-only\nFor the bundled dataset described in this project, expect:\nInput checks passed: 12 samples; 2 groups.\nIf your input version has been intentionally changed, compare the reported counts with its metadata. If they differ unexpectedly, check that you downloaded the intended project version and are using data/synthetic/.\nThe check confirms technical compatibility: headers, sample IDs and numerical values meet the script’s requirements. It does not establish biological validity or statistical significance. --check-only does not refresh existing figures.\n\n\n\n\n\n\nSetup checkpoint\n\n\n\nContinue when the environment check says True, the package imports succeed and the synthetic input check passes. You are ready to run the analysis in Synthetic practice.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#understand-where-things-live",
+    "href": "00-setup.html#understand-where-things-live",
+    "title": "Required setup",
+    "section": "6. Understand where things live",
+    "text": "6. Understand where things live\n\n\n\n\n\n\n\nLocation\nPurpose\n\n\n\n\ndata/\nInput tables, separated by dataset\n\n\nscripts/python/\nReusable checking, analysis and verification code\n\n\nexamples/\nSeven lesson pages per dataset\n\n\nresults/\nGenerated figures, tables and run records\n\n\nreports/\nYour QMD reports\n\n\ndocs/\nRendered guide produced by the project build\n\n\n.venv/\nLocal Python environment\n\n\n\nCommands use paths such as data/synthetic/ relative to the main project folder. Opening a terminal inside examples/synthetic/ changes what those paths refer to and can cause file-not-found errors.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#preview-and-render-with-quarto",
+    "href": "00-setup.html#preview-and-render-with-quarto",
+    "title": "Required setup",
+    "section": "7. Preview and render with Quarto",
+    "text": "7. Preview and render with Quarto\nIf Quarto is installed, check that the command is available:\nquarto --version\nTo preview the guide from the main project folder:\nquarto preview\nOpen the local address printed in the terminal if a browser does not open automatically. Preview keeps running while you work. To stop it and get your terminal prompt back, press Ctrl+C. You can also open a second terminal, but activate .venv there before running Python commands.\nTo build the complete guide:\nquarto render\nThe project is configured to write the guide to docs/. To render a completed synthetic report separately:\nquarto render reports/synthetic-report.qmd --to html\nFollow the lesson before completing the report. Quarto prints the rendered report’s location. The QMD pages display commands and existing figures; rendering does not run the Python analysis. Regenerate results in the terminal after changing inputs, then render again.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#copy-code-into-the-right-place",
+    "href": "00-setup.html#copy-code-into-the-right-place",
+    "title": "Required setup",
+    "section": "8. Copy code into the right place",
+    "text": "8. Copy code into the right place\nCopy code from a displayed block without the surrounding Markdown backticks. Do not copy terminal prompts such as $, &gt; or (.venv).\n\n\n\n\n\n\n\nWhat you see in the guide\nWhat to do\n\n\n\n\npython scripts/python/...\nPaste the command into your terminal\n\n\npython -c \"...\"\nPaste the whole line into your terminal\n\n\nA block starting python - &lt;&lt;'PY'\nIn macOS/Linux Bash or Zsh, paste the whole block through its final PY line\n\n\nA report template starting with ---\nPaste into the named .qmd file in your editor\n\n\n\nWindows PowerShell and Command Prompt do not support the Bash &lt;&lt;'PY' wrapper. For those longer Python examples, copy only the Python lines between the opening wrapper and closing PY into a file named check_values.py in the main project folder. Save it, then run:\npython check_values.py\nDo not include python - &lt;&lt;'PY' or the final PY in that file. You can use this saved-script approach on macOS or Linux too. The calculations are the same.\nIf your prompt is &gt;&gt;&gt;, you are inside interactive Python. Enter exit() to return to the terminal before running shell commands. If a Bash terminal shows continuation prompts &gt; after an incomplete paste, finish with the closing PY on its own line or press Ctrl+C and paste the complete block again.",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#return-for-another-session",
+    "href": "00-setup.html#return-for-another-session",
+    "title": "Required setup",
+    "section": "9. Return for another session",
+    "text": "9. Return for another session\nOpen the project and a terminal, then activate the existing environment:\n\nmacOS/Linux: source .venv/bin/activate\nPowerShell: .\\.venv\\Scripts\\Activate.ps1\nCommand Prompt: .venv\\Scripts\\activate.bat\n\nYou do not need to reinstall packages each time. To leave the environment:\ndeactivate",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "00-setup.html#if-something-goes-wrong",
+    "href": "00-setup.html#if-something-goes-wrong",
+    "title": "Required setup",
+    "section": "If something goes wrong",
+    "text": "If something goes wrong\n\n\n\nSymptom\nFirst thing to try\n\n\n\n\nPython or py not found\nCheck installation and reopen the terminal\n\n\nrequirements.txt or a script not found\nConfirm the main project folder is open\n\n\nModuleNotFoundError\nActivate .venv, check the interpreter and install requirements\n\n\nPowerShell activation blocked\nUse the Command Prompt activation option above\n\n\nInput check failed\nRead the named file/error and follow input troubleshooting\n\n\nquarto not found\nInstall Quarto separately and reopen the terminal; Python analysis can proceed\n\n\nFigure missing after rendering\nRun the analysis first, then check output paths and render again\n\n\n\nIf you need help, share the exact command, full error message, operating system and whether .venv is active. Those details make the problem easier to reproduce.\nNext: Start synthetic practice",
+    "crumbs": [
+      "Required setup",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Required setup</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/00-start-here.html",
+    "href": "examples/synthetic/00-start-here.html",
+    "title": "Synthetic practice: learn the workflow",
+    "section": "",
+    "text": "What you will learn\nBegin here after completing Required setup. You will use a small fictional dataset to learn the complete analysis workflow before working with the larger hypertension example or your own study.\nThe data were constructed for teaching. Group labels, taxon abundances and functional features do not represent a real experiment. The functional labels are invented identifiers and must not be assigned real pathway names.\nBy the end, you should be able to:",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Synthetic practice: learn the workflow</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/00-start-here.html#what-you-will-learn",
+    "href": "examples/synthetic/00-start-here.html#what-you-will-learn",
+    "title": "Synthetic practice: learn the workflow",
+    "section": "",
+    "text": "Connect sample metadata to taxonomic and functional abundance tables.\nCheck the inputs and run the supplied Python script.\nExplain proportions, detected taxa, Shannon diversity and group medians.\nRecalculate sample S01 and compare it with saved results.\nWrite a short report supported by figures and numbers.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Synthetic practice: learn the workflow</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/00-start-here.html#follow-the-pages-in-order",
+    "href": "examples/synthetic/00-start-here.html#follow-the-pages-in-order",
+    "title": "Synthetic practice: learn the workflow",
+    "section": "Follow the pages in order",
+    "text": "Follow the pages in order\n\n\n\nPage\nYour task\n\n\n\n\nPreview the results\nLearn to read the three figures\n\n\nMeet the data\nUnderstand rows, columns and sample IDs\n\n\nCheck the inputs\nConfirm that the files can be processed\n\n\nRun the analysis\nGenerate figures and numerical tables\n\n\nVerify and explain\nCheck one sample and explain the patterns\n\n\nWrite the report\nCreate a short reproducible report",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Synthetic practice: learn the workflow</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/00-start-here.html#how-to-use-the-commands",
+    "href": "examples/synthetic/00-start-here.html#how-to-use-the-commands",
+    "title": "Synthetic practice: learn the workflow",
+    "section": "How to use the commands",
+    "text": "How to use the commands\nRun all commands in the terminal, from the main project folder, with the Python environment active. This is the folder containing scripts/, data/ and _quarto.yml.\nThe code blocks are instructions to copy into your terminal. Rendering the guide does not execute them. When a block starts with python - &lt;&lt;'PY', copy the whole block, including the final PY line: it runs the enclosed Python code in your terminal.\nInput files are in data/synthetic/; outputs go to results/synthetic/. Keeping these folders separate helps you trace a result back to its input.\nBefore you continue: state the question in your own words. What would you need to check before interpreting a similar pattern in a real study?\nNext: Preview the results",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Synthetic practice: learn the workflow</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/01-see-the-result.html",
+    "href": "examples/synthetic/01-see-the-result.html",
+    "title": "See the result",
+    "section": "",
+    "text": "Composition: what makes up each sample?\nFirst, look at what you will produce. These figures are read from results/synthetic/figures/. If they have not been generated yet, continue through the input checks and analysis, then return here.\nEach colour represents a taxon. Its segment height is the taxon’s abundance divided by the sample’s total taxonomic abundance. Every bar sums to 1, or 100%, even when original totals differ.\nCompare samples with one large segment against samples with more similarly sized segments. Similar segment sizes indicate more even abundance distributions. Sample order follows the metadata; check group labels before assigning a pattern to A or B.\nThe script displays up to 15 taxa with the highest mean proportions. If more taxa are present, it combines the remainder as Other. The full relative-abundance table retains every taxon.\nTry this: pick one bar and identify its largest segment. You will check its numerical proportion later.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/01-see-the-result.html#composition-what-makes-up-each-sample",
+    "href": "examples/synthetic/01-see-the-result.html#composition-what-makes-up-each-sample",
+    "title": "See the result",
+    "section": "",
+    "text": "Figure 4.1: Relative composition of the fictional taxa. Each bar represents one sample.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/01-see-the-result.html#diversity-how-evenly-is-abundance-distributed",
+    "href": "examples/synthetic/01-see-the-result.html#diversity-how-evenly-is-abundance-distributed",
+    "title": "See the result",
+    "section": "Diversity: how evenly is abundance distributed?",
+    "text": "Diversity: how evenly is abundance distributed?\n\n\n\n\n\n\nFigure 4.2: Shannon diversity by fictional group. Each dot is a sample; black lines show group medians.\n\n\n\nThe original lesson describes Group A as having a higher median Shannon diversity and less variation than Group B, with overlap between groups. Confirm that description against your current figure and saved table before using it in your report.\n\nRichness is the number of taxa with abundance greater than zero.\nEvenness describes how evenly abundance is distributed among detected taxa.\nShannon diversity combines richness and evenness.\n\nThis practice example is expected to have eight detected taxa per sample. Confirm that with the verification code. When richness is the same, differences in Shannon reflect evenness.\nThe black line is a group’s median, or middle value. Look at the individual dots as well: a median does not describe all variation. Horizontal offsets only separate dots visually. This plot alone does not establish statistical significance.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/01-see-the-result.html#functions-how-are-the-fictional-features-distributed",
+    "href": "examples/synthetic/01-see-the-result.html#functions-how-are-the-fictional-features-distributed",
+    "title": "See the result",
+    "section": "Functions: how are the fictional features distributed?",
+    "text": "Functions: how are the fictional features distributed?\n\n\n\n\n\n\nFigure 4.3: Relative proportions of fictional functional features. Each bar represents one sample.\n\n\n\nEach functional value is divided by the total of the supplied functional values for that sample. A proportion of 0.25 therefore means 25% of that supplied total.\nThese are invented features, not identified pathways. You can describe their numerical patterns, but cannot infer a named pathway, biological function or measured activity from their labels.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/01-see-the-result.html#check-your-understanding",
+    "href": "examples/synthetic/01-see-the-result.html#check-your-understanding",
+    "title": "See the result",
+    "section": "Check your understanding",
+    "text": "Check your understanding\n\nCan two samples with different original totals have identical proportions? Why?\nCan two samples with eight detected taxa have different Shannon values?\nDoes a larger functional proportion necessarily mean a larger original value?\n\nReady to continue: you can explain what one bar, one coloured segment, one dot and one median line represent.\nNext: Meet the data",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/02-meet-the-data.html",
+    "href": "examples/synthetic/02-meet-the-data.html",
+    "title": "Meet the data",
+    "section": "",
+    "text": "Understand the layout\nThe analysis uses three tab-separated text files, or TSVs. A tab separates adjacent columns. Read them with sep=\"\\t\" in pandas; do not treat them as comma-separated files.\nSamples are rows in metadata and columns in both abundance tables. The same sample IDs connect the files. Spelling and case must match exactly. Renaming a header cannot correct a table that needs to be transposed.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/02-meet-the-data.html#understand-the-layout",
+    "href": "examples/synthetic/02-meet-the-data.html#understand-the-layout",
+    "title": "Meet the data",
+    "section": "",
+    "text": "File in data/synthetic/\nOne row represents\nFirst header\nRemaining columns\n\n\n\n\nsample-metadata.tsv\nOne sample\nsample_id\ngroup and any additional sample information\n\n\ntaxon-abundance.tsv\nOne fictional taxon\ntaxon_id\nSample IDs with numerical abundances\n\n\nfunctional-features.tsv\nOne fictional functional feature\nfeature_id\nSample IDs with numerical values",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/02-meet-the-data.html#inspect-the-files-yourself",
+    "href": "examples/synthetic/02-meet-the-data.html#inspect-the-files-yourself",
+    "title": "Meet the data",
+    "section": "Inspect the files yourself",
+    "text": "Inspect the files yourself\nRun this complete block from the main project folder:\npython - &lt;&lt;'PY'\nfrom pathlib import Path\nimport pandas as pd\n\nfolder = Path(\"data/synthetic\")\nmetadata = pd.read_csv(folder / \"sample-metadata.tsv\", sep=\"\\t\")\ntaxa = pd.read_csv(folder / \"taxon-abundance.tsv\", sep=\"\\t\", index_col=0)\nfunctions = pd.read_csv(folder / \"functional-features.tsv\", sep=\"\\t\", index_col=0)\n\nprint(\"Number of samples:\", len(metadata))\nprint(\"Taxon table (taxa, samples):\", taxa.shape)\nprint(\"Functional table (features, samples):\", functions.shape)\nprint(\"\\nSamples per group:\")\nprint(metadata[\"group\"].value_counts().to_string())\nprint(\"\\nFirst three metadata rows:\")\nprint(metadata.head(3).to_string(index=False))\nprint(\"\\nTaxon values for S01:\")\nprint(taxa[\"S01\"].to_string())\nprint(\"\\nFunctional values for S01:\")\nprint(functions[\"S01\"].to_string())\nPY\nFor an abundance table, shape gives (features, samples). Compare its second number with the metadata sample count. Group counts should account for all metadata rows.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/02-meet-the-data.html#what-do-the-values-mean",
+    "href": "examples/synthetic/02-meet-the-data.html#what-do-the-values-mean",
+    "title": "Meet the data",
+    "section": "What do the values mean?",
+    "text": "What do the values mean?\nThe values are constructed abundance numbers for practice. Do not call their totals sequencing depth, reads, cells or gene copies without documentation that defines them that way. The calculation only needs comparable, nonnegative values within each table and positive sample totals; biological interpretation requires much more context.\nA zero means a feature has zero abundance in this practice table. A missing value means the abundance is unknown. Do not replace missing values with zero automatically.\nTaxonomic and functional totals have separate denominators. Dividing a functional value by the taxonomic total would calculate the wrong proportion.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/02-meet-the-data.html#your-task",
+    "href": "examples/synthetic/02-meet-the-data.html#your-task",
+    "title": "Meet the data",
+    "section": "Your task",
+    "text": "Your task\nRecord the number of samples, the number of taxa and functional features, and the group sizes. Locate S01 in all three files. Identify one taxon value and one functional value for that sample.\nFor a real dataset, you would also need source, units, preprocessing, taxonomic resolution, functional definitions and information about independent participants or repeated samples. Here, all labels and patterns are fictional.\nNext: Check the inputs",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/03-check-the-inputs.html",
+    "href": "examples/synthetic/03-check-the-inputs.html",
+    "title": "Check the inputs",
+    "section": "",
+    "text": "Run the check\nBefore calculating results, ask whether the three files are consistent and contain usable values. This step prevents avoidable errors from being carried into the figures.\nFrom the main project folder:\n--data-dir selects the input folder. --output-dir names the results folder used for a full run. --check-only stops after validation.\nThe success message follows this pattern:\nThe sample count should match the number you inspected on the previous page. The angle-bracketed text above is an explanation of the message, not a command or literal output.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/03-check-the-inputs.html#run-the-check",
+    "href": "examples/synthetic/03-check-the-inputs.html#run-the-check",
+    "title": "Check the inputs",
+    "section": "",
+    "text": "python scripts/python/run_workflow.py \\\n  --data-dir data/synthetic \\\n  --output-dir results/synthetic \\\n  --check-only\n\n\nInput checks passed: &lt;number of samples&gt; samples; 2 groups.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/03-check-the-inputs.html#what-is-checked",
+    "href": "examples/synthetic/03-check-the-inputs.html#what-is-checked",
+    "title": "Check the inputs",
+    "section": "What is checked?",
+    "text": "What is checked?\nThe script checks that:\n\nFiles have unique headers starting with the required identifier names.\nTables are nonempty, with no blank values or duplicate row identifiers.\nEach sample has a nonempty group label.\nSample columns match metadata IDs exactly.\nAbundances are numeric, finite and nonnegative.\nEvery sample has a positive total in each abundance table.\n\nAn individual zero is allowed; an all-zero sample cannot be converted to proportions. The script reorders abundance columns to match metadata after checking the IDs.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/03-check-the-inputs.html#fix-the-cause-of-an-error",
+    "href": "examples/synthetic/03-check-the-inputs.html#fix-the-cause-of-an-error",
+    "title": "Check the inputs",
+    "section": "Fix the cause of an error",
+    "text": "Fix the cause of an error\n\n\n\n\n\n\n\nProblem\nWhat to check\n\n\n\n\nExpected headers beginning with taxon_id or feature_id\nFirst header, duplicate headers and whether features are rows\n\n\nSample IDs must match metadata exactly\nMissing or extra IDs, spelling, case and surrounding spaces\n\n\nBlank values or duplicate IDs\nThe original file and why the value or identifier is repeated or absent\n\n\nInvalid numerical values or zero totals\nText in abundance cells, negatives, nonfinite values and all-zero samples\n\n\nFile not found\nCurrent project folder and exact TSV filenames\n\n\n\nDo not drop samples or invent values simply to make a check pass. Resolve the source problem and repeat the command.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/03-check-the-inputs.html#what-does-passing-mean",
+    "href": "examples/synthetic/03-check-the-inputs.html#what-does-passing-mean",
+    "title": "Check the inputs",
+    "section": "What does passing mean?",
+    "text": "What does passing mean?\nIt means the files satisfy the script’s technical requirements. It does not show that a study has a valid design, that samples are independent, or that observed differences are statistically significant.\n--check-only creates no new figures and does not refresh existing results. You must run the next step to generate outputs from the checked inputs.\nCheckpoint: the check passes, sample and group counts match your notes, and you can explain one problem that validation would catch.\nNext: Run the analysis",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/04-run-the-analysis.html",
+    "href": "examples/synthetic/04-run-the-analysis.html",
+    "title": "Run the analysis",
+    "section": "",
+    "text": "Run the command\nNow turn the checked inputs into descriptive figures and tables. Keep the input files unchanged so you can reproduce the run.\nFrom the main project folder:\nThe script repeats the input checks and finishes with:\nIt creates output folders when needed. Rerunning replaces the same named outputs. Preserve a separate copy before changing inputs if you need to compare versions.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/04-run-the-analysis.html#run-the-command",
+    "href": "examples/synthetic/04-run-the-analysis.html#run-the-command",
+    "title": "Run the analysis",
+    "section": "",
+    "text": "python scripts/python/run_workflow.py \\\n  --data-dir data/synthetic \\\n  --output-dir results/synthetic\n\nResults saved to results/synthetic",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/04-run-the-analysis.html#understand-the-calculations",
+    "href": "examples/synthetic/04-run-the-analysis.html#understand-the-calculations",
+    "title": "Run the analysis",
+    "section": "Understand the calculations",
+    "text": "Understand the calculations\n\n\n\n\n\n\n\n\nResult\nCalculation\nHow to interpret it\n\n\n\n\nTotal taxonomic abundance\nSum of taxon values for one sample\nTotal within the supplied practice table\n\n\nDetected taxa\nNumber of taxon values greater than zero\nObserved richness within the supplied table\n\n\nTaxon proportion\nTaxon value divided by that sample’s taxon total\nA share between 0 and 1\n\n\nShannon diversity\n\\(-\\sum_{i:p_i&gt;0}p_i\\ln(p_i)\\)\nCombines richness and evenness; uses the natural logarithm\n\n\nFunctional proportion\nFeature value divided by that sample’s functional total\nShare of the supplied fictional feature total\n\n\n\nMultiplying a proportion by 100 gives a percentage. Taxon proportions and functional proportions each sum to 1 separately for every sample. Shannon uses all supplied taxa, not only those displayed individually in a plot.\nFor stacked bars, the script displays up to 15 features with the highest mean proportions across samples and combines the remainder as Other. This is a display choice, not a test of which features differ between groups.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/04-run-the-analysis.html#find-your-outputs",
+    "href": "examples/synthetic/04-run-the-analysis.html#find-your-outputs",
+    "title": "Run the analysis",
+    "section": "Find your outputs",
+    "text": "Find your outputs\nAll paths below are inside results/synthetic/.\n\n\n\n\n\n\n\nOutput\nWhat to inspect\n\n\n\n\nfigures/composition.png\nRelative taxonomic composition per sample\n\n\nfigures/shannon-diversity.png\nSample diversity values and group medians\n\n\nfigures/functional-features.png\nRelative fictional functional profiles\n\n\ntables/alpha-diversity.tsv\nOne row per sample: total, detected taxa, Shannon and metadata\n\n\ntables/taxon-relative-abundance.tsv\nAll taxon proportions, with samples in columns\n\n\ntables/functional-relative-abundance.tsv\nAll functional proportions, with samples in columns\n\n\ntables/group-summary.tsv\nGroup counts, diversity medians and ranges\n\n\ntables/composition-display.tsv\nStacked taxonomic plot values\n\n\ntables/functional-features-display.tsv\nStacked functional plot values\n\n\ntables/run-record.json\nPython/package versions, input checksums, dimensions and method description\n\n\n\nThe run record supports reproducibility but does not record every input detail. Keep the exact inputs or their Git version with your work.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/04-run-the-analysis.html#inspect-before-explaining",
+    "href": "examples/synthetic/04-run-the-analysis.html#inspect-before-explaining",
+    "title": "Run the analysis",
+    "section": "Inspect before explaining",
+    "text": "Inspect before explaining\nOpen alpha-diversity.tsv, find S01 and record its three calculated values. Then open the figures and return to the preview. Do they show the patterns described there?\nThe current workflow is descriptive: it performs no hypothesis tests or adjustment for other variables. Functional feature names remain fictional identifiers, not measured biological activities.\nCheckpoint: find all three figures and the listed table/record files, and explain the difference between an original abundance and its proportion.\nNext: Verify and explain",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/05-verify-and-explain.html",
+    "href": "examples/synthetic/05-verify-and-explain.html",
+    "title": "Verify and explain",
+    "section": "",
+    "text": "1. Check S01 with the supplied script\nVerification means tracing a saved number back to the input and checking the calculation yourself. Start with S01, then use tables to support your figure descriptions.\nRun from the main project folder:\nRecord the total taxonomic abundance, detected taxa and natural-log Shannon diversity. Compare them with the S01 row in results/synthetic/tables/alpha-diversity.tsv.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/05-verify-and-explain.html#check-s01-with-the-supplied-script",
+    "href": "examples/synthetic/05-verify-and-explain.html#check-s01-with-the-supplied-script",
+    "title": "Verify and explain",
+    "section": "",
+    "text": "python scripts/python/verify_sample.py \\\n  data/synthetic results/synthetic S01",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/05-verify-and-explain.html#recalculate-the-values-independently",
+    "href": "examples/synthetic/05-verify-and-explain.html#recalculate-the-values-independently",
+    "title": "Verify and explain",
+    "section": "2. Recalculate the values independently",
+    "text": "2. Recalculate the values independently\nCopy this complete block into the terminal. It selects S01, calculates each quantity and compares it with the saved result:\npython - &lt;&lt;'PY'\nimport math\nimport pandas as pd\n\nsample = \"S01\"\ntaxa = pd.read_csv(\"data/synthetic/taxon-abundance.tsv\", sep=\"\\t\", index_col=0)\nsaved = pd.read_csv(\"results/synthetic/tables/alpha-diversity.tsv\", sep=\"\\t\", index_col=0)\n\n# Select one sample and calculate its total and observed richness.\nx = taxa[sample].astype(float)\ntotal = float(x.sum())\ndetected = int((x &gt; 0).sum())\n\n# Convert positive values to proportions before calculating Shannon.\np = x[x &gt; 0] / total\nshannon = -sum(float(value) * math.log(float(value)) for value in p)\n\nfor name, manual in [(\"total_abundance\", total),\n                     (\"detected_taxa\", detected),\n                     (\"shannon\", shannon)]:\n    recorded = float(saved.loc[sample, name])\n    agrees = math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9)\n    print(f\"{name}: manual={manual:.6f}; saved={recorded:.6f}; agrees={agrees}\")\n\n# Check a taxon proportion as an additional link to the composition plot.\nrelative = pd.read_csv(\"results/synthetic/tables/taxon-relative-abundance.tsv\", sep=\"\\t\", index_col=0)\ntaxon = x.idxmax()\nmanual = x.loc[taxon] / total\nrecorded = relative.loc[taxon, sample]\nprint(f\"Largest taxon in {sample}: {taxon}; proportion={manual:.6f} ({100 * manual:.2f}%)\")\nprint(\"Taxon proportion agrees:\", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))\nPY\nAll agreement checks should be True. Small final-decimal differences may reflect rounding. Larger discrepancies call for checking the sample ID, input version, most recent run and logarithm base. Do not edit saved values merely to force agreement.\nRecord your answer: S01 has total …, detected taxa … and Shannon …. My independent calculations [agree/do not agree] with the saved results.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/05-verify-and-explain.html#explain-richness-and-evenness",
+    "href": "examples/synthetic/05-verify-and-explain.html#explain-richness-and-evenness",
+    "title": "Verify and explain",
+    "section": "3. Explain richness and evenness",
+    "text": "3. Explain richness and evenness\nFor two equally abundant taxa, proportions are 0.5 and 0.5 and Shannon is approximately 0.6931. For two taxa with proportions 0.9 and 0.1, Shannon is approximately 0.3251. Richness is two in both examples; greater evenness produces the higher Shannon value.\nNow check whether richness is constant in this dataset and summarize the groups:\npython - &lt;&lt;'PY'\nimport pandas as pd\n\nalpha = pd.read_csv(\"results/synthetic/tables/alpha-diversity.tsv\", sep=\"\\t\")\nprint(\"Detected-taxon counts observed:\", sorted(alpha[\"detected_taxa\"].unique().tolist()))\nsummary = alpha.groupby(\"group\", sort=False).agg(\n    samples=(\"shannon\", \"size\"),\n    median_shannon=(\"shannon\", \"median\"),\n    minimum_shannon=(\"shannon\", \"min\"),\n    maximum_shannon=(\"shannon\", \"max\"),\n    sd_shannon=(\"shannon\", \"std\"),\n)\nprint(summary.round(6).to_string())\nPY\nThe original lesson expects all samples to have eight detected taxa. If the output confirms [8], Shannon differences reflect evenness. If it does not, investigate the input version and revise that explanation: richness may also contribute.\nUse medians to compare typical values and ranges or standard deviations to describe variation. Standard deviation summarizes spread around a group’s mean; it is not an uncertainty interval for the median. Neither summary establishes statistical significance.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/05-verify-and-explain.html#check-one-functional-proportion",
+    "href": "examples/synthetic/05-verify-and-explain.html#check-one-functional-proportion",
+    "title": "Verify and explain",
+    "section": "4. Check one functional proportion",
+    "text": "4. Check one functional proportion\nThis example selects the first fictional feature in the input file. It checks the arithmetic without assuming a biological meaning for that label:\npython - &lt;&lt;'PY'\nimport math\nimport pandas as pd\n\nsample = \"S01\"\nraw = pd.read_csv(\"data/synthetic/functional-features.tsv\", sep=\"\\t\", index_col=0)\nsaved = pd.read_csv(\"results/synthetic/tables/functional-relative-abundance.tsv\", sep=\"\\t\", index_col=0)\nfeature = raw.index[0]\nvalue = float(raw.loc[feature, sample])\ntotal = float(raw[sample].sum())\nmanual = value / total\nrecorded = float(saved.loc[feature, sample])\nprint(f\"{feature}: value={value:g}; functional total={total:g}\")\nprint(f\"Calculated proportion={manual:.6f} ({100 * manual:.2f}%)\")\nprint(f\"Saved proportion={recorded:.6f}\")\nprint(\"Agrees:\", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))\nPY\nA larger proportion can result from a larger feature value, smaller values for other features, or both. These plots show relative distributions within the supplied feature set.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/05-verify-and-explain.html#write-observations-with-evidence",
+    "href": "examples/synthetic/05-verify-and-explain.html#write-observations-with-evidence",
+    "title": "Verify and explain",
+    "section": "5. Write observations with evidence",
+    "text": "5. Write observations with evidence\nReturn to the three figures and complete one observation for each:\n\n\n\n\n\n\n\nFigure\nInclude in your observation\n\n\n\n\nComposition\nSample ID, fictional taxon ID and checked proportion\n\n\nShannon diversity\nGroup medians, spread, overlap and detected-taxon counts\n\n\nFunctional profile\nFictional feature ID, sample ID and checked proportion\n\n\n\nExample wording: “Group … has a calculated median Shannon of …, compared with … in Group …. The distributions overlap. All samples have … detected taxa, so …. These descriptive results do not establish statistical significance.”\nKeep a short evidence note for each statement: the table used, numerical value and limitation. If you ask AI to help draft an explanation, provide those checked values and review every claim yourself.\nReady to report: you can reproduce S01’s results and explain the patterns without assigning real pathway names or claiming causation.\nNext: Write the report",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/06-export-the-report.html",
+    "href": "examples/synthetic/06-export-the-report.html",
+    "title": "Export the report",
+    "section": "",
+    "text": "Create or update the report\nA report connects the question, calculations and observations. Keep it short enough to follow, but include the evidence needed to check your claims.\nOpen reports/synthetic-report.qmd. If it does not exist, create it in the reports/ folder. Use the template below, replacing every square-bracketed prompt with your own checked results.\nThe figure paths are relative to the report’s location in reports/. They differ from paths used in the lesson pages.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Export the report</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/06-export-the-report.html#create-or-update-the-report",
+    "href": "examples/synthetic/06-export-the-report.html#create-or-update-the-report",
+    "title": "Export the report",
+    "section": "",
+    "text": "---\ntitle: \"Synthetic metagenomics practice report\"\nformat:\n  html:\n    toc: true\n---\n\n## Question and inputs\n\nHow do taxonomic composition, Shannon diversity and relative functional\nprofiles differ between the fictional groups A and B?\n\nI used the three TSV files in data/synthetic/.\nThe data and group differences were constructed for teaching; the functional\nlabels are invented and do not identify real pathways.\n\n[Report sample count, group sizes and numbers of taxa and functional features.]\n\n## Methods\n\nI validated the files and ran the supplied Python workflow.\nTaxon and functional values were normalized separately by their respective\nwithin-sample totals. Detected taxa had values greater than zero.\nShannon diversity used all supplied taxa and the natural logarithm.\nPlots display up to 15 features with the highest mean proportions,\ncombining any remaining features as Other. This was a descriptive analysis.\n\n## Verification\n\nFor S01, I independently calculated total taxonomic abundance ..., detected\ntaxa ... and Shannon diversity ....\n[State whether these agreed with the saved alpha-diversity table.]\n\n[Report one taxon proportion and one fictional functional proportion you checked.]\n\n## Results\n\n### Taxonomic composition\n\n![Relative composition of fictional taxa.](../results/synthetic/figures/composition.png)\n\n[Describe a sample with a taxon ID and checked proportion from\n taxon-relative-abundance.tsv.]\n\n### Shannon diversity\n\n![Shannon diversity by fictional group; black lines show group medians.](../results/synthetic/figures/shannon-diversity.png)\n\n[Quote group medians and describe spread and overlap using alpha-diversity.tsv.\n State the detected-taxon counts and explain the contribution of evenness.]\n\n### Functional profile\n\n![Relative proportions of fictional functional features.](../results/synthetic/figures/functional-features.png)\n\n[Describe a fictional feature and a checked proportion from\n functional-relative-abundance.tsv. Do not assign a real pathway name.]\n\n## Limitations and next steps\n\nThe data are fictional. The analysis is descriptive and does not establish\nstatistical significance or causation. Proportions depend on the supplied\nfeature set and do not directly measure biological activity.\n\n[State one check you would require before applying this workflow to a real study.]\n\n## Reproducibility\n\nInputs: data/synthetic/.\nOutputs: results/synthetic/.\nEnvironment details: results/synthetic/tables/run-record.json.\n\n[Record the analysis date and input version or Git commit used.]",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Export the report</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/06-export-the-report.html#render-the-report",
+    "href": "examples/synthetic/06-export-the-report.html#render-the-report",
+    "title": "Export the report",
+    "section": "Render the report",
+    "text": "Render the report\nSave your edits and run from the main project folder:\nquarto render reports/synthetic-report.qmd --to html\nQuarto prints the output location. Open the generated HTML and confirm that all three figures display, captions are readable and no unfinished prompts remain. Rendering uses existing analysis results; it does not rerun the Python workflow.\nIf a figure is missing, check that it exists in results/synthetic/figures/ and that the report is saved in reports/ as instructed.",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Export the report</span>"
+    ]
+  },
+  {
+    "objectID": "examples/synthetic/06-export-the-report.html#review-your-explanation",
+    "href": "examples/synthetic/06-export-the-report.html#review-your-explanation",
+    "title": "Export the report",
+    "section": "Review your explanation",
+    "text": "Review your explanation\n\nDoes the report answer the opening question?\nCan you trace every numerical claim to a saved table?\nDid the S01 calculations agree, and have you explained any discrepancy?\nHave you distinguished proportions from original abundance values?\nAre fictional labels kept separate from real biological claims?\n\n\n\n\n\n\n\nReady for another dataset\n\n\n\nYou have learned the workflow once: inspect, check, run, verify and explain. Repeat the same steps with the hypertension example, using verified species and pathway profiles with documented units.\n\n\nReturn to the synthetic overview",
+    "crumbs": [
+      "Synthetic practice",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Export the report</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/00-start-here.html",
+    "href": "examples/hypertension/00-start-here.html",
+    "title": "Hypertension: a real metagenomics case study",
+    "section": "",
+    "text": "What you are working with\nApply the workflow to LiJ_2017, a human stool shotgun metagenomics study available through curatedMetagenomicData. Complete Required setup and synthetic practice first.\nThe main example includes 140 samples from 140 distinct subject IDs: 41 Control and 99 HTN. Both abundance tables contain the same sample accessions.\nThe full curated cohort has 196 samples: 41 Control, 56 pre-hypertension (pHTN), 99 HTN. The main lesson excludes pHTN to keep the first real-data comparison focused. All 196 samples remain available in data/hypertension-all-groups/ for an optional extension.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Hypertension: a real metagenomics case study</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/00-start-here.html#what-you-are-working-with",
+    "href": "examples/hypertension/00-start-here.html#what-you-are-working-with",
+    "title": "Hypertension: a real metagenomics case study",
+    "section": "",
+    "text": "Input\nVerified contents\nMeasurement\n\n\n\n\nSample metadata\n140 samples with group, subject ID and source identifiers\nOne row per sample\n\n\nTaxonomic abundance\n440 species-level features\nSource percentages; approximately 100 per sample\n\n\nFunctional features\n483 named, unstratified MetaCyc pathways\nHUMAnN source relative abundances\n\n\n\n\n\n\n\n\n\n\nWhat this analysis can support\n\n\n\nThese are real processed profiles, not raw reads. This descriptive human comparison does not establish statistical significance or causation. Age, sex and BMI are unavailable in the pinned curated metadata; this workflow does not adjust for confounding. Pathway abundance describes annotated functional potential, not directly measured activity.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Hypertension: a real metagenomics case study</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/00-start-here.html#your-route",
+    "href": "examples/hypertension/00-start-here.html#your-route",
+    "title": "Hypertension: a real metagenomics case study",
+    "section": "Your route",
+    "text": "Your route\n\nPreview the results.\nMeet the data, including units and provenance.\nCheck the inputs.\nRun the analysis.\nVerify and explain using saved numbers.\nWrite the report.\n\nRun commands from the main project folder with your Python environment active. Rendering these pages displays existing results; it does not execute the analysis.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Hypertension: a real metagenomics case study</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/00-start-here.html#study-and-data-sources",
+    "href": "examples/hypertension/00-start-here.html#study-and-data-sources",
+    "title": "Hypertension: a real metagenomics case study",
+    "section": "Study and data sources",
+    "text": "Study and data sources\nThe original human cohort and additional experimental work are described by Li et al. (2017). This lesson analyses the human profiles reprocessed by curatedMetagenomicData, using the 2021-10-14 abundance resources. It does not reproduce the original paper’s entire analysis or its animal experiments.\nNext: Preview the results",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Hypertension: a real metagenomics case study</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/01-see-the-result.html",
+    "href": "examples/hypertension/01-see-the-result.html",
+    "title": "See the result",
+    "section": "",
+    "text": "Species composition\nThese figures use the verified 140-sample Control versus HTN subset. Their numerical evidence is saved in results/hypertension/tables/.\nEach bar sums to 1. A segment is a species’ share of that sample’s profiled taxonomic abundance. The same 15 species are displayed in both groups; selection uses mean proportions across all 140 samples, not a test of group differences. Other combines the remaining species and is not an organism.\nProfiles vary substantially within groups. A large segment indicates relative dominance, not an absolute bacterial count. Group widths reflect different sample counts. Individual sample labels are omitted for readability; use composition-display.tsv and the complete relative-abundance table to check a sample.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/01-see-the-result.html#species-composition",
+    "href": "examples/hypertension/01-see-the-result.html#species-composition",
+    "title": "See the result",
+    "section": "",
+    "text": "Figure 11.1: Top 15 species by mean sample proportion; remaining species are light grey Other. Each bar is one sample, grouped as Control or HTN.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/01-see-the-result.html#shannon-diversity",
+    "href": "examples/hypertension/01-see-the-result.html#shannon-diversity",
+    "title": "See the result",
+    "section": "Shannon diversity",
+    "text": "Shannon diversity\n\n\n\n\n\n\nFigure 11.2: Species Shannon diversity using natural logarithms. Each dot is a sample; black lines mark group medians.\n\n\n\nControl has a higher median Shannon value (2.249602) than HTN (2.009787), with substantial overlap. These are descriptive summaries of the curated species profiles, not a hypothesis test or a replication of the paper’s diversity values.\nShannon combines detected richness and evenness. Controls have 40–118 detected species per sample; HTN samples have 24–119. Consequently, a Shannon difference cannot be attributed to evenness alone.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/01-see-the-result.html#functional-proportions-within-the-named-pathway-set",
+    "href": "examples/hypertension/01-see-the-result.html#functional-proportions-within-the-named-pathway-set",
+    "title": "See the result",
+    "section": "Functional proportions within the named pathway set",
+    "text": "Functional proportions within the named pathway set\n\n\n\n\n\n\nFigure 11.3: Top 15 pathways by mean proportion within the retained named-pathway set. Other pathways are combined in light grey.\n\n\n\nThe workflow divides each source value by that sample’s total over the 483 named pathways. The bars therefore show proportions within this retained set. A share of 0.02 means 2% of the named-pathway total, not 2% of all microbial functions, genes or reads. Pathways can overlap and do not form exclusive biological categories.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/01-see-the-result.html#pathway-abundances-on-the-source-scale",
+    "href": "examples/hypertension/01-see-the-result.html#pathway-abundances-on-the-source-scale",
+    "title": "See the result",
+    "section": "Pathway abundances on the source scale",
+    "text": "Pathway abundances on the source scale\n\n\n\n\n\n\nFigure 11.4: Group medians of source HUMAnN pathway relative abundances for 15 pathways selected by mean source abundance.\n\n\n\nThis heatmap uses the original source values, without renormalizing over the 483 named pathways. The colour scale is shared across cells; it shows abundance level, not a standardized effect size. The table pathway-source-group-medians.tsv provides exact values. Selection is descriptive and does not identify differentially abundant pathways.\nUNMAPPED and UNINTEGRATED are excluded from both pathway plots and recorded separately in functional-denominators.tsv. Neither plot measures pathway activity or metabolite production.\nPathway names are database annotations. A label containing “plant”, “mammalian” or “engineered” does not establish that the sample contains that organism or an engineered community; shared genes can contribute to related pathway annotations. Treat such labels as a prompt to check gene-level support and pathway definitions.\nCheck your understanding: why can changing the retained pathway set alter a normalized bar proportion while leaving the corresponding source abundance unchanged?\nNext: Meet the data",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/02-meet-the-data.html",
+    "href": "examples/hypertension/02-meet-the-data.html",
+    "title": "Meet the data",
+    "section": "",
+    "text": "Inspect the inputs\nThe main lesson reads data/hypertension/. The inputs have the same orientation used in synthetic practice.\nMetadata has samples in rows; abundance tables have samples in columns.\nCopy this block into Bash/Zsh. For Windows alternatives, see setup.\nExpect 140, (440, 140), (483, 140), 41 Control, 99 HTN, and 140 distinct subjects.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/02-meet-the-data.html#inspect-the-inputs",
+    "href": "examples/hypertension/02-meet-the-data.html#inspect-the-inputs",
+    "title": "Meet the data",
+    "section": "",
+    "text": "python - &lt;&lt;'PY'\nfrom pathlib import Path\nimport pandas as pd\nfolder = Path(\"data/hypertension\")\nmeta = pd.read_csv(folder / \"sample-metadata.tsv\", sep=\"\\t\")\ntaxa = pd.read_csv(folder / \"taxon-abundance.tsv\", sep=\"\\t\", index_col=0)\nfunctions = pd.read_csv(folder / \"functional-features.tsv\", sep=\"\\t\", index_col=0)\nprint(\"Metadata rows:\", len(meta))\nprint(\"Taxon table:\", taxa.shape)\nprint(\"Functional table:\", functions.shape)\nprint(meta.groupby(\"group\").size())\nprint(\"Distinct subjects:\", meta.subject_id.nunique())\nprint(meta.head(3).to_string(index=False))\nPY",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/02-meet-the-data.html#metadata-and-units",
+    "href": "examples/hypertension/02-meet-the-data.html#metadata-and-units",
+    "title": "Meet the data",
+    "section": "Metadata and units",
+    "text": "Metadata and units\nsample_id is the ENA run accession matching abundance columns. subject_id identifies the participant; source_sample_id preserves the original identifier. number_reads records source read depth, not the sum of either abundance table.\nGroups come from curated study_condition. The broader source disease field combines pre-hypertension and hypertension and cannot recover the three groups. These are source labels, not diagnostic rules for new patients. Age, sex and BMI are absent from the pinned metadata snapshot; no covariates were inferred from sample names.\nOnly species-level rows were retained. Mixing species with higher ranks would count the same taxonomic profiles repeatedly. Species values are percentages, approximately summing to 100.\nPathway values are HUMAnN relative abundances. Only unstratified named pathways were retained. Taxon-stratified contributions would double count pathway totals. UNMAPPED and UNINTEGRATED are excluded from the pathway table and recorded separately. The retained named pathways do not sum to one on the source scale.\n\n\n\n\n\n\n\nSupporting file\nPurpose\n\n\n\n\ntaxon-annotations.tsv\nSpecies IDs, labels and full source lineages\n\n\nfunctional-annotations.tsv\nMetaCyc IDs, labels and full source feature names\n\n\nfunctional-denominators.tsv\nUnmapped, unintegrated and named-pathway source totals\n\n\nmeasurement-info.json\nUnits and interpretation restrictions\n\n\n../provenance/hypertension/\nSource matrices, pinned metadata, checksums and validation\n\n\n\nNo abundance filtering was applied during export. In this subset, 31 species and five pathways are all zero. They do not affect Shannon or positive-total normalization; downstream statistical methods may require an explicit filtering rule.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/02-meet-the-data.html#optional-full-cohort",
+    "href": "examples/hypertension/02-meet-the-data.html#optional-full-cohort",
+    "title": "Meet the data",
+    "section": "Optional full cohort",
+    "text": "Optional full cohort\ndata/hypertension-all-groups/ contains 196 unique subjects, including 56 pHTN. Both subsets use the same feature definitions. The complete cohort includes hypertension sample ERR1398137, source ID H2M413924. See provenance records for the reconciliation against earlier input versions.\nLearners analyse the supplied TSVs with Python. Maintainers can reproduce their export with scripts/R/prepare_hypertension.R; R is not required for the learner workflow.\nYour task: locate ERR1398068 in all three inputs and explain why a taxonomic total near 100 is not sequencing depth.\nNext: Check the inputs",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/03-check-the-inputs.html",
+    "href": "examples/hypertension/03-check-the-inputs.html",
+    "title": "Check the inputs",
+    "section": "",
+    "text": "Run the validation command\nValidation catches problems that can prevent a reliable calculation, such as mismatched sample IDs or negative values. Run it before creating new results.\nFrom the main project folder, with the Python environment active:\nFor the supplied files, expect:\n--check-only stops after validation. It does not create new analysis outputs or refresh existing figures. Any figures already on disk may come from an earlier run.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/03-check-the-inputs.html#run-the-validation-command",
+    "href": "examples/hypertension/03-check-the-inputs.html#run-the-validation-command",
+    "title": "Check the inputs",
+    "section": "",
+    "text": "python scripts/python/run_workflow.py \\\n  --data-dir data/hypertension \\\n  --output-dir results/hypertension \\\n  --check-only\n\nInput checks passed: 140 samples; 2 groups.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/03-check-the-inputs.html#what-the-script-checks",
+    "href": "examples/hypertension/03-check-the-inputs.html#what-the-script-checks",
+    "title": "Check the inputs",
+    "section": "What the script checks",
+    "text": "What the script checks\n\nRequired files have unique headers beginning with sample_id, taxon_id or feature_id, as appropriate.\nTables are nonempty, with no blank cells or duplicate row identifiers.\nMetadata has a nonempty group value for every sample.\nSample columns in each abundance table match metadata sample IDs exactly.\nAbundances are numeric, finite and nonnegative, with a positive total for every sample in each abundance table.\n\nZero abundance for an individual feature is allowed. An all-zero sample is rejected because it cannot be normalized to proportions.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/03-check-the-inputs.html#if-a-check-fails",
+    "href": "examples/hypertension/03-check-the-inputs.html#if-a-check-fails",
+    "title": "Check the inputs",
+    "section": "If a check fails",
+    "text": "If a check fails\n\n\n\n\n\n\n\n\nMessage or symptom\nWhat to inspect\nHow to resolve it\n\n\n\n\nExpected unique headers beginning with taxon_id\nFirst row and orientation\nPut taxa in rows, samples in columns and taxon_id in the first header; remove duplicate headers\n\n\nExpected unique headers beginning with feature_id\nFunctional header and orientation\nPut features in rows and use feature_id as the first header\n\n\nSample IDs must match metadata exactly\nSpelling, spaces, missing or extra samples\nReconcile IDs against the original files; avoid dropping samples merely to silence an error\n\n\nEmpty table, blank values or duplicate IDs\nMissing cells and repeated IDs\nResolve the source problem; do not replace unknown values with zero automatically\n\n\nNumeric conversion or nonnegative-value error\nText, negatives or zero-total samples\nConfirm source values and units before correcting them\n\n\nFile not found\nCurrent folder and filenames\nRun from the main project folder and check the three TSV filenames\n\n\n\nAfter any correction, rerun the validation command.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/03-check-the-inputs.html#what-passing-does-not-establish",
+    "href": "examples/hypertension/03-check-the-inputs.html#what-passing-does-not-establish",
+    "title": "Check the inputs",
+    "section": "What passing does not establish",
+    "text": "What passing does not establish\nA file can be correctly formatted while containing synthetic values, unsuitable units, incorrect annotations or dependent samples. This check cannot establish provenance, confirm clinical group definitions or show that functional values are biologically comparable.\n\n\n\n\n\n\nCheckpoint\n\n\n\nContinue when the command passes and you can explain both what was checked and what remains unresolved. Also confirm 41 Control and 99 HTN, distinct subject IDs, and the documented measurement scales.\n\n\nNext: Run the analysis",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/04-run-the-analysis.html",
+    "href": "examples/hypertension/04-run-the-analysis.html",
+    "title": "Run the analysis",
+    "section": "",
+    "text": "Understand the calculations\nGenerate new outputs from the verified inputs:\nExpect:\nA rerun replaces outputs with the same names. Preserve a separate copy if comparing input versions. Do not combine earlier placeholder figures with these new tables.\nEach stacked plot shows 15 features selected by mean sample proportion, with remaining features combined as light grey Other. Shannon uses every species. The heatmap selects pathways by mean source abundance, which can give a different ranking. Samples are grouped by metadata label, retaining metadata order within each group.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/04-run-the-analysis.html#understand-the-calculations",
+    "href": "examples/hypertension/04-run-the-analysis.html#understand-the-calculations",
+    "title": "Run the analysis",
+    "section": "",
+    "text": "Calculation\nMeaning\n\n\n\n\nSpecies proportion\nSource species percentage divided by the sample’s species total\n\n\nDetected species\nNumber of positive species values\n\n\nShannon\n\\(H=-\\sum_{i:p_i&gt;0}p_i\\ln(p_i)\\), using all species and natural logarithms\n\n\nFunctional proportion\nSource pathway value divided by the sample’s named-pathway total\n\n\nSource pathway group median\nMedian original pathway relative abundance within each group",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/04-run-the-analysis.html#find-the-outputs",
+    "href": "examples/hypertension/04-run-the-analysis.html#find-the-outputs",
+    "title": "Run the analysis",
+    "section": "Find the outputs",
+    "text": "Find the outputs\nAll paths below are inside results/hypertension/.\n\n\n\n\n\n\n\nOutput\nContents\n\n\n\n\nfigures/composition.png\nTop species and Other, with group boundaries\n\n\nfigures/shannon-diversity.png\nSample Shannon values and group medians\n\n\nfigures/functional-features.png\nProportions within the named pathway set\n\n\nfigures/pathway-source-heatmap.png\nGroup medians on the source pathway scale\n\n\ntables/alpha-diversity.tsv\nSample totals, detected species, Shannon and metadata\n\n\ntables/group-summary.tsv\nCounts, medians and ranges\n\n\ntables/taxon-relative-abundance.tsv\nAll species proportions\n\n\ntables/functional-relative-abundance.tsv\nAll normalized named-pathway proportions\n\n\ntables/composition-display.tsv\nValues stacked in the composition plot\n\n\ntables/functional-features-display.tsv\nValues stacked in the functional plot\n\n\ntables/pathway-source-group-medians.tsv\nHeatmap values\n\n\ntables/run-record.json\nPackage versions, input checksums, dimensions and measurement notes",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/04-run-the-analysis.html#optional-three-group-extension",
+    "href": "examples/hypertension/04-run-the-analysis.html#optional-three-group-extension",
+    "title": "Run the analysis",
+    "section": "Optional three-group extension",
+    "text": "Optional three-group extension\nAfter completing the main example, run:\npython scripts/python/run_workflow.py \\\n  --data-dir data/hypertension-all-groups \\\n  --output-dir results/hypertension-all-groups\nExpect 196 samples; 3 groups. Keep outputs separate. Adding pHTN changes the sample set and can change the top 15 features. These analyses are descriptive: no hypothesis tests, covariate adjustment or causal analysis are performed.\nCheckpoint: open all four figures. Confirm the main diversity plot shows Control n=41 and HTN n=99.\nNext: Verify and explain",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html",
+    "href": "examples/hypertension/05-verify-and-explain.html",
+    "title": "Verify and explain",
+    "section": "",
+    "text": "1. Verify a named sample\nA saved result is more useful when you can trace it back to the input. Verify one sample, check a functional proportion and use numerical summaries to support what you see.\nAll values on this page refer to the verified 140-sample dataset. Inspect the saved tables alongside the figures.\nUse ERR1398068. For the verified species table, expect:\nRun the supplied verification script from the main project folder:\nCompare its reported values with the table above and with results/hypertension/tables/alpha-diversity.tsv.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html#verify-a-named-sample",
+    "href": "examples/hypertension/05-verify-and-explain.html#verify-a-named-sample",
+    "title": "Verify and explain",
+    "section": "",
+    "text": "Quantity\nExpected value\n\n\n\n\nTotal species abundance (source percentage total)\n100.000000\n\n\nDetected species\n75\n\n\nShannon diversity, natural logarithm\n1.394365\n\n\n\n\npython scripts/python/verify_sample.py \\\n  data/hypertension results/hypertension ERR1398068\n\n\nRecalculate independently\nThis block makes each calculation visible and compares it with the saved row. Copy the complete block into the terminal:\npython - &lt;&lt;'PY'\nimport math\nimport pandas as pd\n\nsample = \"ERR1398068\"\ntaxa = pd.read_csv(\"data/hypertension/taxon-abundance.tsv\", sep=\"\\t\", index_col=0)\nsaved = pd.read_csv(\"results/hypertension/tables/alpha-diversity.tsv\", sep=\"\\t\", index_col=0)\n\n# Calculate this sample's total and number of positive taxon values.\nx = taxa[sample].astype(float)\ntotal = float(x.sum())\ndetected = int((x &gt; 0).sum())\n\n# Only positive values contribute to natural-log Shannon diversity.\np = x[x &gt; 0] / total\nshannon = -sum(float(value) * math.log(float(value)) for value in p)\n\nfor name, manual in [(\"total_abundance\", total),\n                     (\"detected_taxa\", detected),\n                     (\"shannon\", shannon)]:\n    recorded = float(saved.loc[sample, name])\n    agrees = math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9)\n    print(f\"{name}: manual={manual:.6f}; saved={recorded:.6f}; agrees={agrees}\")\nPY\nAll three comparisons should print agrees=True. A tiny difference in the last decimal places can be rounding. A larger difference calls for checking the input version, selected sample, normalization and logarithm base. Do not change a saved result merely to make it agree.\nThe calculated Shannon value uses the curated species table and is not a reference reproduction of the original paper’s reported diversity.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html#check-a-functional-proportion",
+    "href": "examples/hypertension/05-verify-and-explain.html#check-a-functional-proportion",
+    "title": "Verify and explain",
+    "section": "2. Check a functional proportion",
+    "text": "2. Check a functional proportion\nFor ERR1398068, named pathway values sum to 0.045588663834 on the source scale. DTDPRHAMSYN-PWY has source abundance 0.00110242. Its normalized share is 0.024181889, or 2.4182% of the named-pathway total. Use functional-annotations.tsv to look up its label.\npython - &lt;&lt;'PY'\nimport math\nimport pandas as pd\n\nsample = \"ERR1398068\"\nfeature = \"DTDPRHAMSYN-PWY\"\nraw = pd.read_csv(\"data/hypertension/functional-features.tsv\", sep=\"\\t\", index_col=0)\nsaved = pd.read_csv(\"results/hypertension/tables/functional-relative-abundance.tsv\", sep=\"\\t\", index_col=0)\nmanual = raw.loc[feature, sample] / raw[sample].sum()\nrecorded = saved.loc[feature, sample]\nprint(f\"Calculated proportion: {manual:.6f} ({100 * manual:.4f}%)\")\nprint(f\"Saved proportion:      {recorded:.6f}\")\nprint(\"Agrees:\", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))\nPY\nThis checks arithmetic within the retained named-pathway set. The denominator excludes UNMAPPED and UNINTEGRATED. Overlapping pathways are not exclusive parts of a biological whole; this calculation does not measure activity.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html#explain-taxonomic-composition",
+    "href": "examples/hypertension/05-verify-and-explain.html#explain-taxonomic-composition",
+    "title": "Verify and explain",
+    "section": "3. Explain taxonomic composition",
+    "text": "3. Explain taxonomic composition\n\n\n\n\n\n\nFigure 15.1: Species composition in the verified Control and HTN samples; remaining species are light grey Other.\n\n\n\nChoose one sample with an uneven profile. Use taxon-relative-abundance.tsv to identify its largest taxon proportion, then write a sentence containing the sample ID, taxon ID and value. Other combines taxa rather than naming an organism.\nSentence starter: “In sample ERR1398068, s__Prevotella_copri accounts for 60.81291% of the profiled species abundance.” Check this value in the full table. A dominant species in one sample does not establish a group association.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html#explain-shannon-diversity",
+    "href": "examples/hypertension/05-verify-and-explain.html#explain-shannon-diversity",
+    "title": "Verify and explain",
+    "section": "4. Explain Shannon diversity",
+    "text": "4. Explain Shannon diversity\n\n\n\n\n\n\nFigure 15.2: Species Shannon diversity in the verified human samples. Each dot is a sample; black lines indicate group medians.\n\n\n\nInspect sample counts, spread and overlap before comparing medians. Generate a numerical summary:\npython - &lt;&lt;'PY'\nimport pandas as pd\n\nalpha = pd.read_csv(\"results/hypertension/tables/alpha-diversity.tsv\", sep=\"\\t\")\nsummary = alpha.groupby(\"group\", sort=False).agg(\n    samples=(\"shannon\", \"size\"),\n    median_shannon=(\"shannon\", \"median\"),\n    minimum_shannon=(\"shannon\", \"min\"),\n    maximum_shannon=(\"shannon\", \"max\"),\n    minimum_detected_taxa=(\"detected_taxa\", \"min\"),\n    maximum_detected_taxa=(\"detected_taxa\", \"max\"),\n)\nprint(summary.round(6).to_string())\nPY\nThe saved group summary gives:\n\n\n\n\n\n\n\n\n\n\nGroup\nSamples\nMedian Shannon\nShannon range\nDetected species range\n\n\n\n\nControl\n41\n2.249602\n0.449661–2.936477\n40–118\n\n\nHTN\n99\n2.009787\n0.209700–3.517295\n24–119\n\n\n\nControl has a higher median, but the distributions overlap substantially. Richness differs, so evenness alone cannot explain Shannon variation. This descriptive plot does not establish statistical significance, adjustment for confounders or causation.\nYour task: write a two-sentence interpretation containing both medians, overlap and one limitation.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html#explain-the-functional-profile",
+    "href": "examples/hypertension/05-verify-and-explain.html#explain-the-functional-profile",
+    "title": "Verify and explain",
+    "section": "5. Explain the functional profile",
+    "text": "5. Explain the functional profile\n\n\n\n\n\n\nFigure 15.3: Within-sample proportions of supplied functional features; remaining features are combined as Other.\n\n\n\nChoose a visible feature and confirm one sample’s proportion in the saved table. Use “larger proportion of the supplied functional total” rather than “more active pathway.” The 483 named pathways overlap, and this normalization excludes source UNMAPPED and UNINTEGRATED categories.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html#check-the-source-scale-pathway-heatmap",
+    "href": "examples/hypertension/05-verify-and-explain.html#check-the-source-scale-pathway-heatmap",
+    "title": "Verify and explain",
+    "section": "6. Check the source-scale pathway heatmap",
+    "text": "6. Check the source-scale pathway heatmap\n\n\n\n\n\n\nFigure 15.4: Median source pathway relative abundances by group.\n\n\n\nChoose a pathway in pathway-source-group-medians.tsv. Quote both group medians and look up its readable label in functional-annotations.tsv. The colour scale shows abundance levels on the source relative-abundance scale, not a standardized group effect or significance. These are group summaries; inspect sample-level source values before describing consistency across individuals.\nPathway names are database annotations. A label containing “plant”, “mammalian” or “engineered” does not establish that the sample contains that organism or an engineered community; shared genes can contribute to related pathway annotations. Treat such labels as a prompt to check gene-level support and pathway definitions.",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/05-verify-and-explain.html#your-evidence-check",
+    "href": "examples/hypertension/05-verify-and-explain.html#your-evidence-check",
+    "title": "Verify and explain",
+    "section": "Your evidence check",
+    "text": "Your evidence check\nWrite one observation for each figure. Include a checked number, its source table, a limitation and a next check. Appropriate next checks include inspecting source-level distributions, obtaining verified covariates or planning a model suitable for relative abundance data. Never manufacture integer counts from these percentages to satisfy a count-based method.\nReady to report: you can reproduce the named sample and explain the two different functional denominators.\nNext: Write the report",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/06-export-the-report.html",
+    "href": "examples/hypertension/06-export-the-report.html",
+    "title": "Write the report",
+    "section": "",
+    "text": "Review before sharing\nDescribe the verified real-data comparison with figures, checked numbers and clear limits. Create the reports/ folder if needed, then save reports/hypertension-report.qmd. Replace all square-bracketed prompts.\nRender from the main project folder:\nOpen the generated HTML. Confirm all four figures display and no prompts remain. Rendering displays saved results; it does not rerun Python.\nReturn to the example overview",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Write the report</span>"
+    ]
+  },
+  {
+    "objectID": "examples/hypertension/06-export-the-report.html#review-before-sharing",
+    "href": "examples/hypertension/06-export-the-report.html#review-before-sharing",
+    "title": "Write the report",
+    "section": "",
+    "text": "Do counts agree with the main 140-sample input and saved group summary?\nDoes each observation name a checked number and table?\nAre species percentages and both pathway denominators explained?\nAre confounding, relative abundance and the descriptive scope clear?\nCan another learner find the exact inputs, commands and source records?",
+    "crumbs": [
+      "Hypertension case study",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Write the report</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/00-start-here.html",
+    "href": "examples/my-study/00-start-here.html",
+    "title": "Your study: analyse your own data",
+    "section": "",
+    "text": "Start with a question\nYou have practised the workflow with example data. Now repeat it with your own prepared taxonomic and functional tables. You will use the same scripts, but supply your own question, sample information and interpretation.\nIf this is your first analysis, complete Synthetic practice and Required setup first.\nWrite one question that your files can help describe. For example:\nReplace the bracketed words with your group names. If you have only one group, ask how profiles vary among samples instead. A descriptive question does not assume that a difference exists or that one factor causes another.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Your study: analyse your own data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/00-start-here.html#start-with-a-question",
+    "href": "examples/my-study/00-start-here.html#start-with-a-question",
+    "title": "Your study: analyse your own data",
+    "section": "",
+    "text": "How do taxonomic composition, Shannon diversity and relative functional profiles vary between [my groups]?",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Your study: analyse your own data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/00-start-here.html#make-a-short-study-note",
+    "href": "examples/my-study/00-start-here.html#make-a-short-study-note",
+    "title": "Your study: analyse your own data",
+    "section": "Make a short study note",
+    "text": "Make a short study note\n\n\n\n\n\n\n\nPrompt\nYour answer\n\n\n\n\nWhat does one sample represent?\n[For example, one specimen collected at one time]\n\n\nWhat groups or conditions will I describe?\n[Names and meanings]\n\n\nWhat is the independent sampling unit?\n[For example, participant, animal or site]\n\n\nDoes one unit contribute multiple samples?\n[Yes, no or not yet known]\n\n\nWhere did the tables come from?\n[Study, source and processing workflow]\n\n\nWhat do the abundance values measure?\n[Units and normalization for each table]\n\n\n\nA sample ID is a file identifier. It does not prove independence: two samples may come from the same participant. The current script does not model repeated measurements or adjust for other variables.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Your study: analyse your own data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/00-start-here.html#what-you-need",
+    "href": "examples/my-study/00-start-here.html#what-you-need",
+    "title": "Your study: analyse your own data",
+    "section": "What you need",
+    "text": "What you need\nYou need three compatible TSV files: sample metadata, taxonomic abundances and functional features. This workflow starts from processed tables, not raw sequencing reads. Do not create fictional functional values to fill a missing table. If you have only taxonomic data, the current three-file workflow needs adapting before use.\nKeep an unchanged copy of your original files. Prepare working copies in data/my-study/ and save results in results/my-study/.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Your study: analyse your own data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/00-start-here.html#your-route",
+    "href": "examples/my-study/00-start-here.html#your-route",
+    "title": "Your study: analyse your own data",
+    "section": "Your route",
+    "text": "Your route\n\nPreview the outputs.\nPrepare and understand your inputs.\nValidate the files.\nRun the workflow.\nVerify a sample and explain the results.\nWrite your report.\n\nRun commands in the terminal from the main project folder, with your Python environment active. Rendering the guide does not run the analysis. For blocks beginning python - &lt;&lt;'PY', copy the entire block, including the closing PY line.\nReady to continue: you have a question, know what a sample represents and can identify the source of your three tables.\nNext: Preview the outputs",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Your study: analyse your own data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/01-see-the-result.html",
+    "href": "examples/my-study/01-see-the-result.html",
+    "title": "See the result",
+    "section": "",
+    "text": "Three figures, three questions\nThis page explains the outputs you will create. Your study has not been analysed yet, so there are no findings to describe. Use the synthetic preview as a visual reference, then return here after running your analysis.\nAll three files will be written to results/my-study/figures/.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/01-see-the-result.html#three-figures-three-questions",
+    "href": "examples/my-study/01-see-the-result.html#three-figures-three-questions",
+    "title": "See the result",
+    "section": "",
+    "text": "Figure\nWhat it shows\nWhat to look for\n\n\n\n\ncomposition.png\nTaxon proportions within each sample\nDominant taxa, evenness and variation among samples\n\n\nshannon-diversity.png\nCalculated sample diversity and group medians\nRichness, evenness, spread and overlap\n\n\nfunctional-features.png\nProportions within the supplied functional feature set\nRelative distributions of features whose definitions and units you understand",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/01-see-the-result.html#how-to-read-the-figures",
+    "href": "examples/my-study/01-see-the-result.html#how-to-read-the-figures",
+    "title": "See the result",
+    "section": "How to read the figures",
+    "text": "How to read the figures\nStacked bars: each bar is a sample and each segment is a feature’s share of that sample’s supplied total. A bar sums to 1, even when original sample totals differ. A larger proportion does not necessarily mean a larger absolute abundance. The workflow displays up to 15 features with the highest mean proportions and combines remaining features as Other.\nDiversity dots: each dot is a sample and its vertical position is its Shannon diversity. Horizontal offsets separate dots visually. Black lines mark group medians. Read these together with the individual values, detected-taxon counts and overlap. With one group, describe sample variation rather than a group comparison.\nFunctional profiles: proportions use only the supplied feature total as their denominator. Confirm that the features are comparable and understand whether categories overlap. A functional label or abundance estimate is not direct evidence of activity.\nSamples in stacked bars are grouped by metadata label, retaining metadata order within each group. Group labels and counts appear above the bars. Remaining features are light grey Other.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/01-see-the-result.html#display-your-figures-here-after-analysis",
+    "href": "examples/my-study/01-see-the-result.html#display-your-figures-here-after-analysis",
+    "title": "See the result",
+    "section": "Display your figures here after analysis",
+    "text": "Display your figures here after analysis\nAfter completing Run the analysis, open this page’s source file, examples/my-study/01-see-the-result.qmd, in your editor. Paste the following Markdown below this code block, save and render the guide. The paths are relative to this lesson page.\n## My taxonomic composition\n\n![Taxonomic composition of my samples.](../../results/my-study/figures/composition.png)\n\n## My Shannon diversity\n\n![Calculated Shannon diversity; black lines show group medians.](../../results/my-study/figures/shannon-diversity.png)\n\n## My functional profile\n\n![Relative proportions of my supplied functional features.](../../results/my-study/figures/functional-features.png)\nThe code block deliberately displays the Markdown as an example until your figure files exist. Do not paste results from another dataset or write an interpretation before checking your own outputs.\nYour task: for each figure, write one question you will investigate. You do not need to know the answer yet.\nNext: Prepare your inputs",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>See the result</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/02-meet-the-data.html",
+    "href": "examples/my-study/02-meet-the-data.html",
+    "title": "Meet the data",
+    "section": "",
+    "text": "Use these filenames and headers\nPrepare working copies of your inputs in data/my-study/. A TSV is a plain-text table with tabs between columns. Changing a filename from .csv to .tsv does not change its separator; export it as tab-separated text.\nSamples are rows in metadata and columns in the abundance tables. Each sample ID must appear once in metadata and once as a column header in each abundance table. Keep identifiers as text so leading zeros are preserved. IDs are case-sensitive: S01 and s01 differ.\nIf you have one descriptive group, use a meaningful label such as All_samples. Do not invent comparison groups. If your data include transformations with negative values, return to an appropriate nonnegative abundance representation rather than deleting negative values.\nA zero means zero in the supplied table; a missing value means unknown. Do not replace missing values with zero without justification. Optional metadata columns must also have nonblank values to pass the current validator; record an explicit missingness label or omit an optional column where appropriate, and document the decision. Do not fabricate measurements.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/02-meet-the-data.html#use-these-filenames-and-headers",
+    "href": "examples/my-study/02-meet-the-data.html#use-these-filenames-and-headers",
+    "title": "Meet the data",
+    "section": "",
+    "text": "File\nRows\nFirst header\nOther columns\n\n\n\n\nsample-metadata.tsv\nSamples\nsample_id\ngroup and optional annotations\n\n\ntaxon-abundance.tsv\nTaxa\ntaxon_id\nSample IDs containing numeric abundances\n\n\nfunctional-features.tsv\nFunctional features\nfeature_id\nSample IDs containing numeric values\n\n\n\n\n\n\n\n\n\n\n\nRequirement\nWhy it matters\n\n\n\n\nUnique, nonblank row IDs and headers\nEvery value must have an unambiguous identity\n\n\nSame samples in all three files\nMetadata must describe the samples being analysed\n\n\nA nonempty group for each sample\nThe diversity plot uses this label\n\n\nFinite, nonnegative abundance values\nThe current calculations require nonnegative abundances\n\n\nPositive sample totals in both abundance tables\nProportions need a nonzero denominator",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/02-meet-the-data.html#inspect-your-working-files",
+    "href": "examples/my-study/02-meet-the-data.html#inspect-your-working-files",
+    "title": "Meet the data",
+    "section": "Inspect your working files",
+    "text": "Inspect your working files\nRun the complete block from the main project folder:\npython - &lt;&lt;'PY'\nfrom pathlib import Path\nimport pandas as pd\n\nfolder = Path(\"data/my-study\")\nmetadata = pd.read_csv(folder / \"sample-metadata.tsv\", sep=\"\\t\", dtype=str, keep_default_na=False)\ntaxa = pd.read_csv(folder / \"taxon-abundance.tsv\", sep=\"\\t\", index_col=0, dtype=str)\nfunctions = pd.read_csv(folder / \"functional-features.tsv\", sep=\"\\t\", index_col=0, dtype=str)\n\nprint(\"Metadata samples:\", len(metadata))\nprint(\"Taxon table (taxa, samples):\", taxa.shape)\nprint(\"Functional table (features, samples):\", functions.shape)\nprint(\"\\nGroup sizes:\")\nprint(metadata[\"group\"].value_counts().to_string())\nprint(\"\\nFirst sample IDs:\", metadata[\"sample_id\"].head().tolist())\nprint(\"\\nFirst metadata rows:\")\nprint(metadata.head(3).to_string(index=False))\nprint(\"\\nFirst taxon values:\")\nprint(taxa.iloc[:3, :3].to_string())\nPY\nThe second number in each abundance-table shape should equal the metadata sample count. Record your actual dimensions and group sizes; there are no fixed answers for your study.\nIf the abundance table has sample IDs down its first column, it may need transposing. Simply renaming that column to taxon_id or feature_id will not correct its orientation. Make the change on a working copy and check which identifiers become rows and columns.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/02-meet-the-data.html#document-meaning-not-just-format",
+    "href": "examples/my-study/02-meet-the-data.html#document-meaning-not-just-format",
+    "title": "Meet the data",
+    "section": "Document meaning, not just format",
+    "text": "Document meaning, not just format\nIn data/my-study/README.md, keep notes on:\n\nStudy/source citation, access date and processing steps.\nTaxonomic resolution and abundance units, including normalization.\nFunctional feature definitions, units, overlap and whether the set is complete or selected.\nGroup definitions, participant/site identifiers and collection timing.\nAvailable age, medication, diet, batch or other relevant annotations.\nFiltering, exclusions and any unresolved questions.\n\nThis file is a local provenance record. The learner-facing instructions are on this page; you do not need to follow a raw Markdown link to understand the input format.\nCheckpoint: locate one sample in all three files, explain one value from each abundance table and record anything whose meaning is not yet known.\nNext: Validate the files",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Meet the data</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/03-check-the-inputs.html",
+    "href": "examples/my-study/03-check-the-inputs.html",
+    "title": "Check the inputs",
+    "section": "",
+    "text": "Run the command\nRun the validator before generating results. It checks the file requirements described on Meet the data.\nFrom the main project folder:\nLook for a message beginning Input checks passed: followed by your actual sample and group counts. Compare those counts with your study notes.\nFor one group, the script also prints:\nThis is an informational message. You can still describe sample composition and diversity, but there is no between-group comparison.\n--check-only stops after validation. It does not create new figures or refresh existing results.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/03-check-the-inputs.html#run-the-command",
+    "href": "examples/my-study/03-check-the-inputs.html#run-the-command",
+    "title": "Check the inputs",
+    "section": "",
+    "text": "python scripts/python/run_workflow.py \\\n  --data-dir data/my-study \\\n  --output-dir results/my-study \\\n  --check-only\n\n\nOne group detected. Continuing with descriptive analysis.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/03-check-the-inputs.html#what-is-checked",
+    "href": "examples/my-study/03-check-the-inputs.html#what-is-checked",
+    "title": "Check the inputs",
+    "section": "What is checked?",
+    "text": "What is checked?\nThe script checks for nonempty tables, unique headers and row IDs, blank cells, nonempty group values, matching sample IDs, numeric finite nonnegative abundances and positive sample totals in both abundance tables.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/03-check-the-inputs.html#work-through-an-error-one-at-a-time",
+    "href": "examples/my-study/03-check-the-inputs.html#work-through-an-error-one-at-a-time",
+    "title": "Check the inputs",
+    "section": "Work through an error one at a time",
+    "text": "Work through an error one at a time\n\n\n\n\n\n\n\nError or symptom\nWhat to inspect\n\n\n\n\nFile not found\nCurrent project folder and exact filenames\n\n\nHeaders must begin with taxon_id or feature_id\nFirst header, duplicate names and table orientation\n\n\nSample IDs must match metadata exactly\nMissing/extra IDs, case and surrounding spaces\n\n\nBlank cells or duplicate IDs\nSource files, accidental duplicates and missing annotations\n\n\nNumeric conversion fails\nText mixed into abundance cells or wrong separators\n\n\nValues must be finite and nonnegative with positive totals\nNegative/transformed values, infinity and all-zero samples\n\n\n\nCheck the original source, correct a working copy and rerun the command. Do not remove samples or fill unknown values merely to silence an error. Document any justified exclusion or transformation.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/03-check-the-inputs.html#passing-is-a-technical-checkpoint",
+    "href": "examples/my-study/03-check-the-inputs.html#passing-is-a-technical-checkpoint",
+    "title": "Check the inputs",
+    "section": "Passing is a technical checkpoint",
+    "text": "Passing is a technical checkpoint\nValidation cannot confirm study provenance, meaningful units, independent sampling, comparable processing or suitable study design. Nor can it establish statistical significance. A correctly formatted file can still be biologically unsuitable.\nReady to continue: the check passes, counts match your notes and you can explain any preparation changes you made.\nNext: Run the workflow",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Check the inputs</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/04-run-the-analysis.html",
+    "href": "examples/my-study/04-run-the-analysis.html",
+    "title": "Run the analysis",
+    "section": "",
+    "text": "Generate your results\nUse the same workflow as in synthetic practice, now pointing to your own input folder.\nRun from the main project folder:\nThe script repeats validation, then prints:\nIt creates the output folders if necessary and replaces files with the same output names when rerun. Preserve a copy if you need to compare different input versions. If you previously used the example files in data/my-study/, confirm that the new run uses your intended study inputs.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/04-run-the-analysis.html#generate-your-results",
+    "href": "examples/my-study/04-run-the-analysis.html#generate-your-results",
+    "title": "Run the analysis",
+    "section": "",
+    "text": "python scripts/python/run_workflow.py \\\n  --data-dir data/my-study \\\n  --output-dir results/my-study\n\nResults saved to results/my-study",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/04-run-the-analysis.html#what-the-script-calculates",
+    "href": "examples/my-study/04-run-the-analysis.html#what-the-script-calculates",
+    "title": "Run the analysis",
+    "section": "What the script calculates",
+    "text": "What the script calculates\n\nTaxon proportions: each taxon value divided by its sample’s taxonomic total.\nDetected taxa: the count of taxon values greater than zero in each sample.\nShannon diversity: \\(H=-\\sum_{i:p_i&gt;0}p_i\\ln(p_i)\\), using all supplied taxa and the natural logarithm.\nFunctional proportions: each feature value divided by its sample’s supplied functional total.\n\nThe two types of proportions use separate denominators. Functional proportions describe the supplied feature set; they do not necessarily represent all genes or functions in the sample. Before biological interpretation, confirm whether these sums and comparisons are meaningful for your units and feature definitions.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/04-run-the-analysis.html#locate-the-outputs",
+    "href": "examples/my-study/04-run-the-analysis.html#locate-the-outputs",
+    "title": "Run the analysis",
+    "section": "Locate the outputs",
+    "text": "Locate the outputs\nAll paths below are inside results/my-study/.\n\n\n\n\n\n\n\nFile\nWhat it contains\n\n\n\n\nfigures/composition.png\nTaxon proportions per sample\n\n\nfigures/shannon-diversity.png\nShannon values and group medians\n\n\nfigures/functional-features.png\nFunctional proportions per sample\n\n\ntables/alpha-diversity.tsv\nTotals, detected taxa, calculated Shannon and metadata\n\n\ntables/taxon-relative-abundance.tsv\nProportions for all supplied taxa\n\n\ntables/functional-relative-abundance.tsv\nProportions for all supplied functional features\n\n\ntables/group-summary.tsv\nGroup counts, diversity medians and ranges\n\n\ntables/composition-display.tsv\nStacked taxonomic plot values\n\n\ntables/functional-features-display.tsv\nStacked functional plot values\n\n\ntables/run-record.json\nPython/package versions, input checksums, dimensions and method description\n\n\n\nStacked plots show up to 15 features selected by highest mean proportions across samples. Any remaining features are combined as Other. Tables retain all features and Shannon uses all supplied taxa.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/04-run-the-analysis.html#inspect-your-first-run",
+    "href": "examples/my-study/04-run-the-analysis.html#inspect-your-first-run",
+    "title": "Run the analysis",
+    "section": "Inspect your first run",
+    "text": "Inspect your first run\n\nOpen alpha-diversity.tsv and check that sample IDs and groups are yours.\nLocate the three figures and inspect their axes and legends.\nReturn to See the result to display your figures in the guide if desired.\nKeep the exact inputs and provenance notes with your analysis. The run record includes input checksums; keep source notes for preparation decisions.\n\nWith many samples, labels may overlap. That is a presentation problem rather than evidence of an incorrect calculation. Use saved tables for sample-specific checks and adapt plotting labels separately if needed.\nThe workflow is descriptive. It does not account for repeated samples, adjust for confounding variables or test group differences. A functional profile does not directly measure activity.\nCheckpoint: all seven output files exist and contain results from your study. Now verify a sample before interpreting patterns.\nNext: Verify and explain",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Run the analysis</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/05-verify-and-explain.html",
+    "href": "examples/my-study/05-verify-and-explain.html",
+    "title": "Verify and explain",
+    "section": "",
+    "text": "1. Choose a sample\nChoose one sample, calculate its results directly from the input and compare them with the saved outputs. This both checks the workflow and shows you how the calculations work in Python.\nThere are no fixed numerical answers for your study. Your independent calculation and saved result should agree when they use the same inputs and method.\nRun this short block to list the first ten sample IDs:\nChoose an ID and copy it exactly. In the command below, replace YOUR_SAMPLE_ID with that ID. Keep the quotation marks; they help if the ID contains spaces.\nRecord the reported total, detected taxa and Shannon value. Compare them with the corresponding row in results/my-study/tables/alpha-diversity.tsv.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/05-verify-and-explain.html#choose-a-sample",
+    "href": "examples/my-study/05-verify-and-explain.html#choose-a-sample",
+    "title": "Verify and explain",
+    "section": "",
+    "text": "python - &lt;&lt;'PY'\nimport pandas as pd\nmetadata = pd.read_csv(\"data/my-study/sample-metadata.tsv\", sep=\"\\t\", dtype=str, keep_default_na=False)\nprint(metadata[\"sample_id\"].head(10).to_string(index=False))\nPY\n\npython scripts/python/verify_sample.py \\\n  data/my-study results/my-study \"YOUR_SAMPLE_ID\"",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/05-verify-and-explain.html#see-the-calculations-in-python",
+    "href": "examples/my-study/05-verify-and-explain.html#see-the-calculations-in-python",
+    "title": "Verify and explain",
+    "section": "2. See the calculations in Python",
+    "text": "2. See the calculations in Python\nThe code below uses the first metadata sample automatically, so it can run without editing. It prints the chosen ID. To use the ID you selected above, replace the sample = ... line with sample = \"your actual ID\".\nCopy the entire block, from python - &lt;&lt;'PY' through the final PY, into your terminal:\npython - &lt;&lt;'PY'\nimport math\nimport pandas as pd\n\nmetadata = pd.read_csv(\"data/my-study/sample-metadata.tsv\", sep=\"\\t\", dtype=str, keep_default_na=False)\nsample = metadata.loc[0, \"sample_id\"]\nprint(\"Verifying sample:\", sample)\n\ntaxa = pd.read_csv(\"data/my-study/taxon-abundance.tsv\", sep=\"\\t\", index_col=0)\nsaved = pd.read_csv(\"results/my-study/tables/alpha-diversity.tsv\", sep=\"\\t\", dtype={\"sample_id\": str}, keep_default_na=False).set_index(\"sample_id\")\n\n# Select the sample's values and calculate its total and richness.\nx = taxa[sample].astype(float)\ntotal = float(x.sum())\ndetected = int((x &gt; 0).sum())\n\n# Use positive proportions for natural-log Shannon diversity.\np = x[x &gt; 0] / total\nshannon = -sum(float(value) * math.log(float(value)) for value in p)\n\nfor name, manual in [(\"total_abundance\", total),\n                     (\"detected_taxa\", detected),\n                     (\"shannon\", shannon)]:\n    recorded = float(saved.loc[sample, name])\n    agrees = math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9)\n    print(f\"{name}: manual={manual:.6f}; saved={recorded:.6f}; agrees={agrees}\")\n\n# Check the largest taxon's proportion against the saved table.\nrelative = pd.read_csv(\"results/my-study/tables/taxon-relative-abundance.tsv\", sep=\"\\t\", index_col=0)\ntaxon = x.idxmax()\nmanual = x.loc[taxon] / total\nrecorded = float(relative.loc[taxon, sample])\nprint(f\"Largest taxon: {taxon}; proportion={manual:.6f} ({100 * manual:.2f}%)\")\nprint(\"Taxon proportion agrees:\", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))\n\n# Separately check the first supplied functional feature.\nfunctions = pd.read_csv(\"data/my-study/functional-features.tsv\", sep=\"\\t\", index_col=0)\nfunctional_saved = pd.read_csv(\"results/my-study/tables/functional-relative-abundance.tsv\", sep=\"\\t\", index_col=0)\nfeature = functions.index[0]\nmanual = float(functions.loc[feature, sample]) / float(functions[sample].sum())\nrecorded = float(functional_saved.loc[feature, sample])\nprint(f\"Functional feature: {feature}; proportion={manual:.6f} ({100 * manual:.2f}%)\")\nprint(\"Functional proportion agrees:\", math.isclose(manual, recorded, rel_tol=1e-9, abs_tol=1e-9))\nPY\n\nWhat the key lines do\n\n\n\n\n\n\n\nCode\nMeaning\n\n\n\n\ntaxa[sample]\nSelect one sample column\n\n\nx.sum()\nAdd the taxon values\n\n\n(x &gt; 0).sum()\nCount detected taxa\n\n\nx[x &gt; 0] / total\nConvert positive taxon values to proportions\n\n\nmath.log(value)\nTake the natural logarithm\n\n\nmath.isclose(...)\nCompare numbers while allowing tiny rounding differences\n\n\n\nAll agreement checks should be True. This supports the checked calculations for that sample; it does not validate every sample or establish a biological conclusion.\nIf a check is False, check the selected sample, input version, output folder and whether results were regenerated after editing inputs. Do not change saved values to force agreement. If necessary, inspect the original data and rerun validation and analysis.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/05-verify-and-explain.html#summarize-your-diversity-values",
+    "href": "examples/my-study/05-verify-and-explain.html#summarize-your-diversity-values",
+    "title": "Verify and explain",
+    "section": "3. Summarize your diversity values",
+    "text": "3. Summarize your diversity values\npython - &lt;&lt;'PY'\nimport pandas as pd\n\nalpha = pd.read_csv(\"results/my-study/tables/alpha-diversity.tsv\", sep=\"\\t\", dtype={\"sample_id\": str, \"group\": str}, keep_default_na=False)\nsummary = alpha.groupby(\"group\", sort=False).agg(\n    samples=(\"shannon\", \"size\"),\n    median_shannon=(\"shannon\", \"median\"),\n    minimum_shannon=(\"shannon\", \"min\"),\n    maximum_shannon=(\"shannon\", \"max\"),\n    minimum_detected_taxa=(\"detected_taxa\", \"min\"),\n    maximum_detected_taxa=(\"detected_taxa\", \"max\"),\n)\nprint(summary.round(6).to_string())\nPY\nCompare group medians, variation and overlap. If there is only one group, describe variation among its samples.\nRichness versus evenness: when two samples have the same number of detected taxa, a difference in Shannon reflects evenness. When detected-taxon counts differ, both may contribute. Do not assume every sample has the same richness because the input table has a fixed number of rows.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/05-verify-and-explain.html#turn-observations-into-supported-statements",
+    "href": "examples/my-study/05-verify-and-explain.html#turn-observations-into-supported-statements",
+    "title": "Verify and explain",
+    "section": "4. Turn observations into supported statements",
+    "text": "4. Turn observations into supported statements\n\n\n\n\n\n\n\nOutput\nA useful observation includes\n\n\n\n\nComposition\nSample ID, taxon name/ID and a checked proportion\n\n\nDiversity\nGroup medians or sample values, detected-taxon counts and overlap\n\n\nFunctional profile\nFeature ID/definition, proportion, denominator and relevant units\n\n\n\nFor each figure, write: what I see; the number supporting it; what I cannot conclude; what I would check next.\nFor example: “Sample … has …% of the supplied taxonomic abundance assigned to …. This is a relative proportion and does not directly establish the absolute amount present.”\nDo not infer significance or causation from plots. Check group sizes, repeated samples, processing differences and relevant covariates before deciding what additional statistical analysis is appropriate. If a source diversity value is present in metadata, keep it separate from the value calculated here unless the input profiles and methods are known to match.\nIf you ask AI to help explain a figure, supply the checked values and units, then review each statement yourself.\nReady to report: you have recorded the chosen ID, checked values, agreement results and one supported observation for each figure.\nNext: Write the report",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Verify and explain</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/06-export-the-report.html",
+    "href": "examples/my-study/06-export-the-report.html",
+    "title": "Export the report",
+    "section": "",
+    "text": "Create a study report\nYour report should let another person understand the question, trace the evidence and see the limits of the analysis. Use your own values; do not carry answers over from synthetic practice or hypertension.\nCreate reports/my-study-report.qmd in your editor. Copy this template and replace every square-bracketed prompt. The figure paths are correct for a report saved in reports/.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Export the report</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/06-export-the-report.html#create-a-study-report",
+    "href": "examples/my-study/06-export-the-report.html#create-a-study-report",
+    "title": "Export the report",
+    "section": "",
+    "text": "---\ntitle: \"My study: descriptive metagenomics report\"\nformat:\n  html:\n    toc: true\n---\n\n## Question\n\n[State the question and the groups or samples being described.]\n\n## Data and study design\n\n[Describe the source, number of samples, group sizes, independent sampling\n unit and any repeated sampling. Give the study/source citation.]\n\n[State taxonomic resolution and abundance units. Explain functional feature\n definitions, units, normalization and whether categories overlap.]\n\n[Record preparation, filtering and exclusions. Identify unresolved details.]\n\n## Methods\n\nI validated the three TSV inputs and ran the supplied Python workflow.\nTaxon and functional values were separately divided by their respective\nwithin-sample totals. Detected taxa had positive abundance. Shannon diversity\nused all supplied taxa and the natural logarithm. Stacked bars display up to\n15 features with the highest mean proportions and combine others as Other.\nThe analysis was descriptive and did not test group differences or adjust\nfor repeated sampling or other variables.\n\n[Explain whether the functional denominator is meaningful for these inputs.]\n\n## Verification\n\nFor sample [ID], independent calculation gave total taxonomic abundance\n[value], detected taxa [value] and Shannon diversity [value].\n[Report whether these agreed with saved results.]\n\n[Record one taxon proportion and one functional proportion you checked.\n Explain any discrepancy before using the result.]\n\n## Results\n\n### Taxonomic composition\n\n![Taxonomic composition of my samples.](../results/my-study/figures/composition.png)\n\n[Describe a checked pattern using sample IDs, taxa and numerical proportions.]\n\n### Shannon diversity\n\n![Calculated diversity; black lines show group medians.](../results/my-study/figures/shannon-diversity.png)\n\n[Describe values, spread and overlap. Check detected-taxon counts before\n attributing differences to evenness. With one group, describe sample variation.]\n\n### Functional profile\n\n![Relative proportions of the supplied functional features.](../results/my-study/figures/functional-features.png)\n\n[Describe a checked feature proportion and explain its denominator.\n Distinguish functional annotation/abundance from measured activity.]\n\n## Limitations and next steps\n\n[Discuss provenance, units, sampling design, feature selection, normalization\n and relevant confounding variables. State what remains unknown.]\n\nVisual differences alone do not establish statistical significance or causation.\n\n[Name one practical next check and explain why it matters.]\n\n## Reproducibility\n\nInputs: data/my-study/.\nOutputs: results/my-study/.\nEnvironment record: results/my-study/tables/run-record.json.\nProvenance notes: data/my-study/README.md.\n\n[Record analysis date, input version or Git commit and any script changes.]",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Export the report</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/06-export-the-report.html#render-and-inspect",
+    "href": "examples/my-study/06-export-the-report.html#render-and-inspect",
+    "title": "Export the report",
+    "section": "Render and inspect",
+    "text": "Render and inspect\nSave the report and run from the main project folder:\nquarto render reports/my-study-report.qmd --to html\nOpen the output location printed by Quarto. Confirm that all three figures display, captions are readable and no unfinished prompts remain. Rendering the report uses existing results; it does not execute the Python workflow again.\nIf a figure is missing, check its filename and location in results/my-study/figures/. Confirm the report is in reports/, because relative image paths depend on that location.",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Export the report</span>"
+    ]
+  },
+  {
+    "objectID": "examples/my-study/06-export-the-report.html#final-learner-check",
+    "href": "examples/my-study/06-export-the-report.html#final-learner-check",
+    "title": "Export the report",
+    "section": "Final learner check",
+    "text": "Final learner check\n\nCan you explain the question and what one sample represents?\nCan each numerical statement be traced to a saved table?\nDid your independent checks agree with the saved results?\nHave you documented units, preparation and unresolved questions?\nAre observations distinguished from claims requiring additional analysis?\n\n\n\n\n\n\n\nYour completed work\n\n\n\nYou have moved from prepared study tables to outputs you can check and explain. Keep your report, provenance notes, exact inputs and scripts together so the work can be reproduced and reviewed.\n\n\nReturn to your study overview",
+    "crumbs": [
+      "Your own study",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Export the report</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html",
+    "href": "99-appendix.html",
+    "title": "Appendix A — Appendix",
+    "section": "",
+    "text": "A small vocabulary\nUse this page as a reference while working through the examples. Begin with Required setup if you have not prepared your environment.\nA sample ID is an identifier, not evidence that the sample is independent of every other sample.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#a-small-vocabulary",
+    "href": "99-appendix.html#a-small-vocabulary",
+    "title": "Appendix A — Appendix",
+    "section": "",
+    "text": "Term\nMeaning in this guide\n\n\n\n\nSample\nOne column of values in an abundance table, linked to one metadata row\n\n\nTaxon\nA taxonomic feature represented by one row; its rank/resolution must be documented\n\n\nFunctional feature\nA supplied numerical feature whose definition and units must be understood\n\n\nAbundance\nThe original numerical value supplied for a feature and sample\n\n\nProportion\nA feature value divided by the corresponding within-sample total\n\n\nDetected taxa\nNumber of taxon values greater than zero in the supplied table\n\n\nMetadata\nInformation describing the samples, including the required group label\n\n\nIndependent sampling unit\nThe participant, animal, site or other unit that provides independent information\n\n\nTSV\nPlain-text table with tabs separating columns",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#taxonomic-proportions-and-detected-taxa",
+    "href": "99-appendix.html#taxonomic-proportions-and-detected-taxa",
+    "title": "Appendix A — Appendix",
+    "section": "Taxonomic proportions and detected taxa",
+    "text": "Taxonomic proportions and detected taxa\nFor one sample with taxon values \\(x_1,\\ldots,x_k\\), the total is \\(T=\\sum_i x_i\\) and the proportion of taxon \\(i\\) is \\(p_i=x_i/T\\). Values must be finite and nonnegative, with \\(T&gt;0\\).\nThe proportions sum to 1. Multiply by 100 to express them as percentages. Total abundance is the sum of the supplied units; it is not necessarily sequencing depth or cell count.\nDetected taxa count rows with values greater than zero. Zero-valued rows remain in the table but do not contribute to observed richness. Resolution, filtering and profiling method affect what this count represents.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#shannon-diversity",
+    "href": "99-appendix.html#shannon-diversity",
+    "title": "Appendix A — Appendix",
+    "section": "Shannon diversity",
+    "text": "Shannon diversity\nUsing natural logarithms:\n\\[\nH=-\\sum_{i:p_i&gt;0}p_i\\ln(p_i).\n\\]\nZero proportions contribute zero and are excluded from the logarithm calculation. Richness and evenness both affect Shannon diversity.\n\n\n\nProportions\nDetected taxa\nShannon, approximately\n\n\n\n\n0.5, 0.5\n2\n0.6931\n\n\n0.9, 0.1\n2\n0.3251\n\n\n\nBoth examples have two detected taxa, but the more even distribution has higher Shannon diversity. If richness differs between samples, both richness and evenness may contribute to a difference. With \\(S\\) detected taxa, equal proportions give the maximum \\(H=\\ln(S)\\) for that \\(S\\). With only one detected taxon, \\(H=0\\).\nShannon computed from a filtered or placeholder table need not match a source study’s reported value. Compare values only after checking the same profiles, filtering, taxonomic resolution and logarithm base were used.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#verified-synthetic-example-s01",
+    "href": "99-appendix.html#verified-synthetic-example-s01",
+    "title": "Appendix A — Appendix",
+    "section": "Verified synthetic example: S01",
+    "text": "Verified synthetic example: S01\nThe learner’s independent calculation for the current synthetic dataset agreed with the saved workflow values:\n\n\n\nQuantity\nChecked value\n\n\n\n\nTotal taxonomic abundance\n546\n\n\nDetected taxa\n8\n\n\nNatural-log Shannon diversity\n2.012363\n\n\nLargest taxon\nTaxon_06\n\n\nTaxon_06 proportion\n0.170330, approximately 17.03%\n\n\n\nThese values are reference answers for that input version, not universal answers for every dataset. If you change the inputs, recalculate them. An agreement check supports the quantities checked for that sample; it does not validate an entire study or establish a group difference.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#functional-profiles-and-their-limits",
+    "href": "99-appendix.html#functional-profiles-and-their-limits",
+    "title": "Appendix A — Appendix",
+    "section": "Functional profiles and their limits",
+    "text": "Functional profiles and their limits\nThe script divides each supplied functional value by that sample’s supplied functional total. Before interpreting the result, confirm what the original values measure and whether summing them is meaningful.\n\nFeature abundance, pathway abundance and pathway coverage are different measurements.\nOverlapping categories can share underlying information; they are not necessarily independent parts of a biological whole.\nA selected set of features gives proportions within that set, not necessarily proportions of every function in the sample.\nA larger proportion can reflect an increase in one feature, decreases in others or both.\nRelative profiles do not directly measure pathway activity or absolute quantities.\n\nThe synthetic functional labels are invented identifiers, not named biological pathways. The hypertension inputs contain 483 named unstratified MetaCyc pathways from HUMAnN. Their source scale includes bookkeeping categories that are excluded from the named-pathway table; normalized bar plots describe only the retained named set. The source heatmap retains the original values. For your study, record those details before making biological claims.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#read-plots-alongside-tables",
+    "href": "99-appendix.html#read-plots-alongside-tables",
+    "title": "Appendix A — Appendix",
+    "section": "Read plots alongside tables",
+    "text": "Read plots alongside tables\nStacked bars display up to 15 features selected by highest mean within-sample proportions across all samples. Remaining features are combined as Other. That selection is for display, not a test of which features differ between groups. Shannon uses all supplied taxa.\nDiversity dots show individual values; black lines show group medians. Horizontal offsets separate dots only. Examine spread, sample counts, detected-taxon counts and overlap alongside medians.\nSaved tables are the numerical evidence for observations. A visual difference alone does not establish significance, causation or an appropriate statistical model.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#what-an-agreement-check-means",
+    "href": "99-appendix.html#what-an-agreement-check-means",
+    "title": "Appendix A — Appendix",
+    "section": "What an agreement check means",
+    "text": "What an agreement check means\nIndependent Python code reads the input, recalculates values and compares them with saved results. math.isclose allows tiny numerical differences due to floating-point representation. A True result indicates agreement within the stated tolerance.\nIf values disagree, check sample selection, input versions, output folder, method and whether results were regenerated. Do not edit a saved result to make it match. Correct the cause and repeat the analysis.\nFor instructions on running long Python blocks in different terminals, see Copy code into the right place.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#keep-the-work-reproducible",
+    "href": "99-appendix.html#keep-the-work-reproducible",
+    "title": "Appendix A — Appendix",
+    "section": "Keep the work reproducible",
+    "text": "Keep the work reproducible\nRetain the exact inputs, source/preparation notes, scripts, outputs and report. Record the analysis date and input or Git version. The workflow’s run-record.json records Python/package versions and the input directory, and SHA-256 input checksums, but does not record every preprocessing decision.\nThe starter’s dependencies are not pinned to exact versions. A run record describes the environment used; it does not recreate it by itself. For a research release, record and manage the environment and input versions explicitly.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#use-ai-with-checked-evidence",
+    "href": "99-appendix.html#use-ai-with-checked-evidence",
+    "title": "Appendix A — Appendix",
+    "section": "Use AI with checked evidence",
+    "text": "Use AI with checked evidence\nAI can help explain a line of Python, clarify an error or draft a result paragraph. Supply the exact command or checked numerical values and relevant units. Then check the explanation against the source tables and study design. Do not treat plausible wording as verification.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#official-software-references",
+    "href": "99-appendix.html#official-software-references",
+    "title": "Appendix A — Appendix",
+    "section": "Official software references",
+    "text": "Official software references\n\nPython virtual environments\nQuarto installation and getting started\n\nReturn to the guide overview",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  },
+  {
+    "objectID": "99-appendix.html#verified-hypertension-reference-values",
+    "href": "99-appendix.html#verified-hypertension-reference-values",
+    "title": "Appendix A — Appendix",
+    "section": "Verified hypertension reference values",
+    "text": "Verified hypertension reference values\nThe main dataset has 140 unique subjects (41 Control, 99 HTN), 440 species and 483 named pathways. ERR1398068 has species total 100.000000, 75 detected species and natural-log Shannon 1.394365. Control median Shannon is 2.249602; HTN median is 2.009787. These are descriptive results from curated profiles.\nThe optional full cohort contains 196 subjects, including 56 pHTN. Source records are in data/provenance/hypertension/. These tables are relative abundances, not integer read counts; a count-based analysis needs appropriate original measurements, not fabricated counts.\n\nOriginal study: Li et al. (2017)\ncuratedMetagenomicData documentation",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix</span>"
+    ]
+  }
+]
