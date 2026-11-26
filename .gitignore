@@ -1,11 +1,5 @@
-.venv/
-__pycache__/
-.quarto/
-.DS_Store
-
-/.quarto/
-
 # Local files and caches
+/.quarto/
 .DS_Store
 .quarto/
 .venv/
